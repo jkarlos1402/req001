@@ -185,97 +185,80 @@ function dispersionesTotales(pago,dispersiones){
 //*************************************
 
 
-var contadorDispersion = 1;
-	function agregaDispersion(padre){
+//var contadorDispersion = 1;
+function agregaDispersion(padre){
 	var indicePago = parseInt($("#numerodePago"+padre).val());
 	var indiceDispersion = parseInt($("#numerodePago"+padre).prev("div").find("div").last().find(".controlDispersion").val());
-	if($("#agrega"+indicePago+indiceDispersion).hasClass("ui-button")){
+	/*if($("#agrega"+indicePago+1).hasClass("ui-button")){
 			$("#agrega"+indicePago+indiceDispersion).button("destroy");
-	}
-	//$("#cve_"+indicePago+"_"+indiceDispersion+"_0_").attr('name',"cve_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	//$("#cve_"+indicePago+"_"+indiceDispersion+"_0_").attr('id',"cve_"+indicePago+"_"+(indiceDispersion+1)+"_0_");					
-	//$("#IdEntPoE_"+indicePago+"_0[]").attr('name',"IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	$("#IdEntPoE_"+indicePago+"_"+indiceDispersion+"_0_").attr('id',"IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	//$("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('name',"FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	$("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('id',"FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	//$("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('name',"IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	$("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('id',"IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	//$("#MonDspPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('name',"MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	$("#MonDspPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('id',"MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	$("#datosbanco"+indicePago+indiceDispersion).attr('id',"datosbanco"+indicePago+(indiceDispersion+1));
-	$("#datoscuenta"+indicePago+indiceDispersion).attr('id',"datoscuenta"+indicePago+(indiceDispersion+1));
-	//$("#IdDesPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('name',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	$("#IdDesPag_"+indicePago+"_"+indiceDispersion+"_0_").attr('id',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
-	$("#numeroDeDispersion"+indiceDispersion).attr('id',"numeroDeDispersion"+(indiceDispersion+1));
-	$("#numeroDeDispersionesSec"+indicePago+indiceDispersion).attr('id',"numeroDeDispersionesSec"+indicePago+(indiceDispersion+1));
+	}*/
+	$("#IdEntPoE_"+indicePago+"_1_0_").attr('id',"IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
+	$("#FecMovDspPag_"+indicePago+"_1_0_").attr('id',"FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
+	$("#IdOrgPag_"+indicePago+"_1_0_").attr('id',"IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
+	$("#MonDspPag_"+indicePago+"_1_0_").attr('id',"MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
+	$("#datosbanco"+indicePago+1).attr('id',"datosbanco"+indicePago+(indiceDispersion+1));
+	$("#datoscuenta"+indicePago+1).attr('id',"datoscuenta"+indicePago+(indiceDispersion+1));
+	$("#IdDesPag_"+indicePago+"_1_0_").attr('id',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_");
+	$("#numeroDeDispersion"+1).attr('id',"numeroDeDispersion"+(indiceDispersion+1));
+	$("#numeroDeDispersionesSec"+indicePago+1).attr('id',"numeroDeDispersionesSec"+indicePago+(indiceDispersion+1));
 	if($("#agrega"+padre+"1").hasClass("ui-button")){
 		$("#agrega"+padre+"1").button("destroy");
 	}
 	var botonesControl = $("#numerodePago"+padre).prev("div").find("div").last().find("table").find("tr:first").find("td:last").html();
-	$("#numerodePago"+padre).prev("div").find("div").last().find("table").find("tr:first").find("td:last").html("<li id='agrega"+indicePago+(indiceDispersion+1)+"' style='visibility:hidden; display:none;' onclick='agregaDispersionSecundaria("+indicePago+','+indiceDispersion+");'></li><li id='elimina"+indicePago+(indiceDispersion+1)+"' onclick=eliminaDispersion("+indicePago+","+(indiceDispersion+1)+");></li>");
-	$("#agrega"+indicePago+indiceDispersion).attr('id',"agrega"+indicePago+(indiceDispersion+1));
+	$("#agrega"+indicePago+1).attr('id',"agrega"+indicePago+(indiceDispersion+1));
+		
+	$("#IdEntPoE_"+indicePago+"_1_1_").attr('name',"IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"[]");
+	$("#IdEntPoE_"+indicePago+"_1_1_").attr('id',"IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
+	$("#FecMovDspPag_"+indicePago+"_1_1_").attr('name',"FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
+	$("#FecMovDspPag_"+indicePago+"_1_1_").attr('id',"FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
+	$("#IdOrgPag_"+indicePago+"_1_1_").attr('name',"IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
+	$("#IdOrgPag_"+indicePago+"_1_1_").attr('id',"IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
+	$("#MonDspPag_"+indicePago+"_1_1_").attr('name',"MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
+	$("#MonDspPag_"+indicePago+"_1_1_").attr('id',"MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
 	
-
-	//$("#cve_"+indicePago+"_"+indiceDispersion+"_1_").attr('name',"cve_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
-	//$("#cve_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"cve_"+indicePago+"_"+(indiceDispersion+1)+"_1_");			
-	$("#IdEntPoE_"+indicePago+"_"+indiceDispersion+"_1_").attr('name',"IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"[]");
-	$("#IdEntPoE_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
-	$("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('name',"FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
-	$("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
-	$("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('name',"IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
-	$("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
-	$("#MonDspPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('name',"MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
-	$("#MonDspPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_");
+	$("#datosbanco"+indicePago+1+1).attr('id',"datosbanco"+indicePago+(indiceDispersion+1)+1);
+	$("#datoscuenta"+indicePago+1+1).attr('id',"datoscuenta"+indicePago+(indiceDispersion+1)+1);
 	
-	$("#datosbanco"+indicePago+indiceDispersion+1).attr('id',"datosbanco"+indicePago+(indiceDispersion+1)+1);
-	$("#datoscuenta"+indicePago+indiceDispersion+1).attr('id',"datoscuenta"+indicePago+(indiceDispersion+1)+1);
+	$("#IdDesPag_"+indicePago+"_1_1_").attr('name',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
+	$("#IdDesPag_"+indicePago+"_1_1_").attr('id',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_"+1+"_");
 	
-	$("#IdDesPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('name',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
-	$("#IdDesPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_"+1+"_");
+	var newElem =$("#numerodePago"+padre).prev("div").find("div:first").clone().attr('id', 'divDispersion'+padre+(indiceDispersion+1));				
+	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"IdEntPoE_"+indicePago+"_1[]");
+	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"IdEntPoE_"+indicePago+"_1_1_");
+	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"FecMovDspPag_"+indicePago+"_1[]");
+	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"FecMovDspPag_"+indicePago+"_1_1_");
+	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"IdOrgPag_"+indicePago+"_1[]");
+	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"IdOrgPag_"+indicePago+"_1_1_");
+	$("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"MonDspPag_"+indicePago+"_1[]");
+	$("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"MonDspPag_"+indicePago+"_1_1_");
 	
-	//var newElem = $("#dispersion"+indiceDispersion).clone().attr('id', 'dispersion'+(indiceDispersion+1));
-	var newElem =$("#numerodePago"+padre).prev("div").find("div").last().clone().attr('id', 'divDispersion'+padre+(indiceDispersion+1));
-	//$("#cve_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"cve_"+indicePago+"_"+indiceDispersion+"_1_");
-	//$("#cve_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"cve_"+indicePago+"_"+indiceDispersion+"_1_");					
-	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"IdEntPoE_"+indicePago+"_"+indiceDispersion+"[]");
-	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"IdEntPoE_"+indicePago+"_"+indiceDispersion+"_1_");
-	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"FecMovDspPag_"+indicePago+"_"+indiceDispersion+"[]");
-	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_1_");
-	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"IdOrgPag_"+indicePago+"_"+indiceDispersion+"[]");
-	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"IdOrgPag_"+indicePago+"_"+indiceDispersion+"_1_");
-	$("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"MonDspPag_"+indicePago+"_"+indiceDispersion+"[]");
-	$("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"MonDspPag_"+indicePago+"_"+indiceDispersion+"_1_");
+	$("#datosbanco"+indicePago+(indiceDispersion+1)+1).attr('id',"datosbanco"+indicePago+1+1);
+	$("#datoscuenta"+indicePago+(indiceDispersion+1)+1).attr('id',"datoscuenta"+indicePago+1+1);
 	
-	$("#datosbanco"+indicePago+(indiceDispersion+1)+1).attr('id',"datosbanco"+indicePago+indiceDispersion+1);
-	$("#datoscuenta"+indicePago+(indiceDispersion+1)+1).attr('id',"datoscuenta"+indicePago+indiceDispersion+1);
-	
-	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"IdDesPag_"+indicePago+"_"+indiceDispersion+"[]");
-	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"IdDesPag_"+indicePago+"_"+indiceDispersion+"_1_");
+	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"IdDesPag_"+indicePago+"_1[]");
+	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"IdDesPag_"+indicePago+"_1_1_");
 	
 	//se regresan originales
-	//$("#cve_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('name',"cve_"+indicePago+"_"+indiceDispersion+"_0_");
-	//$("#cve_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"cve_"+indicePago+"_"+indiceDispersion+"_0_");
-	//$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('name',"IdEntPoE_"+indicePago+"_"+indiceDispersion+"_0_");
-	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdEntPoE_"+indicePago+"_"+indiceDispersion+"_0_");
-	//$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('name',"FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	//$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('name',"IdOrgPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdOrgPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	//$("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('name',"MonDspPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	$("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"MonDspPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	$("#datosbanco"+indicePago+(indiceDispersion+1)).attr('id',"datosbanco"+indicePago+indiceDispersion);
-	$("#datoscuenta"+indicePago+(indiceDispersion+1)).attr('id',"datoscuenta"+indicePago+indiceDispersion);
-	//$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('name',"IdDesPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdDesPag_"+indicePago+"_"+indiceDispersion+"_0_");
-	$("#numeroDeDispersion"+(indiceDispersion+1)).attr('id',"numeroDeDispersion"+indiceDispersion);
-	$("#numeroDeDispersionesSec"+indicePago+(indiceDispersion+1)).attr('id',"numeroDeDispersionesSec"+indicePago+indiceDispersion);
+	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdEntPoE_"+indicePago+"_1_0_");
+	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"FecMovDspPag_"+indicePago+"_1_0_");
+	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdOrgPag_"+indicePago+"_1_0_");
+	$("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"MonDspPag_"+indicePago+"_1_0_");
+	$("#datosbanco"+indicePago+(indiceDispersion+1)).attr('id',"datosbanco"+indicePago+1);
+	$("#datoscuenta"+indicePago+(indiceDispersion+1)).attr('id',"datoscuenta"+indicePago+1);
+	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdDesPag_"+indicePago+"_1_0_");
+	$("#numeroDeDispersion"+(indiceDispersion+1)).attr('id',"numeroDeDispersion"+1);
+	$("#numeroDeDispersionesSec"+indicePago+(indiceDispersion+1)).attr('id',"numeroDeDispersionesSec"+indicePago+1);
 	$("#numerodePago"+padre).prev("div").find("div").last().find("table").find("tr:first").find("td:last").html(botonesControl);
-	$("#agrega"+padre+"1").button({icons: {primary: "ui-icon-plusthick"},text: false});
-	$("#agrega"+indicePago+(indiceDispersion+1)).attr('id',"agrega"+indicePago+indiceDispersion);
-	
+	//$("#agrega"+padre+"1").button({icons: {primary: "ui-icon-plusthick"},text: false});
+	$("#agrega"+indicePago+(indiceDispersion+1)).attr('id',"agrega"+indicePago+1);
+	////////////////////////////////////////////////////////////////////////////////////
 	if((indiceDispersion+1)>2){
-		$("#elimina"+indicePago+indiceDispersion).remove();
-		$("#agrega"+indicePago+indiceDispersion).button({icons: {primary: "ui-icon-plusthick"},text: false});
+            $("#elimina"+indicePago+indiceDispersion).html("");
+            $("#elimina"+indicePago+indiceDispersion).removeClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only");
+            $("#agrega"+indicePago+indiceDispersion).html("");
+            $("#agrega"+indicePago+indiceDispersion).removeClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only");
+            $("#elimina"+indicePago+indiceDispersion).button({icons: {primary: "ui-icon-trash"},text: false});
+            $("#agrega"+indicePago+indiceDispersion).button({icons: {primary: "ui-icon-plusthick"},text: false});
 	}
 	newElem.find(".dispSec").attr("id","dispSec"+padre+(indiceDispersion+1)+1).css({'visibility': 'hidden', 'display': 'none'}).next(".dispSec").remove();//se eliminan dispersiones secundarias 
 	newElem.find("#numeroDeDispersionesSec"+indicePago+(indiceDispersion+1)).val("0");
@@ -292,8 +275,7 @@ var contadorDispersion = 1;
 	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('onchange',"habilitaOrigen(this,"+indicePago+","+(indiceDispersion+1)+",0)");
 	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('onchange',"agregaOrigen(this,"+indicePago+","+(indiceDispersion+1)+",0)");																					
 	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('onchange',"agregaDestino(this.value,"+indicePago+","+(indiceDispersion+1)+",1)");
-	$("#datosbanco"+indicePago+(indiceDispersion+1)).html("");
-	//$("#cve_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('value',indicePago+"_"+(indiceDispersion+1)+"_0_");
+        $("#datosbanco"+indicePago+(indiceDispersion+1)).html("");
 	$("#datoscuenta"+indicePago+(indiceDispersion+1)).html("");
 	$("#agrega"+indicePago+(indiceDispersion+1)).attr('onClick',"agregaDispersionSecundaria("+indicePago+","+(indiceDispersion+1)+");");
 	$("#agrega"+indicePago+(indiceDispersion+1)).css("visibility","hidden");
@@ -308,16 +290,23 @@ var contadorDispersion = 1;
 	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").removeClass("hasDatepicker");
 	$( "input[type=fecha]").datepicker({ dateFormat: 'dd-mm-yy' });
 	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('onchange',"consultaBancoSec(this.value,"+indicePago+","+(indiceDispersion+1)+",1)");
+        $("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('onblur',"validaTotalDispersion("+indicePago+","+(indiceDispersion+1)+")");
+        $("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").css("background-color","#FFF");
+        $("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").val("0.00");
 	$("#datosbanco"+indicePago+(indiceDispersion+1)+1).html("");
-	//$("#cve_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('value',indicePago+"_"+(indiceDispersion+1)+"_1_");
 	$("#datoscuenta"+indicePago+(indiceDispersion+1)+1).html("");
 	
 	$("#numerodePago"+padre).prev("div").find("div").last().find(".controlDispersion").val(indiceDispersion+1);
 	$("#divDispersion"+padre+(indiceDispersion+1)).find("table").find("tr:first").find("td:first").html(padre+"."+(indiceDispersion+1));
 	$("#divDispersion"+padre+(indiceDispersion+1)).find("table").find("tr:last").find("td:first").html(padre+"."+(indiceDispersion+1)+".1");
+        $("#numerodePago"+padre).prev("div").find("div").last().find("table").find("tr:first").find("td:last").html("<li id='agrega"+indicePago+(indiceDispersion+1)+"' style='visibility:hidden; display:none;' onclick='agregaDispersionSecundaria("+indicePago+','+(indiceDispersion+1)+");'></li><li id='elimina"+indicePago+(indiceDispersion+1)+"' onclick=eliminaDispersion("+indicePago+","+(indiceDispersion+1)+");></li>");
+        $("#elimina"+padre+(indiceDispersion+1)).button({icons: {primary: "ui-icon-trash"},text: false});
+        $("#agrega"+padre+"1").button({icons: {primary: "ui-icon-plusthick"},text: false});
+        reOrganizaDispersion(indicePago,1);
 }
 
 function eliminaDispersion(pago,dispersion){
+    if(confirm("¿Seguro de eliminar la dispersion del pago?")){
 	$("#divDispersion"+pago+dispersion).remove();
 	var indicePago = parseInt($("#numerodePago"+pago).val());
 	var indiceDispersion = parseInt($("#numerodePago"+pago).prev("div").find("div").last().find(".controlDispersion").val());
@@ -337,7 +326,27 @@ function eliminaDispersion(pago,dispersion){
 		$("#numerodePago"+pago).prev("div").find("div").last().find("table").find("tr:first").find("td:last").html(html2);
 		$("#agrega"+indicePago+indiceDispersion).button({icons: {primary: "ui-icon-plusthick"},text: false});
 	}
+        reOrganizaDispersion(indicePago,1);
 	validaTotal(indicePago);
+    }
+}
+
+function reOrganizaDispersion(pago,dispersion){
+    $("#controlDispersion"+pago).find("div").each(function(index){
+       $(this).find("tr:first").find("td:first").html(pago+"."+(dispersion+index));
+       reOrganizaSecundaria(this,pago,1,1,(dispersion+index));
+    });
+}
+
+function reOrganizaSecundaria(div,pago,dispersion,secundaria,labelDispersion){
+    $(div).find(".dispSec").each(function(index0){
+        $(this).find("td:first").each(function(index){
+            $(this).html(pago+"."+labelDispersion+"."+(index0+1));
+        });
+    });
+    //$("#dispSec"+pago+dispersion+secundaria).nextAll("tr").each(function(index){ 
+       // $(this).find("td:first").html(pago+"."+labelDispersion+"."+(secundaria+(index+1)));
+    //});
 }
 
 var sec=0;
@@ -379,7 +388,6 @@ function agregaDispersionSecundaria(pago,dispersion){
 	$("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_");
 	$("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"IdOrgPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_");
 	$("#MonDspPag_"+indicePago+"_"+indiceDispersion+"_1_").attr('id',"MonDspPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_");
-	
 	$("#datosbanco"+indicePago+indiceDispersion+1).attr('id',"datosbanco"+indicePago+indiceDispersion+(indiceDispersionSec+1));
 	$("#datoscuenta"+indicePago+indiceDispersion+1).attr('id',"datoscuenta"+indicePago+indiceDispersion+(indiceDispersionSec+1));
 	
@@ -394,7 +402,6 @@ function agregaDispersionSecundaria(pago,dispersion){
 	$("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").attr('id',"FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_1_");
 	$("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").attr('id',"IdOrgPag_"+indicePago+"_"+indiceDispersion+"_1_");
 	$("#MonDspPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").attr('id',"MonDspPag_"+indicePago+"_"+indiceDispersion+"_1_");
-	
 	$("#datosbanco"+indicePago+indiceDispersion+(indiceDispersionSec+1)).attr('id',"datosbanco"+indicePago+indiceDispersion+1);
 	$("#datoscuenta"+indicePago+indiceDispersion+(indiceDispersionSec+1)).attr('id',"datoscuenta"+indicePago+indiceDispersion+1);
 	
@@ -402,59 +409,43 @@ function agregaDispersionSecundaria(pago,dispersion){
 	
 	$("#divDispersion"+indicePago+indiceDispersion).find("tr:last").after(newElemSec);
 	
+        $("#MonDspPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").val("0.00");
 	$("#dispSec"+indicePago+indiceDispersion+(indiceDispersionSec+1)).css("background-color","#A9F5A9");
 	$("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").removeClass("hasDatepicker");
 	$("input[type=fecha]").datepicker({ dateFormat: 'dd-mm-yy' });
 	$("#IdEntPoE_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").attr('onchange',"habilitaOrigen(this,"+indicePago+","+indiceDispersion+","+(indiceDispersionSec+1)+");");
+        $("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").attr('onchange',"agregaOrigen(this,"+indicePago+","+indiceDispersion+","+(indiceDispersionSec+1)+");");
 	$("#datosbanco"+indicePago+indiceDispersion+(indiceDispersionSec+1)).html("");
 	$("#cve_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").attr('value',indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_");
 	$("#datoscuenta"+indicePago+indiceDispersion+(indiceDispersionSec+1)).html("");
 	if((indiceDispersionSec+1)>1){
-		//if((indiceDispersionSec+1)>2){
-		//	$("#eliminaSec"+indicePago+indiceDispersion+indiceDispersionSec).remove();
-		//}
-		$("#numerodePago"+indicePago).prev("div").find("#divDispersion"+indicePago+indiceDispersion).find("table").find("tr:last").find("td:last").html("<li id='eliminaSec"+indicePago+indiceDispersion+(indiceDispersionSec+1)+"' onclick=eliminaDispersionSec("+indicePago+","+indiceDispersion+","+(indiceDispersionSec+1)+");></li>");
-		$("#eliminaSec"+indicePago+indiceDispersion+(indiceDispersionSec+1)).button({icons: {primary: "ui-icon-trash"},text: false});	
+            $("#numerodePago"+indicePago).prev("div").find("#divDispersion"+indicePago+indiceDispersion).find("table").find("tr:last").find("td:last").html("<li id='eliminaSec"+indicePago+indiceDispersion+(indiceDispersionSec+1)+"' onclick=eliminaDispersionSec("+indicePago+","+indiceDispersion+","+(indiceDispersionSec+1)+");></li>");
+            $("#eliminaSec"+indicePago+indiceDispersion+(indiceDispersionSec+1)).button({icons: {primary: "ui-icon-trash"},text: false});	
 	}
 	$("#numeroDeDispersionesSec"+pago+indiceDispersion).val(indiceDispersionSec+1);
-        reOrganizaSecundaria(indicePago,indiceDispersion,1);
+        reOrganizaDispersion(indicePago,1);
 	//$("#divDispersion"+pago+indiceDispersion).find("table").find("tr:last").find("td:first").html(pago+"."+indiceDispersion+"."+(indiceDispersionSec+1));
 }
 
 function eliminaDispersionSec(pago,dispersion,secundaria){
-        if(confirm("¿Seguro de eliminar la dispersion secundaria?")){
-            $("#eliminaSec"+pago+dispersion+secundaria).parents("tr").remove();
-            reOrganizaSecundaria(pago,dispersion,1);
-        }
-	/*$("#numerodePago"+pago).prev("div").find("#divDispersion"+pago+dispersion).find("table").find("tr:last").remove();
-	var indicePago = parseInt($("#numerodePago"+pago).val());
-	var indiceDispersion = dispersion;
-	$("#numeroDeDispersionesSec"+indicePago+indiceDispersion).val($("#numeroDeDispersionesSec"+indicePago+indiceDispersion).val()-1);
-	var indiceDispersionSec = parseInt($("#numeroDeDispersionesSec"+indicePago+indiceDispersion).val());
-	if(indiceDispersionSec>1){
-		$("#numerodePago"+indicePago).prev("div").find("#divDispersion"+indicePago+indiceDispersion).find("table").find("tr:last").find("td:last").html("<li id='eliminaSec"+indicePago+indiceDispersion+indiceDispersionSec+"' onclick=eliminaDispersionSec("+indicePago+","+indiceDispersion+");></li>");
-		$("#eliminaSec"+indicePago+indiceDispersion+indiceDispersionSec).button({icons: {primary: "ui-icon-trash"},text: false});	
-	}*/
+    if(confirm("¿Seguro de eliminar la dispersion secundaria?")){
+        $("#eliminaSec"+pago+dispersion+secundaria).parents("tr").remove();
+        reOrganizaDispersion(pago,1);
+    }
 }
 
-function reOrganizaSecundaria(pago,dispersion,secundaria){
-    $("#dispSec"+pago+dispersion+secundaria).nextAll("tr").each(function(index){ 
-        $(this).find("td:first").html(pago+"."+dispersion+"."+(secundaria+(index+1)));
-    });
-}
 
-var total=0;
-var suma;
 ///////////////////////////////////////////////////////////// REVISAR LAS SUMAS!!!!
 function validaTotal(pago){
 	suma=0;
 	montoTotal = parseFloat($("#montoTotal"+pago).val());
 	$("#controlDispersion"+pago).find(".montoDispersion").each(function(index, element) {
-		if(isNaN($(this).val()) || $(this).val() == "")
-			$(this).val(0);
-		$(this).val(parseFloat($(this).val()).toFixed(2));
-        suma = parseFloat(suma) + parseFloat($(this).val());
-    });
+            if(isNaN($(this).val()) || $(this).val() == "")
+                $(this).val(0);
+            $(this).val(parseFloat($(this).val()).toFixed(2));
+            suma = parseFloat(suma) + parseFloat($(this).val());
+            validaTotalDispersion(pago,(index+1));
+        });
 	if(suma > montoTotal){
 		$("#error"+pago).addClass("ui-state-error ui-corner-all");
 		$("#error"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> Se superó el monto del pago!");
@@ -469,6 +460,31 @@ function validaTotal(pago){
 		
 }
 
+function validaTotalDispersion(pago,dispersion){
+    montoTotalSec = parseFloat($("#MonDspPag_"+pago+"_"+dispersion+"_0_").val());
+    sumaSec = 0.00;
+    $("#divDispersion"+pago+dispersion).find(".montoSecundaria").each(function(index1){
+        if(isNaN($(this).val()) || $(this).val() == "")
+            $(this).val(0);
+        $(this).val(parseFloat($(this).val()).toFixed(2));
+        sumaSec += parseFloat($(this).val());
+    });
+    if(sumaSec > montoTotalSec){
+        $("#divDispersion"+pago+dispersion).find(".montoSecundaria").each(function(index2){
+            $(this).css("background-color","#FEE9EC");
+        });
+        $("#errorSec"+pago).addClass("ui-state-error ui-corner-all");
+	$("#errorSec"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> ¡Se superó el monto de la dispersion!");
+	return false;
+    }else{
+        $("#divDispersion"+pago+dispersion).find(".montoSecundaria").each(function(index3){
+            $(this).css("background-color","#FFF");
+        });
+        $("#errorSec"+pago).removeClass("ui-state-error ui-corner-all");
+        $("#errorSec"+pago).html("");
+        return true; 
+    }
+}
 ///////////////////////////////////////////////////////////////////////////////////////
 Array.prototype.getLength = function(){
   var i, c = 0;

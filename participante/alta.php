@@ -22,7 +22,7 @@ $ltxt_extCtoPoE = $_POST['ltxt_extCtoPoE'];
 $ltxt_emailCtoPoE = $_POST['ltxt_emailCtoPoE'];
 
 //Agregando la persona o empresa
-$query = "insert into tblentpoe (IdEntPoE,NomEntPoE,RFCEntPoE,DirEntPoE,IdEntPfl,GroEntPoE,TelEntPoE,ExtEntPoE,NomCtoPoE,TelCtoPoE,ExtCtoPoE,EmailCtoPoE) values (null,'$ltxt_nomPoE','$ltxt_RFCPoE','$ltxt_dirPoE','$ltxt_pflPoE','$ltxt_girPoE','$ltxt_telPoE','$ltxt_extPoE','$ltxt_nomCtoPoE','$ltxt_telCtoPoE','$ltxt_extCtoPoE','$ltxt_emailCtoPoE')";
+$query = "insert into tblentpoe (IdEntPoE,NomEntPoE,RFCEntPoE,DirEntPoE,IdEntPfl,GroEntPoE,TelEntPoE,ExtEntPoE,NomCtoPoE,TelCtoPoE,ExtCtoPoE,EmailCtoPoE,EstEntPoE) values (null,'$ltxt_nomPoE','$ltxt_RFCPoE','$ltxt_dirPoE','$ltxt_pflPoE','$ltxt_girPoE','$ltxt_telPoE','$ltxt_extPoE','$ltxt_nomCtoPoE','$ltxt_telCtoPoE','$ltxt_extCtoPoE','$ltxt_emailCtoPoE',1)";
 mysql_query($query,$conexion) or die (mysql_error());
 $lint_idePoE = mysql_insert_id();//se obtiene el id de la persona o empresa registrada
 
