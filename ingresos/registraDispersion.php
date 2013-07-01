@@ -1,6 +1,20 @@
 <?php
 include("../conexion.php");
-$a=1;
+
+$IdEntPago = $_POST['IdEntPag'];
+$numeroPago = $_POST['numerodePago'];
+$totalDispersiones = count($_POST['IdEntPoE_'.$numeroPago.'_0']);
+$totalDispersionesSecundarias = Array();
+foreach($_POST['numeroDeDispersion'] as $indice){
+    if(isset($_POST['IdEntPoE_'.$numeroPago.'_'.$indice]))
+        $totalDispersionesSecundarias[] = count($_POST['IdEntPoE_'.$numeroPago.'_'.$indice]);
+    else
+        $totalDispersionesSecundarias[]=0;
+}
+$query = "insert into tbl"
+//echo "total de dispersiones: ".count($_POST[])
+
+/*$a=1;
 $b=1;
 $j=0;
 $padre="";
@@ -52,7 +66,7 @@ for($i=1;$i<=$disptotales;$i++){
 	$j=0;
 	
 }
-
+*/
 
 /*
 $IdEntPoE=$_POST['IdEntPoE'];

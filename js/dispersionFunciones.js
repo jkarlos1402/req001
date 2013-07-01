@@ -67,17 +67,16 @@ function consultaOrigen(padre,hijo){
 
 /////////////////////////////////////////////////////////////////////////////////////
 function consultaDestino(padre,hijo){
-	$("#dest"+padre+""+hijo).html("");
 	var url = "../ingresos/destino.php";
 	$.post(url,{padre:padre,hijo:hijo},function(responseText){
-		$("#dest"+padre+""+hijo).html(responseText);
+            $("#divDispersion"+padre+hijo).find("tr:first").find("td:last").prev("td").html(responseText);
 	});
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 function guardarOrigen(){
 	var url = "../ingresos/guardaOrigen.php";
-	var origennuevo=document.getElementById("nuevoorg").value;
+	var origennuevo=$("#nuevoorg").val();
 	$.post(url,{origennuevo:origennuevo},function(responseText){
 		$("#mensaje").html(responseText);
 	consultaOrigen();	
@@ -87,10 +86,18 @@ function guardarOrigen(){
 /////////////////////////////////////////////////////////////////////////////////////
 function guardarDestino(){
 	var url = "../ingresos/guardaDestino.php";
-	var destinonuevo=document.getElementById("nuevodest").value;
+	var destinonuevo=$("#nuevodest").val();
+        var ultimoIdDestino = -1;
 	$.post(url,{destinonuevo:destinonuevo},function(responseText){
-		$("#mensaje2").html(responseText);
-	consultaDestino();	
+            $("#dialog2").dialog("close"); 
+            ultimoIdDestino = responseText;  
+            $(".destinoDis").each(function(){
+                $(this).find("option:last").remove();
+                $(this).append("<option value='"+ultimoIdDestino+"'>"+destinonuevo+"</option><option value='otros'>OTRO...</option>");
+            });
+            $(".destinoSec").each(function(){
+                $(this).append("<option value='"+ultimoIdDestino+"'>"+destinonuevo+"</option>");
+            });
 	});
 }
 
@@ -138,7 +145,9 @@ function agregaOrigen(valor,pago,dispersion,secundaria){
 function agregaDestino(valor,padre,hijo,hijosec){
 	if(valor == 'otros')
 	{	
-	$( "#dialog2").dialog( "open" );
+            $("#dialog2").dialog( "open" );
+            $("#pagoPadre").val(padre);
+            $("#dispersionPago").val(hijo);
 	}
 	if(valor==2||valor==3){
 		habilitaDispersionSecundaria(padre,hijo,1);	
@@ -147,6 +156,15 @@ function agregaDestino(valor,padre,hijo,hijosec){
 		$("#agrega"+padre+hijo).css({'visibility': 'hidden', 'display': 'none'});
 		$("#divDispersion"+padre+hijo).find(".dispSec").css({'visibility': 'hidden', 'display': 'none'}).next(".dispSec").remove();//se eliminan dispersiones secundarias 
 		$("#divDispersion"+padre+hijo).find("#numeroDeDispersionesSec"+padre+hijo).val("0");
+                $("#MonDspPag_"+padre+"_"+hijo+"_1_").val("0.00").attr("disabled","disabled");
+                $("#IdEntPoE_"+padre+"_"+hijo+"_1_").prop("selectedIndex",0).attr("disabled","disabled");
+                $("#IdOrgPag_"+padre+"_"+hijo+"_1_").prop("selectedIndex",0).css({'visibility': 'hidden', 'display': 'none'}).attr("disabled","disabled");
+                $("#datosbanco"+padre+hijo+"1").html("");
+                $("#datoscuenta"+padre+hijo+"1").html("");
+                $("#MonDspPag_"+padre+"_"+hijo+"_1_").val("0.00").attr("disabled","disabled");
+                $("#FecMovDspPag_"+padre+"_"+hijo+"_1_").val("").attr("disabled","disabled");
+                $("#IdDesPag_"+padre+"_"+hijo+"_1_").prop("selectedIndex",0).attr("disabled","disabled")
+                validaTotal(padre);
 	}
 }
 
@@ -221,6 +239,8 @@ function agregaDispersion(padre){
 	
 	$("#IdDesPag_"+indicePago+"_1_1_").attr('name',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"[]");
 	$("#IdDesPag_"+indicePago+"_1_1_").attr('id',"IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_"+1+"_");
+        
+        $("#indice"+padre+"1").attr("id","indice"+padre+(indiceDispersion+1));
 	
 	var newElem =$("#numerodePago"+padre).prev("div").find("div:first").clone().attr('id', 'divDispersion'+padre+(indiceDispersion+1));				
 	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('name',"IdEntPoE_"+indicePago+"_1[]");
@@ -239,6 +259,7 @@ function agregaDispersion(padre){
 	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('id',"IdDesPag_"+indicePago+"_1_1_");
 	
 	//se regresan originales
+        $("#indice"+padre+(indiceDispersion+1)).attr("id","indice"+padre+"1");
 	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdEntPoE_"+indicePago+"_1_0_");
 	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"FecMovDspPag_"+indicePago+"_1_0_");
 	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").attr('id',"IdOrgPag_"+indicePago+"_1_0_");
@@ -249,7 +270,6 @@ function agregaDispersion(padre){
 	$("#numeroDeDispersion"+(indiceDispersion+1)).attr('id',"numeroDeDispersion"+1);
 	$("#numeroDeDispersionesSec"+indicePago+(indiceDispersion+1)).attr('id',"numeroDeDispersionesSec"+indicePago+1);
 	$("#numerodePago"+padre).prev("div").find("div").last().find("table").find("tr:first").find("td:last").html(botonesControl);
-	//$("#agrega"+padre+"1").button({icons: {primary: "ui-icon-plusthick"},text: false});
 	$("#agrega"+indicePago+(indiceDispersion+1)).attr('id',"agrega"+indicePago+1);
 	////////////////////////////////////////////////////////////////////////////////////
 	if((indiceDispersion+1)>2){
@@ -290,7 +310,7 @@ function agregaDispersion(padre){
 	$("#FecMovDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").removeClass("hasDatepicker");
 	$( "input[type=fecha]").datepicker({ dateFormat: 'dd-mm-yy' });
 	$("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('onchange',"consultaBancoSec(this.value,"+indicePago+","+(indiceDispersion+1)+",1)");
-        $("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('onblur',"validaTotalDispersion("+indicePago+","+(indiceDispersion+1)+")");
+        $("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").attr('onblur',"validaTotal("+indicePago+")");
         $("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").css("background-color","#FFF");
         $("#MonDspPag_"+indicePago+"_"+(indiceDispersion+1)+"_1_").val("0.00");
 	$("#datosbanco"+indicePago+(indiceDispersion+1)+1).html("");
@@ -302,6 +322,7 @@ function agregaDispersion(padre){
         $("#numerodePago"+padre).prev("div").find("div").last().find("table").find("tr:first").find("td:last").html("<li id='agrega"+indicePago+(indiceDispersion+1)+"' style='visibility:hidden; display:none;' onclick='agregaDispersionSecundaria("+indicePago+','+(indiceDispersion+1)+");'></li><li id='elimina"+indicePago+(indiceDispersion+1)+"' onclick=eliminaDispersion("+indicePago+","+(indiceDispersion+1)+");></li>");
         $("#elimina"+padre+(indiceDispersion+1)).button({icons: {primary: "ui-icon-trash"},text: false});
         $("#agrega"+padre+"1").button({icons: {primary: "ui-icon-plusthick"},text: false});
+        $("#indice"+padre+(indiceDispersion+1)).val((indiceDispersion+1));
         reOrganizaDispersion(indicePago,1);
 }
 
@@ -359,6 +380,11 @@ function habilitaDispersionSecundaria(pago,dispersion,hijo){
 	if(!$("#agrega"+pago+dispersion).hasClass("ui-button"))
 		$("#agrega"+pago+dispersion).button({icons: {primary: "ui-icon-plusthick"},text: false});
 	$("#numeroDeDispersionesSec"+pago+dispersion).val(parseInt($("#numeroDeDispersionesSec"+pago+dispersion).val())+1);
+        $("#MonDspPag_"+pago+"_"+dispersion+"_1_").val("0.00").removeAttr("disabled");
+        $("#FecMovDspPag_"+pago+"_"+dispersion+"_1_").val("").removeAttr("disabled");
+        $("#IdOrgPag_"+pago+"_"+dispersion+"_1_").prop("selectedIndex",0).removeAttr("disabled");
+        $("#IdEntPoE_"+pago+"_"+dispersion+"_1_").prop("selectedIndex",0).removeAttr("disabled");
+        $("#IdDesPag_"+pago+"_"+dispersion+"_1_").prop("selectedIndex",0).removeAttr("disabled");
 }
 
 var hijosecnuevo=0;
@@ -418,6 +444,8 @@ function agregaDispersionSecundaria(pago,dispersion){
 	$("#datosbanco"+indicePago+indiceDispersion+(indiceDispersionSec+1)).html("");
 	$("#cve_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").attr('value',indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_");
 	$("#datoscuenta"+indicePago+indiceDispersion+(indiceDispersionSec+1)).html("");
+        $("#IdOrgPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").css({'visibility': 'hidden', 'display': 'none'});
+        $("#FecMovDspPag_"+indicePago+"_"+indiceDispersion+"_"+(indiceDispersionSec+1)+"_").val("");
 	if((indiceDispersionSec+1)>1){
             $("#numerodePago"+indicePago).prev("div").find("#divDispersion"+indicePago+indiceDispersion).find("table").find("tr:last").find("td:last").html("<li id='eliminaSec"+indicePago+indiceDispersion+(indiceDispersionSec+1)+"' onclick=eliminaDispersionSec("+indicePago+","+indiceDispersion+","+(indiceDispersionSec+1)+");></li>");
             $("#eliminaSec"+indicePago+indiceDispersion+(indiceDispersionSec+1)).button({icons: {primary: "ui-icon-trash"},text: false});	
@@ -431,14 +459,17 @@ function eliminaDispersionSec(pago,dispersion,secundaria){
     if(confirm("¿Seguro de eliminar la dispersion secundaria?")){
         $("#eliminaSec"+pago+dispersion+secundaria).parents("tr").remove();
         reOrganizaDispersion(pago,1);
+        validaTotal(pago);
     }
 }
 
 
 ///////////////////////////////////////////////////////////// REVISAR LAS SUMAS!!!!
+banderaTotal = false;
 function validaTotal(pago){
 	suma=0;
 	montoTotal = parseFloat($("#montoTotal"+pago).val());
+        banderaTotal = false;
 	$("#controlDispersion"+pago).find(".montoDispersion").each(function(index, element) {
             if(isNaN($(this).val()) || $(this).val() == "")
                 $(this).val(0);
@@ -449,17 +480,23 @@ function validaTotal(pago){
 	if(suma > montoTotal){
 		$("#error"+pago).addClass("ui-state-error ui-corner-all");
 		$("#error"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> Se superó el monto del pago!");
+                $("#controlDispersion"+pago).find(".montoDispersion").each(function(index3){
+                    $(this).css("background-color","#FF6C70");
+                });
 		return false;	
 	}
 	else{
 		$("#error"+pago).removeClass("ui-state-error ui-corner-all");
 		$("#error"+pago).html("");
+                $("#controlDispersion"+pago).find(".montoDispersion").each(function(index3){
+                    $(this).css("background-color","#FFF");
+                });
 		return true;
 	}
 		
 		
 }
-
+  
 function validaTotalDispersion(pago,dispersion){
     montoTotalSec = parseFloat($("#MonDspPag_"+pago+"_"+dispersion+"_0_").val());
     sumaSec = 0.00;
@@ -473,16 +510,21 @@ function validaTotalDispersion(pago,dispersion){
         $("#divDispersion"+pago+dispersion).find(".montoSecundaria").each(function(index2){
             $(this).css("background-color","#FEE9EC");
         });
-        $("#errorSec"+pago).addClass("ui-state-error ui-corner-all");
-	$("#errorSec"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> ¡Se superó el monto de la dispersion!");
+        if(!banderaTotal){
+            $("#errorSec"+pago).addClass("ui-state-error ui-corner-all");
+            $("#errorSec"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> ¡Se superó el monto de la dispersion!");
+        }
+        banderaTotal = true;
 	return false;
     }else{
+        if(!banderaTotal){
+            $("#errorSec"+pago).removeClass("ui-state-error ui-corner-all");
+            $("#errorSec"+pago).html(""); 
+        }
         $("#divDispersion"+pago+dispersion).find(".montoSecundaria").each(function(index3){
             $(this).css("background-color","#FFF");
         });
-        $("#errorSec"+pago).removeClass("ui-state-error ui-corner-all");
-        $("#errorSec"+pago).html("");
-        return true; 
+        return true;
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -495,85 +537,9 @@ Array.prototype.getLength = function(){
 var cveaux;
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 function guardarDispersiones(pago,idpago){
-	
-	disptotales = arrayPosiciones[pago].getLength();
-	$("#form"+ pago+" #totdisp").val(disptotales);
-	$("#form"+ pago+" #IdEntPag").val(idpago);
-	$("#form"+ pago+" #pago").val(pago);
-	
-		document.getElementById("form"+pago).submit();
-		
-	/*
-		for(i=1;i<=disptotales;i++){
-			
-				for(j=0;j<=arrayPosiciones[pago][i];j++){
-					
-					var valor = (document.getElementById("cve_"+pago+"_"+i+"_"+j+"_").value);
-					
-					cveaux = valor.split("_");
-						//alert(cveaux[]);
-						if(cveaux[2]==0){
-							alert("if");	
-								var IdEntPoE = document.getElementById("IdEntPoE_"+pago+"_"+i+"_"+j+"_").value;
-								var FecMovDspPag = document.getElementById("FecMovDspPag_"+pago+"_"+i+"_"+j+"_").value;
-								var IdOrgPag = document.getElementById("IdOrgPag_"+pago+"_"+i+"_"+j+"_").value;
-								var IdEntBan = document.getElementById("IdEntBan_"+pago+"_"+i+"_"+j+"_").value;
-								var IdEntCue = document.getElementById("IdEntCue_"+pago+"_"+i+"_"+j+"_").value;
-								var MonDspPag = document.getElementById("MonDspPag_"+pago+"_"+i+"_"+j+"_").value;
-								var IdDesPag = document.getElementById("IdDesPag_"+pago+"_"+i+"_"+j+"_").value;
-								
-								//alert(IdEntPoE+FecMovDspPag+IdOrgPag+IdEntBan+IdEntCue+MonDspPag+IdDesPag)
-																
-								//var url = "../ingresos/registraDispersion.php";
-								
-								//$.post(url,{IdEntPag:idpago,IdEntPoE:IdEntPoE,FecMovDspPag:FecMovDspPag,IdOrgPag:IdOrgPag,IdEntBan:IdEntBan,IdEntCue:IdEntCue,MonDspPag:MonDspPag,IdDesPag:IdDesPag},function(responseText){
-									//padre=responseText;
-									//alert(padre);
-									//})
-									
-									 $.ajax({url: "../ingresos/registraDispersion.php",
-									  type: 'POST',
-									  async: false,
-									  data: { IdEntPag:idpago,IdEntPoE:IdEntPoE,FecMovDspPag:FecMovDspPag,IdOrgPag:IdOrgPag,IdEntBan:IdEntBan,IdEntCue:IdEntCue,MonDspPag:MonDspPag,IdDesPag:IdDesPag },
-									  success:function(responseText){
-										  alert(responseText);
-									  }
-									});
-									
-									
-									
-									
-									
-									
-								
-								
-						}
-						else{
-							if(document.getElementById("FecMovDspPag_"+pago+"_"+i+"_"+j+"_").value==''){
-								break;
-							}
-							else{
-								
-								alert("else");
-								var IdEntPoE = document.getElementById("IdEntPoE_"+pago+"_"+i+"_"+j+"_").value;
-								var FecMovDspPag = document.getElementById("FecMovDspPag_"+pago+"_"+i+"_"+j+"_").value;
-								var IdOrgPag = document.getElementById("IdOrgPag_"+pago+"_"+i+"_"+j+"_").value;
-								var IdEntBan = document.getElementById("IdEntBan_"+pago+"_"+i+"_"+j+"_").value;
-								var IdEntCue = document.getElementById("IdEntCue_"+pago+"_"+i+"_"+j+"_").value;
-								var MonDspPag = document.getElementById("MonDspPag_"+pago+"_"+i+"_"+j+"_").value;
-								var IdDesPag = document.getElementById("IdDesPag_"+pago+"_"+i+"_"+j+"_").value;	
-								
-								var url = "../ingresos/registraDispersionSec.php";
-								$.post(url,{padre:padre,IdEntPag:idpago,IdEntPoE:IdEntPoE,FecMovDspPag:FecMovDspPag,IdOrgPag:IdOrgPag,IdEntBan:IdEntBan,IdEntCue:IdEntCue,MonDspPag:MonDspPag,IdDesPag:IdDesPag},function(responseText){	
-								alert(responseText);						
-								});
-								
-								}
-																				
-						}
-					
-				}
-			
-		}
-		*/
+    url="registraDispersion.php";
+    nombreForm = "#form"+pago;
+    $.post(url,$(nombreForm).serialize(),function(data){
+        alert(data);
+    });
 }

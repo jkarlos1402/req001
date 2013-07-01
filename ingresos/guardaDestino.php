@@ -8,4 +8,4 @@ $query = "INSERT INTO tbldespag (DscDesPag) values ('$destinonuevo')";
 $res = mysql_query($query,$conexion);
 
 
-echo "Nuevo destino registrado";
+echo mysql_insert_id();

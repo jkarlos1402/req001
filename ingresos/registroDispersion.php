@@ -109,10 +109,13 @@ while($renglon = mysql_fetch_array($resultado)){
 											'.$renglon['CtoEntPag'].'
 										</td>
 										<td>
-											'.$renglon['FecEntPagPrg'].'
+											'.date("d-m-Y",strtotime($renglon['FecEntPagPrg'])).'
 										</td>
 										<td>
-											'.$renglon['FecEntPagRal'].'
+											';
+                                                                              if($renglon['FecEntPagRal']!= "")
+                                                                                echo date("d-m-Y",  strtotime($renglon['FecEntPagRal']));
+                                                                              echo '
 										</td>
 										<td>
 											<input type="text" value="'.$monto.'" id="montoTotal'.$i.'" name="montoTotal'.$i.'" disabled="disabled">
@@ -167,10 +170,7 @@ while($renglon = mysql_fetch_array($resultado)){
 											<td>
 												Opciones
 											</td>
-										</tr></table>';
-										
-
-
+										</tr></table>';										
 							echo		'
 										<div id="divDispersion'.$i.$h.'">
 										<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
@@ -227,7 +227,7 @@ while($renglon = mysql_fetch_array($resultado)){
 														FROM tbldespag;
 														";
 												$resultadodes=mysql_query("$consultades",$conexion) or die (mysql_error());
-												echo '<select name="IdDesPag_'.$i.'_0[]" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaDestino(this.value,'.$i.','.$h.','.$j.');">';
+												echo '<select name="IdDesPag_'.$i.'_0[]" class="destinoDis" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaDestino(this.value,'.$i.','.$h.','.$j.');">';
 												while($renglon = mysql_fetch_array($resultadodes))
 													{
 														echo '<option value="'.$renglon['IdDesPag'].'">'.$renglon['DscDesPag'].'</option>';
@@ -256,7 +256,7 @@ while($renglon = mysql_fetch_array($resultado)){
 														";
 												//************************************		
 												$resultadopoe=mysql_query("$consultapoe",$conexion) or die (mysql_error());
-												echo '<select name="IdEntPoE_'.$i.'_'.$j.'[]" id="IdEntPoE_'.$i.'_'.$h.'_'.$j.'_"  onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');" >
+												echo '<select name="IdEntPoE_'.$i.'_'.$j.'[]" disabled="disabled" id="IdEntPoE_'.$i.'_'.$h.'_'.$j.'_"  onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');" >
 														<option value="-1">Selecciona</option>';
 												while($renglon = mysql_fetch_array($resultadopoe))
 													{
@@ -265,7 +265,7 @@ while($renglon = mysql_fetch_array($resultado)){
 												echo '</select>';
 									echo	'</td>
 											<td width="100px"> 
-												<input type="fecha" id="FecMovDspPag_'.$i.'_'.$h.'_'.$j.'_" name="FecMovDspPag_'.$i.'_'.$j.'[]" placeholder="Ingrese fecha" size="11">
+												<input type="fecha" disabled="disabled" id="FecMovDspPag_'.$i.'_'.$h.'_'.$j.'_" name="FecMovDspPag_'.$i.'_'.$j.'[]" placeholder="Ingrese fecha" size="11">
 											</td>
 											<td width="160px">';
 												//************************************
@@ -274,7 +274,7 @@ while($renglon = mysql_fetch_array($resultado)){
 														";
 												//*************************************		
 												$resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
-												echo '<select name="IdOrgPag_'.$i.'_'.$j.'[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
+												echo '<select name="IdOrgPag_'.$i.'_'.$j.'[]" disabled="disabled" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
 																<option></option>';
 												while($renglon = mysql_fetch_array($resultadoorig))
 													{
@@ -290,7 +290,7 @@ while($renglon = mysql_fetch_array($resultado)){
 											<td id="datoscuenta'.$i.$h.$j.'" width="150px">
 											</td>
 											<td width="100px">
-												$<input type="text" class="montoSecundaria" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$j.'[]" placeholder="Ingrese Monto" onBlur="validaTotalDispersion('.$i.','.$h.');" size="11"/>
+												$<input type="text" class="montoSecundaria" disabled="disabled" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$j.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11"/>
 											</td>
 											<td width="220px">';
 											//***************************************************************
@@ -298,9 +298,9 @@ while($renglon = mysql_fetch_array($resultado)){
 														FROM tbldespag;
 														";
 												$resultadodes=mysql_query("$consultades",$conexion) or die (mysql_error());
-												echo '<select name="IdDesPag_'.$i.'_'.$j.'[]" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" >';
+												echo '<select name="IdDesPag_'.$i.'_'.$j.'[]" disabled="disabled" class="destinoSec" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" >';
 												while($renglon = mysql_fetch_array($resultadodes)){
-                                                                                                    if($renglon[DscDesPag] !== "TRANSFERIRLOS A UNA CUENTA" && $renglon[DscDesPag] !== "REGRESAR EFECTIVO"){
+                                                                                                    if($renglon['DscDesPag'] !== "TRANSFERIRLOS A UNA CUENTA" && $renglon['DscDesPag'] !== "REGRESAR EFECTIVO"){
                                                                                                         echo '<option value="'.$renglon['IdDesPag'].'">'.$renglon['DscDesPag'].'</option>';
                                                                                                     }
 												}
@@ -314,7 +314,7 @@ while($renglon = mysql_fetch_array($resultado)){
 											</td>
 										</tr>
 										</table>
-										<input type="hidden" class="controlDispersion" id="numeroDeDispersion'.$i.$h.'" id="numeroDeDispersion'.$i.'" value="'.$h.'"/>
+										<input type="hidden" class="controlDispersion" id="numeroDeDispersion'.$i.$h.'" name="numeroDeDispersion[]" value="'.$h.'"/>
 										<input type="hidden" id="numeroDeDispersionesSec'.$i.$h.'" value="0"/>
 										</div>
 										<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
@@ -332,8 +332,8 @@ while($renglon = mysql_fetch_array($resultado)){
 									</table>
 									';							
 							echo '</div>
-								  <input type="hidden" id="numerodePago'.$i.'" name="numerodePago'.$i.'" value="'.$i.'"/>
-								  <input type="hidden" id="IdEntPag'.$i.'" name="IdEntPag'.$i.'" value="'.$Idpago[$i].'"/>
+								  <input type="hidden" id="numerodePago'.$i.'" name="numerodePago" value="'.$i.'"/>
+								  <input type="hidden" id="IdEntPag'.$i.'" name="IdEntPag" value="'.$Idpago[$i].'"/>
 								</form>
 							</div> 
 									';	
@@ -352,7 +352,7 @@ while($renglon = mysql_fetch_array($resultado)){
 <div id="dialog" title="Agregar Categoria">
 
 <input type="text" name="nuevoorg" id="nuevoorg" size="30" placeholder="Ingresa el nuevo origen"/>
-<input type="button" value="Guardar" onclick="guardarOrigen()" />
+<input type="button" value="Guardar" onclick="guardarOrigen();" />
 	<div id="mensaje">
 	</div>
 
@@ -361,6 +361,8 @@ while($renglon = mysql_fetch_array($resultado)){
 
 <input type="text" name="nuevodest" id="nuevodest" size="30" placeholder="Ingresa el nuevo destino"/>
 <input type="button" value="Guardar" onclick="guardarDestino()" />
+<input type="hidden" value="" id="pagoPadre"/>
+<input type="hidden" value="" id="dispersionPago"/>
 	<div id="mensaje2">
 	</div>
 
