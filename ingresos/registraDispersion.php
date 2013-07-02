@@ -1,17 +1,25 @@
 <?php
 include("../conexion.php");
 
-$IdEntPago = $_POST['IdEntPag'];
-$numeroPago = $_POST['numerodePago'];
-$totalDispersiones = count($_POST['IdEntPoE_'.$numeroPago.'_0']);
-$totalDispersionesSecundarias = Array();
+$IdEntPago = $_POST['IdEntPag'];//id del pago a registrar dispersiones
+$numeroPago = $_POST['numerodePago'];//indice de pago a registratr dispersiones
+$totalDispersiones = count($_POST['IdEntPoE_'.$numeroPago.'_0']);//numero de dispersiones en el pago
+$totalDispersionesSecundarias = Array();//numero de dispersiones secundarias por cada dispersion
 foreach($_POST['numeroDeDispersion'] as $indice){
     if(isset($_POST['IdEntPoE_'.$numeroPago.'_'.$indice]))
         $totalDispersionesSecundarias[] = count($_POST['IdEntPoE_'.$numeroPago.'_'.$indice]);
     else
         $totalDispersionesSecundarias[]=0;
 }
-$query = "insert into tbl"
+for($i = 0; $i < $totalDispersiones; $i++){
+    $query = "insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,SalDspPag,IdEntCue) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_0'][$i]))."',".$_POST['MonDspPag_'.$numeroPago.'_0'][$i].",".$_POST['IdOrgPag_'.$numeroPago.'_0'][$i].",".$_POST['IdDesPag_'.$numeroPago.'_0'][$i].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_0'][$i].",".$_POST['saldoDispersion'][$i].",".$_POST['IdEntCue_'.$numeroPago.'_0'][$i].")";
+    echo $query."<br/>";
+    for($j = 0;$j < $totalDispersionesSecundarias[$i];$j++){
+        $query="insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,IdEntCue,PadDspPag) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i]))."',".$_POST['MonDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$_POST['IdOrgPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$_POST['IdDesPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$_POST['IdEntCue_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",100)";
+        echo $query."<br/>";
+    }
+    
+}
 //echo "total de dispersiones: ".count($_POST[])
 
 /*$a=1;

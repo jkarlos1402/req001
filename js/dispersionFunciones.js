@@ -524,6 +524,7 @@ function validaTotalDispersion(pago,dispersion){
         $("#divDispersion"+pago+dispersion).find(".montoSecundaria").each(function(index3){
             $(this).css("background-color","#FFF");
         });
+        $("#MonDspPag_"+pago+"_"+dispersion+"_0_").next("input").val((montoTotalSec-sumaSec).toFixed(2));
         return true;
     }
 }
@@ -539,7 +540,21 @@ var cveaux;
 function guardarDispersiones(pago,idpago){
     url="registraDispersion.php";
     nombreForm = "#form"+pago;
-    $.post(url,$(nombreForm).serialize(),function(data){
-        alert(data);
+    if(validaCamposDispersion(pago)){
+        $.post(url,$(nombreForm).serialize(),function(data){
+            $("#prueba").html(data);
+        });
+    }
+}
+
+function validaCamposDispersion(pago){
+    $("#controlDispersion"+pago).find("select").each(function(index){
+        if($(this).prop("selectedIndex") === 0 && !$(this).attr("disabled")){
+            alert("entro");
+            $(this).css({'background-color':'#FFB7B7'}).focus();
+            return false;
+        }else{
+            $(this).css({'background-color':'#FFF'});
+        }
     });
 }
