@@ -130,10 +130,8 @@ while($renglon = mysql_fetch_array($resultado)){
 								<br />';
 								$h=1;
 								$j=0;	
-															
-								
-								
-							echo '<div id="controlDispersion'.$i.'" style="visibility:hidden; display:none;">
+                                                                
+                                                            echo '<div id="controlDispersion'.$i.'" style="visibility:hidden; display:none;">
 									<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
 									<tr>
 											<td colspan="9">
@@ -170,9 +168,66 @@ while($renglon = mysql_fetch_array($resultado)){
 											<td>
 												Opciones
 											</td>
-										</tr></table>';										
-							echo		'
-										<div id="divDispersion'.$i.$h.'">
+										</tr></table>';
+                                                                        $query = "select * from tbldsppag where IdEntPag = $Idpago[$i]";
+                                                                        $dispersiones = mysql_query($query);
+                                                                        $numeroRegistrados = mysql_num_rows($dispersiones);
+                                                                        $h = 0;
+                                                                        if($numeroRegistrados > 0){
+                                                                        /////////// AQUI COMIENZAN LOS QUE YA ESTAN EN LA BASE DE DATOS
+                                                                        while ($dispersion = mysql_fetch_array($dispersiones)) {
+                                                                            if($dispersion['PadDspPag']==NULL){
+                                                                            echo'<div id="divDispersion'.$i.$h.'">
+										<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
+										<tr id="dispersion'.$i.'" bgcolor="01DF01">	
+											<td width="50px">
+											'.$i.'.'.($h+1).'
+											</td>
+											<td width="220px">';
+                                                                                        //************************************POE agregado en base
+                                                                                        $consultapoe = "SELECT * 
+                                                                                                        FROM tblentpoe where EstEntPoE = 1;
+                                                                                                        ";
+											//************************************	
+                                                                                        $resultadopoe=mysql_query("$consultapoe",$conexion) or die (mysql_error());
+                                                                                        echo '<select name="IdEntPoE_'.$i.'_0[]" id="IdEntPoE_'.$i.'_'.$h.'_'.$j.'_" onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');">
+                                                                                                        <option value="-1">Selecciona</option>';
+                                                                                        while($renglon = mysql_fetch_array($resultadopoe)){
+                                                                                            echo '<option value="'.$renglon['IdEntPoE'].'"';
+                                                                                            if($dispersion['IdEntPoE'] === $renglon['IdEntPoE'])
+                                                                                                echo 'selected="selected"';
+                                                                                            echo'>'.$renglon['NomEntPoE'].'</option>';
+                                                                                        }
+                                                                                        echo '</select>';
+                                                                                        echo'</td>
+                                                                                            <td width="100px">
+												<input type="fecha" id="FecMovDspPag_'.$i.'_'.$h.'_'.$j.'_" name="FecMovDspPag_'.$i.'_0[]" placeholder="Ingrese fecha" size="11" value="'.date('d-m-Y',strtotime($dispersion['FecMovDspPag'])).'"/>
+                                                                                            </td>
+                                                                                            <td width="160px">';
+                                                                                        //************************************Origen pago ya en base
+												$consultaorig = "SELECT * 
+														FROM tblorgpag;
+														";
+												//*************************************		
+												$resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
+												echo '<select name="IdOrgPag_'.$i.'_0[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');">
+                                                                                                        <option></option>';
+												while($renglon = mysql_fetch_array($resultadoorig))
+													{
+														echo '<option value="'.$renglon['IdOrgPag'].'"';
+                                                                                                                if($dispersion['IdOrgPag']=== $renglon['IdOrgPag'])
+                                                                                                                    echo 'selected="selected"';
+                                                                                                                echo'>'.$renglon['DscOrgPag'].'</option>';
+													}
+												echo '
+																<option value="otros">OTRO...</option>
+													  </select></td></tr></table></div>';
+                                                                            $h++;
+                                                                            }
+                                                                        }
+                                                                        /////////// AQUI TERMINAN LOS QUE YA ESTAN EN LA BASE DE DATOS
+                                                                        }else{
+                                                                            echo '<div id="divDispersion'.$i.$h.'">
 										<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
 										<tr id="dispersion'.$i.'" bgcolor="01DF01">	
 											<td width="50px">
@@ -320,8 +375,9 @@ while($renglon = mysql_fetch_array($resultado)){
 										</table>
 										<input type="hidden" class="controlDispersion" id="numeroDeDispersion'.$i.$h.'" name="numeroDeDispersion[]" value="'.$h.'"/>
 										<input type="hidden" id="numeroDeDispersionesSec'.$i.$h.'" value="0"/>
-										</div>
-										<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
+										</div>';
+                                                                        }
+										echo '<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
 										<tr>
 											<td colspan="7">
 											

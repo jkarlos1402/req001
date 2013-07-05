@@ -18,7 +18,8 @@ if (mysql_num_rows($res) == 0) //Si no hay registros envia un aviso
 	}
 	else // Si si hay registros imprime los resultados
 	{
-$perfiles = '<select name="IdEntCue_'.$padre.'_'.$hijo.'[]" id="IdEntCue_'.$padre.'_'.$hijo.'_'.$hijosec.'_">';
+$perfiles = '<select name="IdEntCue_'.$padre.'_'.$hijo.'[]" id="IdEntCue_'.$padre.'_'.$hijo.'_'.$hijosec.'_">
+             <option></option>';
 while($renglon = mysql_fetch_array($res)){
 	$perfiles = $perfiles.'<option value="'.$renglon['IdEntCue'].'">'.$renglon['NumEntCue'].'</option>';
 }

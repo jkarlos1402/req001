@@ -1,6 +1,5 @@
 <?php
 include("../conexion.php");
-
 $IdEntPago = $_POST['IdEntPag'];//id del pago a registrar dispersiones
 $numeroPago = $_POST['numerodePago'];//indice de pago a registratr dispersiones
 $totalDispersiones = count($_POST['IdEntPoE_'.$numeroPago.'_0']);//numero de dispersiones en el pago
@@ -12,15 +11,25 @@ foreach($_POST['numeroDeDispersion'] as $indice){
         $totalDispersionesSecundarias[]=0;
 }
 for($i = 0; $i < $totalDispersiones; $i++){
-    $query = "insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,SalDspPag,IdEntCue) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_0'][$i]))."',".$_POST['MonDspPag_'.$numeroPago.'_0'][$i].",".$_POST['IdOrgPag_'.$numeroPago.'_0'][$i].",".$_POST['IdDesPag_'.$numeroPago.'_0'][$i].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_0'][$i].",".$_POST['saldoDispersion'][$i].",".$_POST['IdEntCue_'.$numeroPago.'_0'][$i].")";
-    echo $query."<br/>";
+    if($_POST['IdEntCue_'.$numeroPago.'_0'][$i]!== "-1"){
+        $query = "insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,SalDspPag,IdEntCue) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_0'][$i]))."',".$_POST['MonDspPag_'.$numeroPago.'_0'][$i].",".$_POST['IdOrgPag_'.$numeroPago.'_0'][$i].",".$_POST['IdDesPag_'.$numeroPago.'_0'][$i].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_0'][$i].",".$_POST['saldoDispersion'][$i].",".$_POST['IdEntCue_'.$numeroPago.'_0'][$i].")";
+    }else{
+        $query = "insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,SalDspPag) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_0'][$i]))."',".$_POST['MonDspPag_'.$numeroPago.'_0'][$i].",".$_POST['IdOrgPag_'.$numeroPago.'_0'][$i].",".$_POST['IdDesPag_'.$numeroPago.'_0'][$i].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_0'][$i].",".$_POST['saldoDispersion'][$i].")";
+    }
+    $res = mysql_query($query);
+    $idPadre = mysql_insert_id();
     for($j = 0;$j < $totalDispersionesSecundarias[$i];$j++){
-        $query="insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,IdEntCue,PadDspPag) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i]))."',".$_POST['MonDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$_POST['IdOrgPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$_POST['IdDesPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",".$_POST['IdEntCue_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$i].",100)";
-        echo $query."<br/>";
+        if($_POST['IdEntCue_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j] !=="-1"){
+            $query="insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,IdEntCue,PadDspPag) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j]))."',".$_POST['MonDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['IdOrgPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['IdDesPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['IdEntCue_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$idPadre.")";
+        }else{
+            $query="insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,PadDspPag) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j]))."',".$_POST['MonDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['IdOrgPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['IdDesPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$idPadre.")";
+            echo $query;
+        }
+        $res = mysql_query($query);
     }
     
 }
-//echo "total de dispersiones: ".count($_POST[])
+echo "HECHO!!!";
 
 /*$a=1;
 $b=1;

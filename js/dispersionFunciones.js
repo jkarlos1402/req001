@@ -133,10 +133,10 @@ function agregaOrigen(valor,pago,dispersion,secundaria){
 	}else{
 		if(secundaria == 0){
 			$("#datosbanco"+pago+dispersion).html("");
-			$("#datoscuenta"+pago+dispersion).html("");
+			$("#datoscuenta"+pago+dispersion).html("<input type='hidden' name='IdEntCue_"+pago+"_0[]' value='-1'/>");
 		}else{
 			$("#datosbanco"+pago+dispersion+secundaria).html("");
-			$("#datoscuenta"+pago+dispersion+secundaria).html("");
+			$("#datoscuenta"+pago+dispersion+secundaria).html("<input type='hidden' name='IdEntCue_"+pago+"_"+dispersion+"[]' value='-1'/>");
 		}
 	}
 }
@@ -548,13 +548,15 @@ function guardarDispersiones(pago,idpago){
 }
 
 function validaCamposDispersion(pago){
+    alerta = true;
     $("#controlDispersion"+pago).find("select").each(function(index){
         if($(this).prop("selectedIndex") === 0 && !$(this).attr("disabled")){
-            alert("entro");
             $(this).css({'background-color':'#FFB7B7'}).focus();
+            alerta = false;
             return false;
         }else{
             $(this).css({'background-color':'#FFF'});
         }
     });
+    return alerta;
 }
