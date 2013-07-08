@@ -12,11 +12,11 @@ function habilitaDispersion(aux){
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-function consultaBanco(IdEntPoE,padre,hijo){
+function consultaBanco(IdEntPoE,padre,hijo,IdEntCue){
 		
 	var url = "../ingresos/banco.php";
 	$("#datoscuenta").html("");
-	$.post(url,{IdEntPoE:IdEntPoE,padre:padre,hijo:hijo},function(responseText){
+	$.post(url,{IdEntPoE:IdEntPoE,padre:padre,hijo:hijo,IdEntCue:IdEntCue},function(responseText){
 		$("#datosbanco"+padre+""+hijo).html(responseText);
 	});
 }
@@ -32,10 +32,10 @@ function consultaBancoSec(IdEntPoE,padre,hijo,hijosec){
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
-function consultaCuenta(IdEntPoE,IdEntBan,padre,hijo){
+function consultaCuenta(IdEntPoE,IdEntBan,padre,hijo,IdEntCue){
 	if($(IdEntBan).val() != -1){
 		var url = "../ingresos/cuenta.php";
-		$.post(url,{IdEntPoE:IdEntPoE,IdEntBan:IdEntBan.value,padre:padre,hijo:hijo},function(responseText){
+		$.post(url,{IdEntPoE:IdEntPoE,IdEntBan:IdEntBan.value,padre:padre,hijo:hijo,IdEntCue:IdEntCue},function(responseText){
 			$("#datoscuenta"+padre+""+hijo).html(responseText);
 		});
 	}else{
@@ -127,7 +127,7 @@ function agregaOrigen(valor,pago,dispersion,secundaria){
 	}
 	if($("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_ :selected").text() == "DEPOSITO" || $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_ :selected").text() == "TRANSFERENCIA"){
 		if(secundaria == 0)
-			consultaBanco($("#IdEntPoE_"+pago+"_"+dispersion+"_"+secundaria+"_").val(),pago,dispersion);
+			consultaBanco($("#IdEntPoE_"+pago+"_"+dispersion+"_"+secundaria+"_").val(),pago,dispersion,-1);
 		else
 			consultaBancoSec($("#IdEntPoE_"+pago+"_"+dispersion+"_"+secundaria+"_").val(),pago,dispersion,secundaria);
 	}else{

@@ -172,7 +172,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                                                         $query = "select * from tbldsppag where IdEntPag = $Idpago[$i]";
                                                                         $dispersiones = mysql_query($query);
                                                                         $numeroRegistrados = mysql_num_rows($dispersiones);
-                                                                        $h = 0;
+                                                                        $h = 1;
                                                                         if($numeroRegistrados > 0){
                                                                         /////////// AQUI COMIENZAN LOS QUE YA ESTAN EN LA BASE DE DATOS
                                                                         while ($dispersion = mysql_fetch_array($dispersiones)) {
@@ -181,7 +181,7 @@ while($renglon = mysql_fetch_array($resultado)){
 										<table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
 										<tr id="dispersion'.$i.'" bgcolor="01DF01">	
 											<td width="50px">
-											'.$i.'.'.($h+1).'
+											'.$i.'.'.$h.'
 											</td>
 											<td width="220px">';
                                                                                         //************************************POE agregado en base
@@ -221,7 +221,21 @@ while($renglon = mysql_fetch_array($resultado)){
 													}
 												echo '
 																<option value="otros">OTRO...</option>
-													  </select></td></tr></table></div>';
+													  </select></td>';
+                                                                                                if($dispersion['IdEntCue']!= NULL){
+                                                                                                    echo '<td width="150px" id="datosbanco'.$i.$h.'">
+                                                                                                            <script type="text/javascript">consultaBanco('.$dispersion['IdEntPoE'].','.$i.','.$h.','.$dispersion['IdEntCue'].');</script>
+                                                                                                          </td>
+                                                                                                          <td width="150px" id="datoscuenta'.$i.$h.'">
+                                                                                                              <script type="text/javascript">consultaCuenta('.$dispersion['IdEntPoE'].',this,'.$i.','.$h.','.$dispersion['IdEntCue'].');</script>
+                                                                                                          </td>';
+                                                                                                }else{
+                                                                                                    echo '<td width="150px" id="datosbanco'.$i.$h.'"></td>
+                                                                                                          <td width="150px" id="datoscuenta'.$i.$h.'">
+                                                                                                              <input type="hidden" name="IdEntCue_'.$i.'_0[]" value="-1">
+                                                                                                          </td>';
+                                                                                                }
+                                                                                                echo '</tr></table></div>';
                                                                             $h++;
                                                                             }
                                                                         }

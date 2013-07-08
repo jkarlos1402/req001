@@ -4,6 +4,17 @@ include("../conexion.php");
 $IdEntPoE = $_POST['IdEntPoE'];
 $padre = $_POST['padre'];
 $hijo = $_POST['hijo'];
+$IdEntCue = $_POST['IdEntCue'];
+if($IdEntCue != -1){
+    $query = "select IdEntSuc from tblentcue where IdEntCue = $IdEntCue limit 1";
+    $res = mysql_query($query);
+    $sucursal = mysql_fetch_array($res);
+    $query = "select IdEntBan from tblentsuc where IdEntSuc =".$sucursal['IdEntSuc']." limit 1";
+    $res = mysql_query($query);
+    $IdEntBan = mysql_fetch_array($res);
+}else{
+    $IdEntBan['IdEntBan'] = -1;
+}
 $query = "select tblentban.IdEntBan, tblentban.NomEntBan
 			from tblentban, tblentsuc, tblentcue
 			where tblentban.IdEntBan = tblentsuc.IdEntBan AND 
@@ -20,7 +31,11 @@ if (mysql_num_rows($res) == 0) //Si no hay registros envia un aviso
 $perfiles = '<select name="IdEntBan_'.$padre.'_0[]" id="IdEntBan_'.$padre.'_'.$hijo.'_0_" onchange="consultaCuenta('.$IdEntPoE.',this,'.$padre.','.$hijo.');">
 				<option value="-1">Selecciona</option>';
 while($renglon = mysql_fetch_array($res)){
-	$perfiles = $perfiles.'<option value="'.$renglon['IdEntBan'].'">'.$renglon['NomEntBan'].'</option>';
+	$perfiles = $perfiles.'<option value="'.$renglon['IdEntBan'].'"';
+        if($IdEntBan['IdEntBan'] == $renglon['IdEntBan']){
+            $perfiles = $perfiles." selected='selected'";
+        }
+        $perfiles = $perfiles.'>'.$renglon['NomEntBan'].'</option>';
 }
 $perfiles = $perfiles."</select>";
 	}
