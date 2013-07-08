@@ -15,7 +15,7 @@ if (mysql_num_rows($res) == 0)
 	}
 	else
 	{
-$perfiles = '<select name="PoE" id="PoE" style="width:550px;" onchange="mostrarInfoPoE(this.value);" class="ui-corner-all"><option value="0">Selecciona un cliente</option>';
+$perfiles = '<select name="PoE" id="PoE" style="width:550px;" onchange="mostrarInfoPoE(this.value);" class="ui-corner-all"><option value="0">Selecciona una persona o empresa</option>';
 while($renglon = mysql_fetch_array($res)){
 	$perfiles = $perfiles.'<option value="'.$renglon['IdEntPoE'].'">'.$renglon['NomEntPoE'].'</option>';
 }
