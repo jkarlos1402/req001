@@ -14,16 +14,8 @@ echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link href="../vista/css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">';
 
 //************************************
-$consulta="SELECT * FROM tblentpry, tblentcli WHERE tblentcli.IdEntCli = tblentpry.IdEntCli and tblentpry.IdEntPry=$IdEntPry";
-$resultado=mysql_query("$consulta",$conexion) or die (mysql_error());
-
-//************************************
-$consultaorig = "SELECT * FROM tblorgpag";
-$resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
-
-//************************************
-$consultaban = "SELECT * FROM tblentban";
-$resultadoban=mysql_query("$consultaban",$conexion) or die (mysql_error());
+$consulta="SELECT NomEntCli,NomEntPry FROM tblentpry, tblentcli WHERE tblentcli.IdEntCli = tblentpry.IdEntCli and tblentpry.IdEntPry=$IdEntPry";
+$resultado=mysql_query($consulta) or die (mysql_error());
 
 echo '<article align="center" class="encabezado">REGISTRO Y DISPERSION DE PAGOS</article>
 <div align="center">';
@@ -51,8 +43,8 @@ while($renglon = mysql_fetch_array($resultado)){
 	for ($i=1;$i<$renglones;$i++){	
             if(isset($Idpago[$i])){
 		$r++;
-		$consulta="SELECT * FROM tblentpag WHERE IdEntPag =$Idpago[$i]";
-		$resultado=mysql_query("$consulta",$conexion) or die (mysql_error());
+		$consulta="SELECT MonEntPagRal,MonEntPagPrg,CtoEntPag,FecEntPagPrg,FecEntPagRal FROM tblentpag WHERE IdEntPag =$Idpago[$i]";
+		$resultado=mysql_query($consulta) or die (mysql_error());
 		while($renglon = mysql_fetch_array($resultado)){
                     if($renglon['FecEntPagRal']!=null){
 			$monto =$renglon['MonEntPagRal'];
@@ -149,7 +141,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                 </td>
                             </tr>
                         </table>';
-                        $query = "select * from tbldsppag where IdEntPag = $Idpago[$i] and PadDspPag is NULL";
+                        $query = "select PadDspPag,IdDspPag,IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,SalDspPag,IdDesPag from tbldsppag where IdEntPag = $Idpago[$i] and PadDspPag is NULL";
                         $dispersiones = mysql_query($query);
                         $numeroRegistrados = mysql_num_rows($dispersiones);
                         $h = 1;
@@ -166,9 +158,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="220px">';
                                                 //************************************POE agregado en base
-                                                $consultapoe = "SELECT * FROM tblentpoe where EstEntPoE = 1";
+                                                $consultapoe = "SELECT IdEntPoE,NomEntPoE FROM tblentpoe where EstEntPoE = 1";
                                                 //************************************	
-                                                $resultadopoe=mysql_query("$consultapoe",$conexion) or die (mysql_error());
+                                                $resultadopoe=mysql_query($consultapoe) or die (mysql_error());
                                                 echo '<select name="IdEntPoE_'.$i.'_0[]" id="IdEntPoE_'.$i.'_'.$h.'_0_" onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');">
                                                                 <option value="-1">Selecciona</option>';
                                                 while($renglon = mysql_fetch_array($resultadopoe)){
@@ -184,7 +176,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="160px">';
                                                 //************************************Origen pago ya en base
-                                                $consultaorig = "SELECT * FROM tblorgpag";
+                                                $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                                 //*************************************		
                                                 $resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
                                                 echo '<select name="IdOrgPag_'.$i.'_0[]" id="IdOrgPag_'.$i.'_'.$h.'_0_" onchange="agregaOrigen(this,'.$i.','.$h.',0);">
@@ -219,10 +211,8 @@ while($renglon = mysql_fetch_array($resultado)){
                                                 </td>
                                                 <td width="220px">';
                                             //***************************************************************En base de datos
-                                            $consultades = "SELECT * 
-                                                            FROM tbldespag;
-                                                            ";
-                                            $resultadodes=mysql_query("$consultades",$conexion) or die (mysql_error());
+                                            $consultades = "SELECT IdDesPag,DscDesPag FROM tbldespag";
+                                            $resultadodes=mysql_query($consultades) or die (mysql_error());
                                                 echo '<select name="IdDesPag_'.$i.'_0[]" class="destinoDis" id="IdDesPag_'.$i.'_'.$h.'_0_" onchange="agregaDestino(this.value,'.$i.','.$h.','.$j.');">
                                                         <option value=""></option>';
                                                 while($renglon = mysql_fetch_array($resultadodes)){
@@ -245,7 +235,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                                     }
                                             echo '</td>
                                                 </tr>';
-                                            $query = "select * from tbldsppag where PadDspPag = ".$dispersion['IdDspPag'];
+                                            $query = "select IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,IdDesPag from tbldsppag where PadDspPag = ".$dispersion['IdDspPag'];
                                             $dispersionesSecundarias = mysql_query($query);
                                             $numeroDispersionesSec = mysql_num_rows($dispersionesSecundarias);
                                             $j = 1;
@@ -260,9 +250,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                                             </td>
                                                             <td width="220px">';
                                                     //************************************POE agregado en base
-                                                    $consultapoe = "SELECT * FROM tblentpoe where EstEntPoE = 1";
+                                                    $consultapoe = "SELECT IdEntPoE,NomEntPoE FROM tblentpoe where EstEntPoE = 1";
                                                     //************************************	
-                                                    $resultadopoe=mysql_query("$consultapoe",$conexion) or die (mysql_error());
+                                                    $resultadopoe=mysql_query($consultapoe) or die (mysql_error());
                                                         echo '<select name="IdEntPoE_'.$i.'_'.$h.'[]" id="IdEntPoE_'.$i.'_'.$h.'_'.$j.'_" onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');">
                                                                 <option value="-1">Selecciona</option>';
                                                         while($renglon = mysql_fetch_array($resultadopoe)){
@@ -278,9 +268,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                                             </td>
                                                             <td width="160px">';
                                                             //************************************Origen pago ya en base
-                                                            $consultaorig = "SELECT * FROM tblorgpag";
+                                                            $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                                             //*************************************		
-                                                            $resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
+                                                            $resultadoorig=mysql_query($consultaorig) or die (mysql_error());
                                                             echo '<select name="IdOrgPag_'.$i.'_'.$h.'[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');">
                                                                     <option></option>';
                                                             while($renglon = mysql_fetch_array($resultadoorig)){
@@ -312,8 +302,8 @@ while($renglon = mysql_fetch_array($resultado)){
                                                                   </td>
                                                                   <td width="220px">';
                                                             //***************************************************************
-                                                            $consultades = "SELECT * FROM tbldespag";
-                                                            $resultadodes=mysql_query("$consultades",$conexion) or die (mysql_error());
+                                                            $consultades = "SELECT DscDesPag,IdDesPag FROM tbldespag";
+                                                            $resultadodes=mysql_query($consultades) or die (mysql_error());
                                                             echo '<select name="IdDesPag_'.$i.'_'.$h.'[]" class="destinoSec" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" >
                                                                        <option value=""></option>';
                                                             while($renglon = mysql_fetch_array($resultadodes)){
@@ -345,9 +335,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                                         </td>
                                                         <td width="220px">';
                                                         //************************************
-                                                        $consultapoe = "SELECT * FROM tblentpoe where EstEntPoE = 1";
+                                                        $consultapoe = "SELECT IdEntPoE,NomEntPoE FROM tblentpoe where EstEntPoE = 1";
                                                         //************************************		
-                                                        $resultadopoe=mysql_query("$consultapoe",$conexion) or die (mysql_error());
+                                                        $resultadopoe=mysql_query($consultapoe) or die (mysql_error());
                                                         echo '<select name="IdEntPoE_'.$i.'_'.$h.'[]" disabled="disabled" id="IdEntPoE_'.$i.'_'.$h.'_'.$j.'_"  onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');" >
                                                                         <option value="-1">Selecciona</option>';
                                                         while($renglon = mysql_fetch_array($resultadopoe)){
@@ -360,9 +350,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                                         </td>
                                                         <td width="160px">';
                                                         //************************************
-                                                        $consultaorig = "SELECT * FROM tblorgpag";
+                                                        $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                                         //*************************************		
-                                                        $resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
+                                                        $resultadoorig=mysql_query($consultaorig) or die (mysql_error());
                                                         echo '<select name="IdOrgPag_'.$i.'_'.$h.'[]" disabled="disabled" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
                                                                 <option></option>';
                                                         while($renglon = mysql_fetch_array($resultadoorig)){
@@ -373,12 +363,12 @@ while($renglon = mysql_fetch_array($resultado)){
                                                         <td id="datosbanco'.$i.$h.$j.'" width="150px"></td>
                                                         <td id="datoscuenta'.$i.$h.$j.'" width="150px"></td>
                                                         <td width="100px">
-                                                                $<input type="text" class="montoSecundaria" disabled="disabled" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$h.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11"/>
+                                                            $<input type="text" class="montoSecundaria" disabled="disabled" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$h.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11"/>
                                                         </td>
                                                         <td width="220px">';
                                                         //***************************************************************
-                                                        $consultades = "SELECT * FROM tbldespag";
-                                                        $resultadodes=mysql_query("$consultades",$conexion) or die (mysql_error());
+                                                        $consultades = "SELECT IdDesPag,DscDesPag FROM tbldespag";
+                                                        $resultadodes=mysql_query($consultades) or die (mysql_error());
                                                         echo '<select name="IdDesPag_'.$i.'_'.$h.'[]" disabled="disabled" class="destinoSec" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" >
                                                                    <option value=""></option>';
                                                         while($renglon = mysql_fetch_array($resultadodes)){
@@ -395,7 +385,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                             echo '</table>
                                                 <input type="hidden" class="controlDispersion" id="numeroDeDispersion'.$i.$h.'" name="numeroDeDispersion[]" value="'.$h.'"/>
                                                 <input type="hidden" id="numeroDeDispersionesSec'.$i.$h.'" value="'.$numeroDispersionesSec.'"/>
-                                            </div>';//aqui termian el div de los que ya estan en base
+                                            </div>';//aqui termina el div de los que ya estan en base
                                         $h++;
                                 }
                             }
@@ -409,9 +399,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="220px">';
                                             //************************************
-                                            $consultapoe = "SELECT * FROM tblentpoe where EstEntPoE = 1";
+                                            $consultapoe = "SELECT IdEntPoE,NomEntPoE FROM tblentpoe where EstEntPoE = 1";
                                             //************************************		
-                                            $resultadopoe=mysql_query("$consultapoe",$conexion) or die (mysql_error());
+                                            $resultadopoe=mysql_query($consultapoe) or die (mysql_error());
                                             echo '<select name="IdEntPoE_'.$i.'_0[]" id="IdEntPoE_'.$i.'_'.$h.'_'.$j.'_" onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');">
                                                             <option value="-1">Selecciona</option>';
                                             while($renglon = mysql_fetch_array($resultadopoe)){
@@ -424,9 +414,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="160px">';
                                             //************************************
-                                            $consultaorig = "SELECT * FROM tblorgpag";
+                                            $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                             //*************************************		
-                                            $resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
+                                            $resultadoorig=mysql_query($consultaorig) or die (mysql_error());
                                             echo '<select name="IdOrgPag_'.$i.'_0[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
                                                     <option></option>';
                                             while($renglon = mysql_fetch_array($resultadoorig)){
@@ -445,8 +435,8 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="220px">';
                                             //***************************************************************
-                                            $consultades = "SELECT * FROM tbldespag";
-                                            $resultadodes=mysql_query("$consultades",$conexion) or die (mysql_error());
+                                            $consultades = "SELECT IdDesPag,DscDesPag FROM tbldespag";
+                                            $resultadodes=mysql_query($consultades) or die (mysql_error());
                                             echo '<select name="IdDesPag_'.$i.'_0[]" class="destinoDis" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaDestino(this.value,'.$i.','.$h.','.$j.');">
                                                     <option value=""></option>';
                                             while($renglon = mysql_fetch_array($resultadodes)){
@@ -467,9 +457,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="220px">';
                                             //************************************
-                                            $consultapoe = "SELECT * FROM tblentpoe where EstEntPoE = 1";
+                                            $consultapoe = "SELECT IdEntPoE,NomEntPoE FROM tblentpoe where EstEntPoE = 1";
                                             //************************************		
-                                            $resultadopoe=mysql_query("$consultapoe",$conexion) or die (mysql_error());
+                                            $resultadopoe=mysql_query($consultapoe) or die (mysql_error());
                                             echo '<select name="IdEntPoE_'.$i.'_'.$j.'[]" disabled="disabled" id="IdEntPoE_'.$i.'_'.$h.'_'.$j.'_"  onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');" >
                                                     <option value="-1">Selecciona</option>';
                                             while($renglon = mysql_fetch_array($resultadopoe)){
@@ -482,9 +472,9 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="160px">';
                                             //************************************
-                                            $consultaorig = "SELECT * FROM tblorgpag";
+                                            $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                             //*************************************		
-                                            $resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
+                                            $resultadoorig=mysql_query($consultaorig) or die (mysql_error());
                                             echo '<select name="IdOrgPag_'.$i.'_'.$j.'[]" disabled="disabled" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
                                                     <option></option>';
                                             while($renglon = mysql_fetch_array($resultadoorig)){
@@ -501,8 +491,8 @@ while($renglon = mysql_fetch_array($resultado)){
                                             </td>
                                             <td width="220px">';
                                             //***************************************************************
-                                            $consultades = "SELECT * FROM tbldespag";
-                                            $resultadodes=mysql_query("$consultades",$conexion) or die (mysql_error());
+                                            $consultades = "SELECT IdDesPag,DscDesPag FROM tbldespag";
+                                            $resultadodes=mysql_query($consultades) or die (mysql_error());
                                             echo '<select name="IdDesPag_'.$i.'_'.$j.'[]" disabled="disabled" class="destinoSec" id="IdDesPag_'.$i.'_'.$h.'_'.$j.'_" >
                                                     <option value=""></option>';
                                             while($renglon = mysql_fetch_array($resultadodes)){

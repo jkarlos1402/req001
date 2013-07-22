@@ -20,7 +20,6 @@ foreach($_POST['numeroDeDispersion'] as $indice){
         $totalDispersionesSecundarias[]=0;
     }
 }
-//echo "total de dispersiones: ".$totalDispersiones."<br/>";
 if($totalDispersiones < $numeroDispersionesEnBase){
     $query = "delete from tbldsppag where IdDspPag > ".$dispersionesEnBase[($totalDispersiones-1)]." and (PadDspPag IS NULL OR PadDspPag > ".$dispersionesEnBase[($totalDispersiones-1)].")";
     $res = mysql_query($query);
@@ -43,11 +42,9 @@ for($i = 0; $i < $totalDispersiones; $i++){
         $res = mysql_query($query);
         $idPadre = mysql_insert_id();
     }
-    //echo $query."<br/>";
-    if($i < count($dispersionesEnBase)){
+    if(isset($dispersionesEnBase) && $i < count($dispersionesEnBase)){
         $query = "delete from tbldsppag where PadDspPag = ".$dispersionesEnBase[$i];
         $res = mysql_query($query);
-        //echo $query."<br/>";
     }
     for($j = 0;$j < $totalDispersionesSecundarias[$i];$j++){
         if($_POST['IdEntCue_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j] !=="-1"){
@@ -55,7 +52,6 @@ for($i = 0; $i < $totalDispersiones; $i++){
         }else{
             $query="insert into tbldsppag (FecMovDspPag,MonDspPag,IdOrgPag,IdDesPag,IdEntPag,IdEntPoE,SalDspPag,PadDspPag) values('".date("Y-m-d",strtotime($_POST['FecMovDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j]))."',".$_POST['MonDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['IdOrgPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['IdDesPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$IdEntPago.",".$_POST['IdEntPoE_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$_POST['MonDspPag_'.$numeroPago.'_'.$_POST['numeroDeDispersion'][$i]][$j].",".$idPadre.")";
         }
-        //echo $query."<br/>";
         $res = mysql_query($query);
     }
     
