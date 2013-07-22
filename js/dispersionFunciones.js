@@ -295,6 +295,7 @@ function agregaDispersion(padre){
 	$("#agrega"+indicePago+(indiceDispersion+1)).css("display","none");
 	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").css("visibility","hidden");
 	$("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").css("display","none");
+        $("#IdOrgPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").prop("selectedIndex",0);
         $("#IdEntPoE_"+indicePago+"_"+(indiceDispersion+1)+"_0_").prop("selectedIndex",0);
 	$("#IdDesPag_"+indicePago+"_"+(indiceDispersion+1)+"_0_").prop("selectedIndex",0);
 	
@@ -468,13 +469,16 @@ banderaTotal = false;
 function validaTotal(pago){
 	suma=0;
 	montoTotal = parseFloat($("#montoTotal"+pago).val());
+        banderaSecundarias = true;
         banderaTotal = false;
 	$("#controlDispersion"+pago).find(".montoDispersion").each(function(index, element) {
             if(isNaN($(this).val()) || $(this).val() == "")
                 $(this).val(0);
             $(this).val(parseFloat($(this).val()).toFixed(2));
             suma = parseFloat(suma) + parseFloat($(this).val());
-            validaTotalDispersion(pago,(index+1));
+            if(!validaTotalDispersion(pago,(index+1))){
+                banderaSecundarias = false;
+            }
         });
 	if(suma > montoTotal){
 		$("#error"+pago).addClass("ui-state-error ui-corner-all");
@@ -490,7 +494,11 @@ function validaTotal(pago){
                 $("#controlDispersion"+pago).find(".montoDispersion").each(function(index3){
                     $(this).css("background-color","#FFF");
                 });
-		return true;
+                if(banderaSecundarias){
+                    return true;
+                }else{
+                    return false;
+                }
 	}
 		
 		
@@ -539,17 +547,17 @@ var cveaux;
 function guardarDispersiones(pago,idpago){
     url="registraDispersion.php";
     nombreForm = "#form"+pago;
-    if(validaCamposDispersion(pago)){
+    if(validaCamposDispersion(pago) && validaTotal(pago) ){
         $.post(url,$(nombreForm).serialize(),function(data){
-            $("#prueba").html(data);
+            $("#mensajePopUp").html("<p><strong>"+data+"</strong></p>").addClass("ui-widget ui-state-highlight ui-corner-all").css({"width":"250px","position":"absolute","margin-left":"500px","margin-top":"-150px","text-align": "center"}).show( "puff", 1000 ).delay(2000).hide( "puff", 1000 );
         });
     }
 }
 
 function validaCamposDispersion(pago){
     alerta = true;
-    $("#controlDispersion"+pago).find("select").each(function(index){
-        if($(this).prop("selectedIndex") === 0 && !$(this).attr("disabled")){
+    $("#controlDispersion"+pago).find("select,input").each(function(index){
+        if(($(this).prop("selectedIndex") === 0 || $(this).val()=== "" ) && !$(this).attr("disabled")){
             $(this).css({'background-color':'#FFB7B7'}).focus();
             alerta = false;
             return false;
