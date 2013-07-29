@@ -13,25 +13,6 @@
 <script type="text/javascript" src="../js/funcionesGastos.js"></script>
 <link rel="stylesheet" type="text/css" href="css/estilos.css">
 <link href="../vista/css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
-<script type="text/javascript">
-$(document).ready(function(){
-	creaBarra();
-	cargarParticipante();});
-
-//************************************//
-//Nombre: Regino Tabares
-//Nombre del mÃ³dulo: cargarClientes()
-//Funcion del mÃ³dulo: Llamar a "cliente.php" para consultar los clientes ya registrados y ponerlos en un SELECT sin recargar la pÃ¡gina
-//Fecha:10/05/03
-//*************************************
-function cargarParticipante(){
-	var url = "../participante/participante.php";
-	$.post(url,{},function(responseText){
-		$("#part").html(responseText);
-		eliminaBarra();
-	});
-}
-
 </script>
 </head>
 <body>
@@ -56,6 +37,5 @@ function cargarParticipante(){
     </div>
 </form>
 <div id="progressbar" style="visibility:hidden; display:none;"><div class="progress-label" >Buscando...</div></div>
-
 </body>
 </html>
