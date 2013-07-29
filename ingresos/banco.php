@@ -28,7 +28,7 @@ if (mysql_num_rows($res) == 0) //Si no hay registros envia un aviso
 	}
 	else // Si si hay registros imprime los resultados
 	{
-$perfiles = '<select name="IdEntBan_'.$padre.'_0[]" id="IdEntBan_'.$padre.'_'.$hijo.'_0_" onchange="consultaCuenta('.$IdEntPoE.',this,'.$padre.','.$hijo.');">
+$perfiles = '<select name="IdEntBan_'.$padre.'_0[]" id="IdEntBan_'.$padre.'_'.$hijo.'_0_" onchange="consultaCuenta('.$IdEntPoE.',this.value,'.$padre.','.$hijo.',-1);">
 				<option value="-1">Selecciona</option>';
 while($renglon = mysql_fetch_array($res)){
 	$perfiles = $perfiles.'<option value="'.$renglon['IdEntBan'].'"';
