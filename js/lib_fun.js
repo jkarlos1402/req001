@@ -6,6 +6,12 @@
 * Fecha: 08/05/2013
 */
 function cambiaHtml(url){
-	document.getElementById('workbench').innerHTML = "<object data='"+url+"' class='homeobj'></object>";
+	//$("#workbench").html("<object data='"+url+"' class='homeobj'></object>");
+        $.ajax({
+  url: url,
+  cache: false
+}).done(function( data ) {
+  $("#workbench").html(data);
+});
 }
 

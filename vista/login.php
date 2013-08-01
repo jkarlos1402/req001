@@ -16,6 +16,9 @@ echo '<SCRIPT LANGUAGE="javascript">
 <script type="text/javascript" src="../js/loginFunciones.js"></script>
 <link rel="stylesheet" type="text/css" href="css/estilos.css">
 <link href="../vista/css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
+<script>
+     $(window).load(cargaCaracteristicas());
+</script>
 </head>
 <body>
 <div>

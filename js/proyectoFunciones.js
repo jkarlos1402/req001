@@ -75,7 +75,7 @@ function cargarClientes(IdEntCli){
 		url = "../proyecto/clientes.php";
 	}
 	$.post(url,{},function(responseText){
-		$("#clientes").html(responseText);
+		$("#listaClientes").html(responseText);
 	});
 }
 
@@ -296,7 +296,14 @@ function buscaProy(IdEntPry){
 }
 
 function eliminarProyecto(){
-	if(confirm("¿Seguro de eliminar el proyecto?")){
-		$("#formElimina").submit();
-	}
+    if(confirm("¿Seguro de eliminar el proyecto?")){
+            $("#formElimina").submit();
+    }
+}
+
+function enviaModificar(IdEntPry){
+    var url="../vista/modificaProy.php";
+    $.get(url,{id:IdEntPry},function(responseText){
+        $("#workbench").html(responseText);
+    });
 }

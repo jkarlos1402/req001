@@ -9,7 +9,7 @@ $NomEntUsu = $_POST['NomEntUsu'];
 $PwdEntUsu = $_POST['PwdEntUsu'];
 $query = "select * from tblentusu where NomEntUsu='$NomEntUsu'";
 $res = mysql_query($query,$conexion);
-if($row == mysql_fetch_array($res)){
+if($row = mysql_fetch_array($res)){
         if($row["PwdEntUsu"] == $PwdEntUsu){
  
             $_SESSION["k_username"] = $row['NomEntUsu'];

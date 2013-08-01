@@ -491,7 +491,7 @@ function validaTotalDispersion(pago,dispersion){
 }
 
 function guardarDispersiones(pago,idpago){
-    url="registraDispersion.php";
+    url="../ingresos/registraDispersion.php";
     nombreForm = "#form"+pago;
     if(validaCamposDispersion(pago) && validaTotal(pago) ){
         $.post(url,$(nombreForm).serialize(),function(data){

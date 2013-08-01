@@ -5,13 +5,7 @@ $IdEntPry=$_POST['IdEntPry'];
 $Idpago=$_POST['pago'];
 $renglones = $_POST['renglones'];
 $r=0;
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-    <script src="../js/jquery.js" type="text/javascript"></script>
-    <script src="../js/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../js/funciones.js"></script>
-    <script type="text/javascript" src="../js/dispersionFunciones.js"></script>
-    <link rel="stylesheet" type="text/css" href="../vista/css/estilos.css">
-    <link href="../vista/css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">';
+echo '<script type="text/javascript" src="../js/dispersionFunciones.js"></script>';
 
 //************************************
 $consulta="SELECT NomEntCli,NomEntPry FROM tblentpry, tblentcli WHERE tblentcli.IdEntCli = tblentpry.IdEntCli and tblentpry.IdEntPry=$IdEntPry";
@@ -54,7 +48,7 @@ while($renglon = mysql_fetch_array($resultado)){
                     echo '<h3>'.$renglon['CtoEntPag'].'</h3>
                     <div>
                     <form id="form'.$i.'" action="../ingresos/registraDispersion.php" method="post">
-                        <table class="ui-widget" border="0" cellpadding="0" align="center" style="width: 1280px;">
+                        <table class="ui-widget" border="0" cellpadding="0" align="center" style="width: 1225px;">
 			<tr>
                             <td>
 				Pago
@@ -104,7 +98,7 @@ while($renglon = mysql_fetch_array($resultado)){
                     $h=1;
                     $j=0;                                                               
               echo '<div id="controlDispersion'.$i.'" style="visibility:hidden; display:none;">
-                        <table class="ui-widget" border="0" cellpadding="0" align="center" style="width: 1280px;">
+                        <table class="ui-widget" border="0" cellpadding="0" align="center" style="width: 1225px;">
                             <tr>
                                 <td colspan="9">
                                     <article id="error'.$i.'"></article><br>
@@ -150,7 +144,7 @@ while($renglon = mysql_fetch_array($resultado)){
                         while ($dispersion = mysql_fetch_array($dispersiones)) {
                             if($dispersion['PadDspPag']==NULL){
                             echo '<input type="hidden" name="idDispersion[]" value="'.$dispersion['IdDspPag'].'"/>';
-                            echo '<div id="divDispersion'.$i.$h.'" style="width: 1280px;">
+                            echo '<div id="divDispersion'.$i.$h.'" style="width: 1225px;">
                                     <table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
                                         <tr id="dispersion'.$i.'" bgcolor="01DF01">	
                                             <td width="50px">
@@ -391,7 +385,7 @@ while($renglon = mysql_fetch_array($resultado)){
                             }
                         /////////// AQUI TERMINAN LOS QUE YA ESTAN EN LA BASE DE DATOS
                         }else{
-                            echo '<div id="divDispersion'.$i.$h.'" style="width: 1280px;">
+                            echo '<div id="divDispersion'.$i.$h.'" style="width: 1225px;">
                                     <table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
                                         <tr id="dispersion'.$i.'" bgcolor="01DF01">	
                                             <td width="50px">
@@ -537,13 +531,13 @@ echo  '</div>
 </div> 
 <div id="mensajePopUp">
 </div>
-<div id="dialog" title="Agregar Categoria">
+<div id="dialog" title="Agregar Categoria" style="display: none;">
     <input type="text" name="nuevoorg" id="nuevoorg" size="30" placeholder="Ingresa el nuevo origen"/>
     <input type="button" value="Guardar" onclick="guardarOrigen();" />
     <div id="mensaje">
     </div>
 </div>
-<div id="dialog2" title="Agregar Categoria">
+<div id="dialog2" title="Agregar Categoria" style="display: none;">
     <input type="text" name="nuevodest" id="nuevodest" size="30" placeholder="Ingresa el nuevo destino"/>
     <input type="button" value="Guardar" onclick="guardarDestino()" />
     <input type="hidden" value="" id="pagoPadre"/>
