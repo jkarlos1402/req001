@@ -1,14 +1,10 @@
 <?php
-$IdEntPry=$_POST['IdEntPry'];
-$IdEntCue=$_POST['IdEntCue'];
-$DesEntGas=$_POST['concepto'];
-$FecEntGas=$_POST['fecha'];
-$MonEntGas=$_POST['monto'];
-$i=0;
-while($i<count($DesEntGas)){
-echo $query = "INSERT INTO tblentgas VALUES ($IdEntCue,$IdEntPry,null,'$DesEntGas[$i]',$FecEntGas[$i],$MonEntGas[$i]);"."<br>";
-
-$i++;
-}
+include("../conexion.php");
+session_start();
+$IdEntCue = $_POST['cuenta'];
+$SalEntCue = $_POST['saldo'];
+$query = "UPDATE tblentcue SET SalActEntCue = $SalEntCue WHERE IdEntCue =$IdEntCue";
+echo $query;
+mysql_query($query,$conexion) or die (mysql_error());
 
 ?>

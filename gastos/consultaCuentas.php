@@ -1,4 +1,4 @@
-<?php
+    <?php
 include("../conexion.php");
 session_start();
 $IdEntPoE=$_POST['PoE'];
@@ -41,10 +41,10 @@ echo '
    echo'<tr>
             <td><input type="radio" id="radio" name="radio" onclick="despliegaMovimientos('.$i.')">
             <input type="hidden" id="IdEntCue'.$i.'" name="IdEntCue'.$i.'" value="'.$cuenta['IdEntCue'].'"/></td>
-            <td><input type="text" id="NomEntBan'.$i.'" id="NomEntBan'.$i.'" value="'.$cuenta['NomEntBan'].'"></td>
-            <td><input type="text" id="SucEntSuc'.$i.'" id="SucEntSuc'.$i.'" value="'.$cuenta['SucEntSuc'].'"></td>
-            <td><input type="text" id="NumEntCue'.$i.'" id="NumEntCue'.$i.'" value="'.$cuenta['NumEntCue'].'"></td>
-            <td><input type="text" id="ClaEntCue'.$i.'" id="ClaEntCue'.$i.'" value="'.$cuenta['ClaEntCue'].'"></td>
+            <td><input type="text" id="NomEntBan'.$i.'" id="NomEntBan'.$i.'" value="'.$cuenta['NomEntBan'].'" readonly></td>
+            <td><input type="text" id="SucEntSuc'.$i.'" id="SucEntSuc'.$i.'" value="'.$cuenta['SucEntSuc'].'" readonly></td>
+            <td><input type="text" id="NumEntCue'.$i.'" id="NumEntCue'.$i.'" value="'.$cuenta['NumEntCue'].'" readonly></td>
+            <td><input type="text" id="ClaEntCue'.$i.'" id="ClaEntCue'.$i.'" value="'.$cuenta['ClaEntCue'].'" readonly></td>
         </tr>';
         $i++;
         }
@@ -56,16 +56,15 @@ echo '</table>
             </tr>
             <tr>
                 <td>
-                    No. de Cuenta: <input type="text" id="cuenta" name="cuenta" size="70">
+                    No. de Cuenta: <input type="text" id="cuenta" name="cuenta" size="70" readonly>
                     <input type="button" id="agregar" value="Agregar" onclick="agregarMovimientos();">
                     <input type="button" id="eliminar" value="Eliminar" style="visibility:hidden; display:none;" onclick="eliminarMovimientos();">
                 </td>
             </tr>
         </table>
-        
         <div class="mov" id="mov0" style="margin-top:5px; background-color:#eee;">
             <form id="form0">
-            <input type="text" name="IdEntCue" id="cuentax">
+            <input type="hidden" name="IdEntCue" id="cuentax">
             <input type="hidden" class="index" value="0">
                 <table width="100%" class="ui-widget">
                     <tr>
@@ -74,8 +73,13 @@ echo '</table>
                         </td>
                     </tr>
                 </table>
-                <div class="datosMov" >
-                    <table class="ui-widget" width="100%">
+                <div class="movRegistrados">
+                </div>
+                <div class="datosMov" style="visibility:hidden; display:none;">
+                    <table class="ui-widget" width="100%" >
+                        <tr>
+                            <td colspan="4"><center>GASTOS NUEVOS</center></td>
+                        </tr>
                         <tr align="center">
                             <td>CONCEPTO</td>
                             <td>FECHA</td>
@@ -90,7 +94,7 @@ echo '</table>
                         </tr>
                         <tr>
                             <td colspan="2" align="right">TOTAL DE GASTOS</td>
-                            <td>$<input class="montoTotal" type="text" id="montoTotal" style="width:90%" name="montoTotal" value="0.00"/></td>
+                            <td>$<input class="montoTotal" type="text" id="montoTotal" style="width:90%" name="montoTotal" value="0.00" readonly/></td>
                         </tr>
                         
                     </table>
@@ -102,15 +106,15 @@ echo '</table>
                     <table width="100%" class="ui-widget">
                         <tr>
                             <td align="right">TOTAL DE GASTOS</td>
-                            <td>$<input type="text" id="totalGeneral" name="totalGeneral" value="0.00"/></td>
+                            <td>$<input type="text" id="totalGeneral" name="totalGeneral" value="0.00" readonly/></td>
                         </tr>
                         <tr>
                             <td align="right">INGRESOS A CUENTA</td>
-                            <td>$<input type="text" id="ingresos" name="ingresos"/></td>
+                            <td>$<input type="text" id="ingresos" name="ingresos" readonly/></td>
                         </tr>
                         <tr>
                             <td align="right">SALDO EN CUENTA</td>
-                            <td>$<input type="text" id="saldo" name="saldo"/></td>
+                            <td>$<input type="text" id="saldo" name="saldo" readonly/></td>
                         </tr>
                         <tr>
                             <td align="right">
@@ -123,6 +127,7 @@ echo '</table>
      echo' </div>
          <div id="log">
          </div>
+         
     ';
 
 ?>

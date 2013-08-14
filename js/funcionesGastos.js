@@ -38,6 +38,7 @@ function mostrarInfoPoE(IdEntPoE){
 	}
 }
 
+
 function despliegaMovimientos(index){
     var cuenta = $("#NomEntBan"+index).val()+"-"+$("#SucEntSuc"+index).val()+"-"+$("#NumEntCue"+index).val();
     var IdEntCue=$("#IdEntCue"+index).val();
@@ -68,15 +69,24 @@ function despliegaMovimientos(index){
     
     
     
-    var url = "../gastos/ingresos.php"
+    var url = "../gastos/ingresos.php";
     $.post(url,{IdEntCue:IdEntCue},function(responseText){
         $("#ingresos").val(responseText);
+    });
+    
+    var url="../gastos/cuenta.php";
+    $.post(url,{IdEntCue:IdEntCue},function(responseText){
         $("#saldo").val(responseText);
-    })
+    });
+    $("#IdEntPry0").prop("selectedIndex",0);
+    $(".movRegistrados").html('');
+    $(".datosMov").css("visibility","hidden");
+    $(".datosMov").css("display","none");
 }
-
+var cuenta;
 var index;
 function agregarMovimientos(){
+   
   index = parseInt($("#movimientos").find(".index:last").val())+1;
   //$("#IdEntPry0").attr("name","IdEntPry"+index);
   $("#fecha00").attr("id","fecha"+index+"0");
@@ -84,6 +94,8 @@ function agregarMovimientos(){
   $("#agrega0").attr("id","agrega"+index);
   $("#elimina0").attr("id","elimina"+index);
   var newElem =$("#mov0").clone().attr('id', 'mov'+index);
+  newElem.find(".movRegistrados").html('').next("div").css({"visibility":"hidden","display":"none"});
+  
   //$("#IdEntPry"+index).attr("name","IdEntPry0");
   $("#agrega"+index).attr("id","agrega0");
   $("#elimina"+index).attr("id","elimina0")
@@ -108,6 +120,7 @@ function agregarMovimientos(){
       $("#eliminar").css("visibility","visible");
       $("#eliminar").css("display","");
   }
+ 
 }
 
 var indexCampos;
@@ -156,6 +169,8 @@ function eliminarMovimientos(){
         $("#eliminar").css("display","none");
     }
     $("#movimientos").find(".mov:last").remove();
+     sumaTotal();
+     saldoCuenta();
 }
 
 
@@ -196,17 +211,28 @@ function guardarGastos(){
             
         });
     }
-    /*
+    
     var cuenta=$("#cuentax").val();
-    var total=$("#totalGeneral").val();
-    var ingresos = $("#ingresos").val();
-    var saldo = $("saldo").val();
+    var saldo = $("#saldo").val();
     var url ="../gastos/estadoCuenta.php";
-    $.post(url,{cuentax:cuentax,total:total,ingresos:ingresos,saldo:saldo},function(responseText){
-            $("#estado").html(responseText);
+    $.post(url,{cuenta:cuenta,saldo:saldo},function(responseText){
+            $("#log").html(responseText);
     });
-    */
+    
     }
+}
+
+function despliegaRegistrados(IdEntPry){
+    //alert($(IdEntPry).parents("div").attr("id"));
+    var IdEntCue = $("#cuentax").val();
+    var url="../gastos/gastosRegistrados.php"
+    $.post(url,{IdEntPry:$(IdEntPry).val(),IdEntCue:IdEntCue},function(reponseText){
+        $(IdEntPry).parents("table").next("div").html(reponseText).next("div").css({"visibility":"visible","display":""});
+        //$(IdEntPry).parents("div").find(".movRegistrados:first").html(reponseText);
+        $(".elimina").button({icons: {primary: "ui-icon-trash"},text: false});
+        //$(".datosMov").css("visibility","visible");
+        //$(".datosMov").css("display","");
+    });
 }
 
 var k;
@@ -216,7 +242,7 @@ estado =  true;
     for(k=0 ;k<=indice;k++){
     $("#mov"+k).find("select,input").each(function(){
         if($(this).val()===''||$(this).prop("selectedIndex")===0){
-            alert($(this).attr("id"));
+            
             $(this).focus().css("background-color","#FFB7B7");
             estado = false;
             
@@ -227,10 +253,6 @@ estado =  true;
         }
     });
     }
-  alert(estado);
-  
-  
-  
-  return estado;
+ return estado;
 }
 
