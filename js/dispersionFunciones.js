@@ -100,6 +100,11 @@ function habilitaOrigen(combo,pago,dispersion,secundaria){
     if($(combo).val()!== -1){
         $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("visibility","visible");
         $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("display","");
+        $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").prop("selectedIndex",0);
+        $("#datosbanco"+pago+dispersion+secundaria).html("");
+        $("#datoscuenta"+pago+dispersion+secundaria).html("");
+        $("#MonDspPag_"+pago+"_"+dispersion+"_"+secundaria+"_").val("0.00");
+        $("#IdDesPag_"+pago+"_"+dispersion+"_"+secundaria+"_").prop("selectedIndex",0);
     }else{
         $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("visibility","hidden");
         $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("display","none");
@@ -415,7 +420,7 @@ function agregaDispersionSecundaria(pago,dispersion){
 
 function eliminaDispersionSec(pago,dispersion,secundaria){
     if(confirm("¿Seguro de eliminar la dispersion secundaria?")){
-        $("#eliminaSec"+pago+dispersion+secundaria).parents("tr").remove();
+        $("#dispSec"+pago+dispersion+secundaria).remove();
         reOrganizaDispersion(pago,1);
         validaTotal(pago);
     }

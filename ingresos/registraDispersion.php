@@ -21,7 +21,7 @@ foreach($_POST['numeroDeDispersion'] as $indice){
     }
 }
 if($totalDispersiones < $numeroDispersionesEnBase){
-    $query = "delete from tbldsppag where IdDspPag > ".$dispersionesEnBase[($totalDispersiones-1)]." and (PadDspPag IS NULL OR PadDspPag > ".$dispersionesEnBase[($totalDispersiones-1)].")";
+    $query = "delete from tbldsppag where IdDspPag > ".$dispersionesEnBase[($totalDispersiones-1)]." and IdEntPag = ".$IdEntPago." and (PadDspPag IS NULL OR PadDspPag > ".$dispersionesEnBase[($totalDispersiones-1)].")";
     $res = mysql_query($query);
 }
 for($i = 0; $i < $totalDispersiones; $i++){
@@ -55,6 +55,14 @@ for($i = 0; $i < $totalDispersiones; $i++){
         $res = mysql_query($query);
     }
     
+}
+$query = "SELECT c.IdEntCue,
+            (SELECT IFNULL(sum(p.SalDspPag),0.00) from tbldsppag p where p.IdEntCue = c.IdEntCue) saldo_cuenta
+        from tblentcue c where IdEntCue is not null group by c.IdEntCue";
+$res = mysql_query($query) or die(mysql_error());
+while($saldoCuenta = mysql_fetch_array($res)){
+    $query = "update tblentcue set SalEntCue = ".$saldoCuenta['saldo_cuenta']." where IdEntCue = ".$saldoCuenta['IdEntCue'];
+    mysql_query($query);
 }
 echo "Se han registrado las dipersiones para el pago";
 ?>

@@ -160,7 +160,7 @@ while($pago = mysql_fetch_array($res)){
 <td><input type="text" name="lint_pjePag'.$contPago.'" id="lint_pjePag'.$contPago.'" size="8" onblur="valida('."'pje',".$numPagos.');" value="'.$PorEntPag.'" '.$disabled.'/></td>
 <td>$<input type="text" name="lint_subPag'.$contPago.'" id="lint_subPag'.$contPago.'" size="10" value="'.$pago['MonEntPagRal'].'" '.$disabled.'  disabled="disabled"/></td>
 <td>$<input type="text" name="lint_ivaPag'.$contPago.'" id="lint_ivaPag'.$contPago.'" size="10" disabled="disabled"/></td>
-<td>$<input type="text" name="lint_totPag'.$contPago.'" id="lint_totPag'.$contPago.'" size="10" onblur="valida('."'totalP',".$numPagos.');"/></td>
+<td>$<input type="text" name="lint_totPag'.$contPago.'" id="lint_totPag'.$contPago.'" size="10" onblur="valida('."'totalP',".$numPagos.');" '.$disabled.'/></td>
 <td><input type="fechaPag" name="ltxt_fecPag'.$contPago.'" id="ltxt_fecPag'.$contPago.'" '.$disabled.'/>
 <script type="text/javascript">
 	$("#ltxt_fecPag'.$contPago.'").datepicker("setDate","'.$ltxt_fecEntPag.'");
