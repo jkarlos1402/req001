@@ -1,5 +1,12 @@
+<?php 
+session_start(); 
+if(!ISSET($_SESSION["k_username"])){
+    echo '<SCRIPT LANGUAGE="javascript">
+        location.href = "../vista/login.php";
+        </SCRIPT>';	
+}
+?>
 <script type="text/javascript" src="../js/participanteFunciones.js"></script>
-<?php session_start(); ?>
 <script type="text/javascript">
 //************************************//
 //Nombre: Regino Tabares
@@ -7,18 +14,18 @@
 //Funcion del mÃ³dulo: Llamar a "participante.php" para consultar los participantes ya registrados y ponerlos en un SELECT sin recargar la pÃ¡gina
 //Fecha:10/05/03
 //*************************************
-    $(document).ready(function() {
-        creaBarra();
-        cargarParticipante();
-    });
+$(document).ready(function() {
+    creaBarra();
+    cargarParticipante();
+});
 
-    function cargarParticipante() {
-        var url = "../participante/participante.php";
-        $.post(url, {}, function(responseText) {
-            $("#part").html(responseText);
-            eliminaBarra();
-        });
-    }
+function cargarParticipante() {
+    var url = "../participante/participante.php";
+    $.post(url, {}, function(responseText) {
+        $("#part").html(responseText);
+        eliminaBarra();
+    });
+}
 </script>
 <h2 align="center" class="encabezado ui-corner-all">CONSULTA DE EMPRESAS Y PERSONAS FÍSICAS</h2>
 <br>
@@ -30,9 +37,7 @@
         </tr>
 
     </table>     
-
     <div id="datos">
     </div>
-
 </div>
 <div id="progressbar" style="visibility:hidden; display:none;"><div class="progress-label" >Buscando...</div></div>

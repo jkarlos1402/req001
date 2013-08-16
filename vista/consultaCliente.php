@@ -2,13 +2,13 @@
 $ban = false;
 session_start();
 if (!ISSET($_SESSION["k_username"])) {
-    header("HTTP/1.0 404 Not Found");
-    die();
+    echo '<SCRIPT LANGUAGE="javascript">
+        location.href = "../vista/login.php";
+        </SCRIPT>';
 }
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        cargaCaracteristicas();
         creaBarra();
         cargarClientes();
     });
@@ -26,7 +26,6 @@ if (!ISSET($_SESSION["k_username"])) {
             $("#listaClientes").html(responseText);
             eliminaBarra();
         });
-
     }
 
 </script>

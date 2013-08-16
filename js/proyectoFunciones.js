@@ -44,22 +44,22 @@ $(document).ready(function(){
 $(document).ready(cargarClientes(0));
 
 function validaCampos(){
-	var bandera = true;
-	$("#formSetPry,#formAddPry").find('input,select').each(function() {
-        if($(this).val() ==""){
-			$("#proyecto").accordion("option","active",$(this).parents("div").prev("h3").index("h3"));
-			$(this).focus();
-			bandera = false;
-			return false;
-		}
-		if($("#error").html() !== ""){
-			$("#proyecto").accordion("option","active",$("#lint_pjePag0").parent().index());
-			$("#lint_pjePag0").focus();
-			bandera = false;
-			return false;
-		}
-	});
-	return bandera;
+    var bandera = true;
+    $("#formSetPry,#formAddPry").find('input,select').each(function() {
+    if($(this).val() ==""){
+        $("#proyecto").accordion("option","active",$(this).parents("div").prev("h3").index("h3"));
+        $(this).focus();
+        bandera = false;
+        return false;
+    }
+    if($("#error").html() !== ""){
+        $("#proyecto").accordion("option","active",$("#lint_pjePag0").parent().index());
+        $("#lint_pjePag0").focus();
+        bandera = false;
+        return false;
+    }
+    });
+    return bandera;
 }
 
 /*

@@ -1,9 +1,16 @@
+<?php
+session_start(); 
+if(!ISSET($_SESSION["k_username"])){
+    echo '<SCRIPT LANGUAGE="javascript">
+        location.href = "../vista/login.php";
+        </SCRIPT>';	
+}
+?>
 <script>
-
-    $(document).ready(function() {
-        creaBarra();
-        cargarProyecto();
-    });
+$(document).ready(function() {
+    creaBarra();
+    cargarProyecto();
+});
 
 //************************************//
 //Nombre: Regino Tabares
@@ -11,14 +18,13 @@
 //Funcion del módulo: Llamar a "proyecto.php" para consultar los proyectos ya registrados y ponerlos en un SELECT sin recargar la página
 //Fecha:13/05/03
 //*************************************
-    function cargarProyecto() {
-        var url = "../proyecto/proyecto.php";
-        $.post(url, {}, function(responseText) {
-            $("#listaProyecto").html(responseText);
-            eliminaBarra();
-            //cargaCaracteristicas();
-        });
-    }
+function cargarProyecto() {
+    var url = "../proyecto/proyecto.php";
+    $.post(url, {}, function(responseText) {
+        $("#listaProyecto").html(responseText);
+        eliminaBarra();
+    });
+}
 
 </script>
 <h2 align="center" class="encabezado">CONSULTA DE PROYECTOS</h2>

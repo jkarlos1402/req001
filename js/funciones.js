@@ -1,35 +1,29 @@
 //************************************//
 //Nombre: Regino Tabares
-//Funcion: antes del envio de formulario manda a llamar la funcion que realiza las validaciones
+//Funcion: funcion que realiza las validaciones para el cliente a registrar o modificar
 //Fecha:10/05/03
 //*************************************
-
-$(function() {
-    $("#Reg_Cli,#formModificaCli").submit(function() {
-        if (validaCliente())
-            return true;
-        else
-            return false;
-    });
-
-});
-
 function validaCliente() {
     var banderaCliente = true;
     $("#Reg_Cli,#formModificaCli").find(".requerido").each(function() {
         if ($(this).val() == "") {
-            alert("Campo requerido");
-            $(this).focus();
+            $("#accordion").accordion("option","active",$(this).parents("div").prev("h3").index("h3"));
+            $(this).css("background-color","#FF6C70").focus();
             banderaCliente = false;
             return false;
+        }else{
+           $(this).css("background-color","#FFF"); 
         }
     });
     if (!banderaCliente)
         return false;
     if (isNaN($("#TelEntCli").val()) || $("#TelEntCli").val().length < 7 || $("#TelEntCli").val().length > 12) {
         alert("Número telefónico inválido");
-        $("#TelEntCli").focus();
+        $("#accordion").accordion("option","active",$("#TelEntCli").parents("div").prev("h3").index("h3"));
+        $("#TelEntCli").css("background-color","#FF6C70").focus();
         return false;
+    }else{
+        $("#TelEntCli").css("background-color","#FFF");
     }
     return true;
 }
@@ -238,8 +232,13 @@ function cargaCaracteristicas() {
                 .nextAll("ul")
                 .hide()
                 .menu();
-
-
+    });
+    
+    $("#Reg_Cli,#formModificaCli").submit(function() {
+        if (validaCliente())
+            return true;
+        else
+            return false;
     });
 }
 
@@ -297,6 +296,7 @@ function mostrarInfoCliente(IdEntCli) {
         $("#datos").find($("input[type=button],input[type=submit]")).button();
         $("input[type=text],select,td,tr,h2").addClass("ui-corner-all");
         eliminaBarra();
+        cargaCaracteristicas();
     });
 }
 
