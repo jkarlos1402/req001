@@ -19,8 +19,8 @@ $clientes = '<table>
     </tr>
     <tr>
         <td align="left">
-            <label for="lint_nomPry"><b>NOMBRE DEL PROYECTO:</b></label>
-            <select id="lint_nomPry" name="lint_nomPry" multiple style="margin-left: 9px;width: 333px;" size="15">';
+            <label for="lint_idPry"><b>NOMBRE DEL PROYECTO:</b></label>
+            <select id="lint_idPry" name="lint_idPry" multiple style="margin-left: 9px;width: 333px;" size="15">';
 while($cliente = mysql_fetch_array($res)){//Se forman las opciones del select
 	if($IdEntCli == $cliente['IdEntPry'])
 		$selected = "selected";
