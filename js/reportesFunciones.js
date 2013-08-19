@@ -1,5 +1,6 @@
 function muestraFiltro(select){
     if($(select).val() === '1'){
+        $("#menuIzq").html("");
         $("#resultadoReporte").html("");
         var url = "../reporte/proyectos.php";
         $.post(url,{},function (responseText){
