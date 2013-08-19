@@ -11,7 +11,8 @@ function muestraFiltro(select){
                     $("#mensaje").html("").removeClass("ui-state-error ui-corner-all");
                     var url1 = "../reporte/reporteProyecto.php";
                     $.post(url1,{idPry:$("#lint_idPry").val()},function(data){
-                       $("#resultadoReporte").html(data);
+                       $("#resultadoReporte").html(data);                      
+                       $("table tfoot td").nextAll("td").css({"border":"solid 1px","cellpading":"0px"});
                     });
                }else{
                    $("#mensaje").html("<span>Seleccione por lo menos un proyecto</span>").
