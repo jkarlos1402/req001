@@ -35,5 +35,12 @@ $clientes = $clientes."</select>
             <input type='button' id='btnRep' value='Generar reporte'/>
         </td>
     </tr>
+    <tr>
+        <td align='center'>
+           <div id='mensaje'>
+           
+           </div>
+        </td>
+    </tr>
 </table>";
 echo $clientes;//Regresa el select
