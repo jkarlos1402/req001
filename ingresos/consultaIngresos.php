@@ -261,7 +261,8 @@ echo '      <tr align="center" class="registro">
     </div>		
     <script>
         enviaTotal('.$totalpry.','.$cuenta.','.$cuentavalidar.','.round($totalporcral,3).','.$alerta.');
-        cargaCaracteristicas();
+        //cargaCaracteristicas();
+        $("input[type=button],input[type=submit]").button();
     </script>';            	
 ?>
                

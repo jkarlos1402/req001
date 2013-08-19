@@ -12,7 +12,7 @@ if ($_SESSION["k_perfil"] == "USU") {
 ?>
 <script type="text/javascript">
     //$(window).load(cargaCaracteristicas());
-    $("#accordion").accordion({
+    $("#accordion,#cliente").accordion({
         heightStyle: "content"
     });
     $("input[type=button],input[type=submit]").button();

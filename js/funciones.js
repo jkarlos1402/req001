@@ -296,7 +296,10 @@ function mostrarInfoCliente(IdEntCli) {
         $("#datos").find($("input[type=button],input[type=submit]")).button();
         $("input[type=text],select,td,tr,h2").addClass("ui-corner-all");
         eliminaBarra();
-        cargaCaracteristicas();
+        //cargaCaracteristicas();
+        $("#accordion,#cliente").accordion({
+            heightStyle: "content"
+        });
     });
 }
 
@@ -574,7 +577,12 @@ function selTodos(cont, proceso){
             //document.getElementById("formulario").submit();
             $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
                 $("#workbench").html(data);
-                cargaCaracteristicas();
+                //cargaCaracteristicas();
+                $("#accordion").accordion({
+                    heightStyle: "content"
+                });
+                $("input[type=button],input[type=submit]").button();
+                $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
             });           
         }else{
             for (var i = 1; i < cont; i++){
@@ -594,6 +602,7 @@ function selTodos(cont, proceso){
             }
         }
     }
+    
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -603,7 +612,7 @@ function programaDisp(aux) {
         //document.getElementById("formulario").submit();
         $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
             $("#workbench").html(data);
-            cargaCaracteristicas();
+            //cargaCaracteristicas();
         });
     }
 }
@@ -613,7 +622,7 @@ function programaSel() {
     //document.getElementById("formulario").submit();
     $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
         $("#workbench").html(data);
-        cargaCaracteristicas();
+        //cargaCaracteristicas();
     });
 }
 
