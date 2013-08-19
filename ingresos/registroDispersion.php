@@ -5,7 +5,22 @@ $IdEntPry=$_POST['IdEntPry'];
 $Idpago=$_POST['pago'];
 $renglones = $_POST['renglones'];
 $r=0;
-echo '<script type="text/javascript" src="../js/dispersionFunciones.js"></script>';
+echo '<script type="text/javascript" src="../js/dispersionFunciones.js"></script>
+    <script type="text/javascript" >
+        $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
+            width: 350,
+            modal: true,
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+    </script>';
 
 //************************************
 $consulta="SELECT NomEntCli,NomEntPry FROM tblentpry, tblentcli WHERE tblentcli.IdEntCli = tblentpry.IdEntCli and tblentpry.IdEntPry=$IdEntPry";

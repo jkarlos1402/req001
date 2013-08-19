@@ -353,6 +353,19 @@ function mostrarInfoIng(IdEntPry) {
         $.post(url, {IdEntPry: IdEntPry}, function(responseText) {
             $("#datos").html(responseText);
             eliminaBarra();
+            $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
+                width: 350,
+                modal: true,
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
         });
     }
     else {
@@ -613,6 +626,19 @@ function programaDisp(aux) {
         $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
             $("#workbench").html(data);
             //cargaCaracteristicas();
+            $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
+                width: 350,
+                modal: true,
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
         });
     }
 }
@@ -623,6 +649,19 @@ function programaSel() {
     $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
         $("#workbench").html(data);
         //cargaCaracteristicas();
+        $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
+                width: 350,
+                modal: true,
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
     });
 }
 
