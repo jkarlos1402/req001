@@ -105,6 +105,10 @@ echo '  <ul style="position:absolute; width:auto;">
 
 ?>
 </div>
+    <div style="position: absolute; right:5px; margin-top: -40px;">
+        <img src="images/upgenia_head.png" width="50%" style="float: right;"></img>
+    </div>
+    
 <script type="text/javascript">
     $(window).load(cargaCaracteristicas());
 </script>
@@ -155,5 +159,6 @@ echo '  <ul style="position:absolute; width:auto;">
         </tr>
     </table>
 </div>
+    
 </body>
 </html>
