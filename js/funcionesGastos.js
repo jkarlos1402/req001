@@ -2,9 +2,6 @@ $(function() {
     $("input[type=button],input[type=submit]").button(); 
     $(".agrega").button({icons: {primary: "ui-icon-plusthick"},text: false});
     $(".elimina").button({icons: {primary: "ui-icon-trash"},text: false});
-    $("input[type=fecha]").datepicker();
-    
-    
     var url = "../gastos/proyectos.php";
     $.post(url,{},function(responseText){
         $("#proyecto0").html(responseText);
@@ -26,7 +23,7 @@ function eliminaBarra(){
 	$(".progress-label").css("display","none");
 }
 
-function mostrarInfoPoE(IdEntPoE){
+function mostrarInfoPoE(IdEntPoE){   
 	$("#datos").html("");
 	if(IdEntPoE != 0){
 		creaBarra();
@@ -34,12 +31,16 @@ function mostrarInfoPoE(IdEntPoE){
 		$.post(url,{PoE:IdEntPoE},function(responseText){
 			$("#datos").html(responseText);
 			eliminaBarra();
+                        
+                        
+                       
 		});
 	}
 }
 
 
 function despliegaMovimientos(index){
+   
     var cuenta = $("#NomEntBan"+index).val()+"-"+$("#SucEntSuc"+index).val()+"-"+$("#NumEntCue"+index).val();
     var IdEntCue=$("#IdEntCue"+index).val();
     $("#cuentax").val(IdEntCue);
@@ -62,6 +63,7 @@ function despliegaMovimientos(index){
     $("#movimientos").css("display","");
     
     
+    
     var url2 = "../gastos/gastosRegistrados.php";
     $.post(url2,{IdEntCue:IdEntCue},function(responseText){
        $("#datosGastos").html(responseText); 
@@ -82,6 +84,11 @@ function despliegaMovimientos(index){
     $(".movRegistrados").html('');
     $(".datosMov").css("visibility","hidden");
     $(".datosMov").css("display","none");
+    $("#ui-datepicker-div").remove();
+    $("input[type=fecha]").datepicker();
+    $("input[type=fecha]").datepicker( "refresh" );
+    
+    
 }
 var cuenta;
 var index;
@@ -95,7 +102,10 @@ function agregarMovimientos(){
   $("#elimina0").attr("id","elimina"+index);
   var newElem =$("#mov0").clone().attr('id', 'mov'+index);
   newElem.find(".movRegistrados").html('').next("div").css({"visibility":"hidden","display":"none"});
-  
+  if(indiceSelect!=null){
+    
+      newElem.find("#IdEntPry0 option:eq("+indiceSelect+")").remove();
+  }
   //$("#IdEntPry"+index).attr("name","IdEntPry0");
   $("#agrega"+index).attr("id","agrega0");
   $("#elimina"+index).attr("id","elimina0")
@@ -221,15 +231,17 @@ function guardarGastos(){
     
     }
 }
-
+var indiceSelect;
 function despliegaRegistrados(IdEntPry){
     //alert($(IdEntPry).parents("div").attr("id"));
     var IdEntCue = $("#cuentax").val();
     var url="../gastos/gastosRegistrados.php"
     $.post(url,{IdEntPry:$(IdEntPry).val(),IdEntCue:IdEntCue},function(reponseText){
         $(IdEntPry).parents("table").next("div").html(reponseText).next("div").css({"visibility":"visible","display":""});
+        indiceSelect=$(IdEntPry).prop("selectedIndex");
         //$(IdEntPry).parents("div").find(".movRegistrados:first").html(reponseText);
         $(".elimina").button({icons: {primary: "ui-icon-trash"},text: false});
+        
         //$(".datosMov").css("visibility","visible");
         //$(".datosMov").css("display","");
     });
