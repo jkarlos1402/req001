@@ -127,7 +127,7 @@ function cargaCaracteristicas() {
         $("input[type=button],input[type=submit]").button();
         $(".botonAdd").button({icons: {primary: "ui-icon-plusthick"}, text: false});
         $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
-        $("#accordion,#cliente").accordion({
+        $("#cliente").accordion({
             heightStyle: "content"
         });
         $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});

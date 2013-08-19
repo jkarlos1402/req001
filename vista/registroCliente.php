@@ -11,7 +11,18 @@ if ($_SESSION["k_perfil"] == "USU") {
 }
 ?>
 <script type="text/javascript">
-    $(window).load(cargaCaracteristicas());
+    //$(window).load(cargaCaracteristicas());
+    $("#accordion").accordion({
+        heightStyle: "content"
+    });
+    $("input[type=button],input[type=submit]").button();
+    $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
+    $("#Reg_Cli,#formModificaCli").submit(function() {
+        if (validaCliente())
+            return true;
+        else
+            return false;
+    });
 </script>
 <form class="form" name="Reg_Cli" id="Reg_Cli" method="POST" action="../cliente/altaCliente.php" target="_top">
     <div align="center" id="div_cra"> 
