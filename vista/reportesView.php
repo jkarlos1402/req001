@@ -26,7 +26,7 @@ if (!ISSET($_SESSION["k_username"])) {
                 
             </div> 
         </td>
-        <td style="width: 935px;" align="center">
+        <td style="width: 935px; vertical-align: top;" align="center">
             <div id="resultadoReporte">                
             </div>
         </td>
