@@ -11,7 +11,7 @@ $IdEntCue=$_POST['IdEntCue'];
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
 
 		';*/
-$query =  "SELECT * FROM tblentgas WHERE IdEntPry = $IdEntPry AND IdEntCue = $IdEntCue";
+$query =  "SELECT * FROM tblentgas WHERE IdEntPry = $IdEntPry AND IdEntCue = $IdEntCue ORDER BY FecEntGas DESC";
 $res = mysql_query($query,$conexion);
 //$resultado=  mysql_fetch_array($res);
 if(mysql_num_rows($res) > 0){
@@ -30,7 +30,7 @@ echo '<div style="margin-top:5px;">
     while($resultado=  mysql_fetch_array($res)){
     echo'               <tr>
                             <td width="45%"><input type="text" style="width:100%;" value="'.$resultado['DesEntGas'].'"/></td>
-                            <td width="25%"><input type="fecha"  style="width:100%;" value="'.$resultado['FecEntGas'].'"/></td>
+                            <td width="25%"><input type="fecha"  style="width:100%;" value="'.date('d-m-Y',strtotime($resultado['FecEntGas'])).'"/></td>
                             <td width="25%">$<input type="text" class="monto" style="width:90%;" value="'.$resultado['MonEntGas'].'"/></td>
                         </tr>';
     }

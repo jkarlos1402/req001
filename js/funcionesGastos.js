@@ -217,7 +217,7 @@ function guardarGastos(){
     for(i=0;i<=lim;i++){
         
         $.post(url,$("#form"+i).serialize(),function(responseText){
-            $("#log").html(responseText);
+            $("#log").html("<p><strong>"+responseText+"</strong></p>").addClass("ui-widget ui-state-highlight ui-corner-all").css({"width":"250px","position":"absolute","margin-left":"500px","margin-top":"-150px","text-align": "center"}).show( "puff", 1000 ).delay(2000).hide( "puff", 1000 );
             
         });
     }
@@ -226,7 +226,7 @@ function guardarGastos(){
     var saldo = $("#saldo").val();
     var url ="../gastos/estadoCuenta.php";
     $.post(url,{cuenta:cuenta,saldo:saldo},function(responseText){
-            $("#log").html(responseText);
+            /*$("#log").html(responseText);*/
     });
     
     }
@@ -235,7 +235,7 @@ var indiceSelect;
 function despliegaRegistrados(IdEntPry){
     //alert($(IdEntPry).parents("div").attr("id"));
     var IdEntCue = $("#cuentax").val();
-    var url="../gastos/gastosRegistrados.php"
+    var url="../gastos/gastosRegistrados.php";
     $.post(url,{IdEntPry:$(IdEntPry).val(),IdEntCue:IdEntCue},function(reponseText){
         $(IdEntPry).parents("table").next("div").html(reponseText).next("div").css({"visibility":"visible","display":""});
         indiceSelect=$(IdEntPry).prop("selectedIndex");
