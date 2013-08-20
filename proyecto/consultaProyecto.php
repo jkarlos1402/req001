@@ -109,7 +109,7 @@ while($renglon = mysql_fetch_array($resultadocliente)){
         $auxiva=0;
     }
     echo '<script type="text/javascript" src="../js/proyectoFunciones.js"></script>
-        <label>Cliente: </label><input type=text value="'.$renglon['NomEntCli'].'">';
+        <label>Cliente: </label><input type="text" readonly value="'.$renglon['NomEntCli'].'">';
 }
 echo '<table CellSpacing="3">
     <tr class="encabezado">
