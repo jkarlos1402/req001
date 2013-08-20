@@ -63,6 +63,8 @@ $res = mysql_query($query) or die(mysql_error());
 while($saldoCuenta = mysql_fetch_array($res)){
     $query = "update tblentcue set SalEntCue = ".$saldoCuenta['saldo_cuenta']." where IdEntCue = ".$saldoCuenta['IdEntCue'];
     mysql_query($query);
+    $query = "update tblentcue set SalActEntCue =(".$saldoCuenta['saldo_cuenta']."-(SELECT sum(MonEntGas) FROM tblentgas where IdEntCue =".$saldoCuenta['IdEntCue'].")) where IdEntCue = ".$saldoCuenta['IdEntCue'];
+    mysql_query($query) or die(mysql_error());
 }
 echo "Se han registrado las dipersiones para el pago";
 ?>
