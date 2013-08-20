@@ -86,10 +86,9 @@ function despliegaMovimientos(index){
     $(".datosMov").css("display","none");
     $("#ui-datepicker-div").remove();
     $("input[type=fecha]").datepicker();
-    $("input[type=fecha]").datepicker( "refresh" );
-    
-    
+    $("input[type=fecha]").datepicker("option","dateFormat","dd-mm-yy");   
 }
+
 var cuenta;
 var index;
 function agregarMovimientos(){
@@ -121,7 +120,7 @@ function agregarMovimientos(){
   $("#mov"+index).find("input[type=text]").val("");  
   $("#mov"+index).find(".index:last").val(index);
   $("#mov"+index).find(".indexCampos:last").val("0");
-  $("#mov"+index).find("#montoTotal").val("0.00");
+  $("#mov"+index).find("#montoTotal").val("");
   $("#mov"+index).find("#fecha"+index+"0").removeClass("hasDatepicker").datepicker().val("");
   $("#mov"+index).find(".agrega:last").attr('onclick','agregaCampos('+index+')');
   $("#mov"+index).find(".elimina:last").attr('onclick','eliminaCampos('+index+')');
@@ -232,8 +231,9 @@ function guardarGastos(){
     }
 }
 var indiceSelect;
+
 function despliegaRegistrados(IdEntPry){
-    //alert($(IdEntPry).parents("div").attr("id"));
+    var gastosRegistrados=0.00;
     var IdEntCue = $("#cuentax").val();
     var url="../gastos/gastosRegistrados.php";
     $.post(url,{IdEntPry:$(IdEntPry).val(),IdEntCue:IdEntCue},function(reponseText){
@@ -241,7 +241,12 @@ function despliegaRegistrados(IdEntPry){
         indiceSelect=$(IdEntPry).prop("selectedIndex");
         //$(IdEntPry).parents("div").find(".movRegistrados:first").html(reponseText);
         $(".elimina").button({icons: {primary: "ui-icon-trash"},text: false});
-        
+        $(IdEntPry).parents("table").next("div").find(".monto").each(
+            function(){
+                gastosRegistrados=gastosRegistrados+eval($(this).val());
+            });
+            $(IdEntPry).parents("table").next("div").next("div").find("#montoTotal").val(gastosRegistrados.toFixed(2));
+                    
         //$(".datosMov").css("visibility","visible");
         //$(".datosMov").css("display","");
     });
