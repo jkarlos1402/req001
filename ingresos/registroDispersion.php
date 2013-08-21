@@ -23,19 +23,19 @@ echo '<script type="text/javascript" src="../js/dispersionFunciones.js"></script
     </script>';
 
 //************************************
-$consulta="SELECT NomEntCli,NomEntPry FROM tblentpry, tblentcli WHERE tblentcli.IdEntCli = tblentpry.IdEntCli and tblentpry.IdEntPry=$IdEntPry";
+$consulta="SELECT NomEntCli,NomEntPry,PjeEntPry FROM tblentpry, tblentcli WHERE tblentcli.IdEntCli = tblentpry.IdEntCli and tblentpry.IdEntPry=$IdEntPry";
 $resultado=mysql_query($consulta) or die (mysql_error());
 
 echo '<article align="center" class="encabezado">REGISTRO Y DISPERSION DE PAGOS</article>
 <div align="center">';
-while($renglon = mysql_fetch_array($resultado)){
+while($renglonp = mysql_fetch_array($resultado)){
     echo'<table class="ui-widget">
             <tr>
                 <td>
                     Cliente
 		</td>
 		<td>
-                    '.$renglon['NomEntCli'].'
+                    '.$renglonp['NomEntCli'].'
 		</td>
             </tr>
             <tr>
@@ -43,7 +43,7 @@ while($renglon = mysql_fetch_array($resultado)){
                     Proyecto: 
 		</td>
 		<td>
-                    '.$renglon['NomEntPry'].'
+                    '.$renglonp['NomEntPry'].'
 		</td>
             </tr>
 	</table>					
@@ -57,8 +57,10 @@ while($renglon = mysql_fetch_array($resultado)){
 		while($renglon = mysql_fetch_array($resultado)){
                     if($renglon['FecEntPagRal']!=null){
 			$monto =$renglon['MonEntPagRal'];
+                        $monto=(float)$monto-(($monto*$renglonp['PjeEntPry'])/100);
                     }else{
 			$monto =$renglon['MonEntPagPrg'];
+                        $monto=(float)$monto-(($monto*$renglonp['PjeEntPry'])/100);
                     }
                     echo '<h3>'.$renglon['CtoEntPag'].'</h3>
                     <div>
@@ -188,7 +190,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                                 $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                                 //*************************************		
                                                 $resultadoorig=mysql_query("$consultaorig",$conexion) or die (mysql_error());
-                                                echo '<select name="IdOrgPag_'.$i.'_0[]" id="IdOrgPag_'.$i.'_'.$h.'_0_" onchange="agregaOrigen(this,'.$i.','.$h.',0);">
+                                                echo '<select name="IdOrgPag_'.$i.'_0[]" id="IdOrgPag_'.$i.'_'.$h.'_0_" class="origenDis" onchange="agregaOrigen(this,'.$i.','.$h.',0);">
                                                         <option></option>';
                                                 while($renglon = mysql_fetch_array($resultadoorig)){
                                                     echo '<option value="'.$renglon['IdOrgPag'].'"';
@@ -362,7 +364,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                                         $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                                         //*************************************		
                                                         $resultadoorig=mysql_query($consultaorig) or die (mysql_error());
-                                                        echo '<select name="IdOrgPag_'.$i.'_'.$h.'[]" disabled="disabled" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
+                                                        echo '<select name="IdOrgPag_'.$i.'_'.$h.'[]" disabled="disabled" class="origenDis" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
                                                                 <option></option>';
                                                         while($renglon = mysql_fetch_array($resultadoorig)){
                                                             echo '<option value="'.$renglon['IdOrgPag'].'">'.$renglon['DscOrgPag'].'</option>';
@@ -426,7 +428,7 @@ while($renglon = mysql_fetch_array($resultado)){
                                             $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                             //*************************************		
                                             $resultadoorig=mysql_query($consultaorig) or die (mysql_error());
-                                            echo '<select name="IdOrgPag_'.$i.'_0[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
+                                            echo '<select name="IdOrgPag_'.$i.'_0[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" class="origenDis" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');" style="visibility:hidden; display:none;">
                                                     <option></option>';
                                             while($renglon = mysql_fetch_array($resultadoorig)){
                                                 echo '<option value="'.$renglon['IdOrgPag'].'">'.$renglon['DscOrgPag'].'</option>';

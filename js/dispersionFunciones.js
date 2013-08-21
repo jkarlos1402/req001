@@ -71,8 +71,14 @@ function consultaDestino(padre,hijo){
 function guardarOrigen(){
     var url = "../ingresos/guardaOrigen.php";
     var origennuevo=$("#nuevoorg").val();
+    var ultimoIdOrigen = -1;
     $.post(url,{origennuevo:origennuevo},function(responseText){
-            $("#mensaje").html(responseText);
+            $("#dialog").dialog("close"); 
+            ultimoIdOrigen=responseText;
+            $(".origenDis").each(function(){
+            $(this).find("option:last").remove();
+            $(this).append("<option value='"+ultimoIdOrigen+"'>"+origennuevo+"</option><option value='otros'>OTRO...</option>");
+        });
     consultaOrigen();	
     });
 }
