@@ -5,6 +5,7 @@ $IdEntPry=$_POST['IdEntPry'];
 $Idpago=$_POST['pago'];
 $renglones = $_POST['renglones'];
 $r=0;
+echo $IdEntPry[1];
 echo '<script type="text/javascript" src="../js/dispersionFunciones.js"></script>
     <script type="text/javascript" >
         $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
@@ -282,7 +283,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                             $consultaorig = "SELECT IdOrgPag,DscOrgPag FROM tblorgpag";
                                                             //*************************************		
                                                             $resultadoorig=mysql_query($consultaorig) or die (mysql_error());
-                                                            echo '<select name="IdOrgPag_'.$i.'_'.$h.'[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');">
+                                                            echo '<select name="IdOrgPag_'.$i.'_'.$h.'[]" id="IdOrgPag_'.$i.'_'.$h.'_'.$j.'_" class="origenSec" onchange="agregaOrigen(this,'.$i.','.$h.','.$j.');">
                                                                     <option></option>';
                                                             while($renglon = mysql_fetch_array($resultadoorig)){
                                                                 echo '<option value="'.$renglon['IdOrgPag'].'"';

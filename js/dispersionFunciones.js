@@ -76,10 +76,12 @@ function guardarOrigen(){
             $("#dialog").dialog("close"); 
             ultimoIdOrigen=responseText;
             $(".origenDis").each(function(){
-            $(this).find("option:last").remove();
-            $(this).append("<option value='"+ultimoIdOrigen+"'>"+origennuevo+"</option><option value='otros'>OTRO...</option>");
-        });
-    consultaOrigen();	
+                $(this).find("option:last").remove();
+                $(this).append("<option value='"+ultimoIdOrigen+"'>"+origennuevo+"</option><option value='otros'>OTRO...</option>");
+            });
+            $(".origenSec").each(function(){
+                $(this).append("<option value='"+ultimoIdOrigen+"'>"+origennuevo+"</option>");
+            });
     });
 }
 
