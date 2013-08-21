@@ -300,3 +300,35 @@ function enviaModificar(IdEntPry){
         $("#workbench").html(responseText);
     });
 }
+
+function consultarDispersion(a){
+    alert(a);
+}
+
+function programarDispersion(pago){
+    if (confirm("¿Deseas programar dispersión?")) {
+        var IdEntPry=($("#IdEntPry").val());
+        var renglones=1;
+        var IdEntPag=[];
+        IdEntPag[1]=pago;
+        $.post("../ingresos/registroDispersion.php",{IdEntPry:IdEntPry,pago:IdEntPag,renglones:renglones},function(data){
+            $("#workbench").html(data);
+            $("input[type=button],input[type=submit]").button();
+            $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
+            $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
+            $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
+                width: 350,
+                modal: true,
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+        });
+    }
+}

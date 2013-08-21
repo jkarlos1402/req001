@@ -29,6 +29,7 @@ $pagoi=0;
 $cuenta=0;
 $cuentavalidar=0;
 
+
  //******************************************************************************************************//
 // Nombre: Regino Tabares																				//
 // Nombre del módulo: diasEntreFechas 																	 //
@@ -100,7 +101,9 @@ while($renglon = mysql_fetch_array($resultadocliente)){
         $totalpry = round($totalpry,2);
     }
     echo '<label>Cliente: </label><input type=text value='.$renglon['NomEntCli'].'>';
+   $factor=$renglon['PjeEntPry'];
 }
+
 echo '<form name="formulario" id="formulario" method="post" action="../ingresos/registroDispersion.php">
 	<table CellSpacing="3">
             <tr class="encabezado">
@@ -185,7 +188,14 @@ while($renglon = mysql_fetch_array($resultado)){
             </tr>';
     $cont++;	
 }
-echo '      <tr align="center" class="registro">
+echo '      <tr align="center">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Factor Intermediario</td>
+                <td>'.(int)$factor.'%</td>
+            </tr>
+            <tr align="center" class="registro">
                 <td colspan="4"></td>
                 <td>Total<br>Proyecto</td>
                 <td>$'.$totalpry.'</td>

@@ -129,8 +129,8 @@ while($renglon = mysql_fetch_array($resultado)){
     $dias = diasFaltantes(date("d-m-Y"),$renglon['FecEntPagPrg'],$renglon['IdEntPag']);
     echo '<tr align="center">
             <form class="form" id="formulario'.$cont.'" name="formulario'.$cont.'" method="POST" action="../ingresos/consultaDispersion.php">
-            <td><img src="../vista/images/vista.png" width="25" onclick=consultarDispersion('.$cont.');></td>
-            <td><img src="../vista/images/config.gif" width="25"></td>
+            <td><img src="../vista/images/vista.png" style="cursor:pointer;" width="25" onclick=consultarDispersion('.$renglon['IdEntPag'].');></td>
+            <td><img src="../vista/images/config.gif" style="cursor:pointer;" onclick=programarDispersion('.$renglon['IdEntPag'].') width="25"></td>
             <td>'.$cont.'<input type="text" id="IdEntPag" name="IdEntPag" value="'.$renglon['IdEntPag'].'" style="visibility:hidden; display:none"><input type="text" id="IdEntPry" name="IdEntPry" value="'.$IdEntPry.'" style="visibility:hidden; display:none"></td>';
     if($renglon['FecEntPagRal']==null){	
         echo '<td>'.date("d-m-Y",strtotime($renglon['FecEntPagPrg'])).'</td>';
