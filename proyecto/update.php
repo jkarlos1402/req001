@@ -60,7 +60,7 @@ while(isset($_POST['lint_pjePag'.$i])){
 	//recuperando información necesaria para agregar pago
 	$ltxt_ctoPag = $_POST['ltxt_ctoPag'.$i];
 	$lint_pjePag = $_POST['lint_pjePag'.$i];//porcentaje del consto del proyecto sin IVA
-	$lint_subPag = $_POST['lint_subPag'.$i];//monto del pago sin IVA
+	$lint_subPag = $_POST['lint_totPag'.$i];//monto del pago sin IVA
 	$ltxt_fecPag = date('Y-m-d',strtotime($_POST['ltxt_fecPag'.$i]));//fecha programada para realizar el pago
 	$fechaProgramada = explode ("-", $ltxt_fecPag);
 	$fechaHoy = explode("-",date("Y-m-d"));
