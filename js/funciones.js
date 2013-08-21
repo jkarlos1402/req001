@@ -366,7 +366,9 @@ function mostrarInfoIng(IdEntPry) {
                     duration: 1000
                 }
             });
+            $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
         });
+        
     }
     else {
         $("#datos").html("");
@@ -595,7 +597,8 @@ function selTodos(cont, proceso){
                     heightStyle: "content"
                 });
                 $("input[type=button],input[type=submit]").button();
-                $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
+                $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");               
+                $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
             });           
         }else{
             for (var i = 1; i < cont; i++){
@@ -625,7 +628,9 @@ function programaDisp(aux) {
         //document.getElementById("formulario").submit();
         $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
             $("#workbench").html(data);
-            //cargaCaracteristicas();
+            $("input[type=button],input[type=submit]").button();
+            $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
+            $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
             $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
                 width: 350,
                 modal: true,
@@ -645,7 +650,10 @@ function programaDisp(aux) {
 
 ////////////////////////////////////////////////////////////////////////////
 function programaSel() {
-    //document.getElementById("formulario").submit();
+    if($( "input:checked" ).length === 0){
+        alert("Seleccione por lo menos un pago");
+        return false;
+    }
     $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
         $("#workbench").html(data);
         //cargaCaracteristicas();
@@ -662,6 +670,9 @@ function programaSel() {
                     duration: 1000
                 }
             });
+            $("input[type=button],input[type=submit]").button();
+            $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
+            $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
     });
 }
 

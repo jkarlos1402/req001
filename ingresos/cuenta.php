@@ -2,7 +2,7 @@
 include("../conexion.php");
 //Crea y ejecuta la consulta para saber los clientes registrados
 $IdEntPoE = $_POST['IdEntPoE'];
-$IdEntBan = $_POST['IdEntBan'];
+//$IdEntBan = $_POST['IdEntBan'];
 $padre = $_POST['padre'];
 $hijo = $_POST['hijo'];
 if(isset($_POST['IdEntCue'])){
@@ -11,8 +11,8 @@ if(isset($_POST['IdEntCue'])){
     $IdEntCue = -1;
 }
 $query = "select tblentcue.IdEntCue, tblentcue.NumEntCue
-			from tblentcue, tblentsuc
-			where tblentsuc.IdEntBan =$IdEntBan AND tblentsuc.IdEntSuc = tblentcue.IdEntSuc and tblentcue.IdEntPoE = $IdEntPoE";
+			from tblentcue
+                        where tblentcue.IdEntPoE = $IdEntPoE";
 		
 $res = mysql_query($query,$conexion);
 
