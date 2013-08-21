@@ -186,8 +186,20 @@ function valida(){
 			$("#"+suc).focus();
 			return false;
 		}
+                if($("#"+suc).val().length>4){
+                    alert("La sucursal es no es válida");
+			$("#participante").accordion("option","active",$("#"+suc).parents("div").prev("h3").index("h3"));
+			$("#"+suc).focus();
+			return false;
+                }
 		if(isNaN($("#"+cta).val())){
 			alert("El número de cuenta es numérico");
+			$("#participante").accordion("option","active",$("#"+cta).parents("div").prev("h3").index("h3"));
+			$("#"+cta).focus();
+			return false;
+		}
+                if($("#"+cta).val().length!=16){
+			alert("El número de cuenta debe tener 16 dígitos");
 			$("#participante").accordion("option","active",$("#"+cta).parents("div").prev("h3").index("h3"));
 			$("#"+cta).focus();
 			return false;
