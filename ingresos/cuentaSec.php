@@ -12,8 +12,8 @@ if(isset($_POST['IdEntCue'])){
     $IdEntCue = -1;
 }
 $query = "select tblentcue.IdEntCue, tblentcue.NumEntCue
-			from tblentcue, tblentsuc
-			where tblentsuc.IdEntBan =$IdEntBan AND tblentsuc.IdEntSuc = tblentcue.IdEntSuc and tblentcue.IdEntPoE = $IdEntPoE";
+			from tblentcue
+			where tblentcue.IdEntPoE = $IdEntPoE";
 		
 $res = mysql_query($query,$conexion);
 
