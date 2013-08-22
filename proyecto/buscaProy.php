@@ -4,6 +4,7 @@ require_once '../conexion.php';
 $idProy = $_POST['IdEntPry'];
 $query = "select * from tblentpry where IdEntPry = $idProy and EstEntPry = 1 limit 1";
 $res = mysql_query($query,$conexion);
+$banderaActivaIVA = false;
 $proyecto = mysql_fetch_array($res);
 if($proyecto['IVAEntPry'] != 0){
     $checked = "checked";
@@ -154,6 +155,7 @@ while($pago = mysql_fetch_array($res)){
     if($pago['FecEntPagRal'] != ""){
         $MonEntPag = $pago['MonEntPagRal'];
         $disabled = 'disabled="disabled"';
+        $banderaActivaIVA = true;
     }else{
         $MonEntPag = $pago['MonEntPagPrg'];
         $disabled = '';
@@ -233,8 +235,11 @@ $formulario .= '       <tr>
     <script type="text/javascript">
         $("#lbool_iva").on("change",function(change,ui){valida("totalP",'.($numPagos-1).');});
         $("#lint_ctoPry").on("blur",function(blur,ui){valida("totalP",'.($numPagos-1).');});
-        valida("totalP",'.($numPagos-1).');
-    </script>
+        valida("totalP",'.($numPagos-1).');';
+        if($banderaActivaIVA){
+            $formulario.= '$("#lbool_iva").attr("disabled",true);';
+        }
+    $formulario.= '</script>
 ';
 
 echo $formulario;

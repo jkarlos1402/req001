@@ -176,8 +176,7 @@ function valida(origen,actual){
                     pje = "lint_pjePag"+i;
                     totP = "lint_totPag"+i;
                     if(!expresion.test($("#"+totP).val())){
-                            if(expresion.test($("#"+pje).val())){
-                                alert("entro");
+                            if(expresion.test($("#"+pje).val())){                               
                                 subTotalPago = (($("#lint_pjePag"+i).val())*total)/100;
                                 ivaPago = subTotalPago * iva;
                                 totalPago = subTotalPago + ivaPago;

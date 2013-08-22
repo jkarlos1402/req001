@@ -42,7 +42,7 @@ while(isset($_POST['lint_pjePag'.$i])){
 	//recuperando información necesaria para agregar pago
 	$ltxt_ctoPag = $_POST['ltxt_ctoPag'.$i];
 	$lint_pjePag = $_POST['lint_pjePag'.$i];//porcentaje del consto del proyecto sin IVA
-	$lint_subPag = $_POST['lint_subPag'.$i];//monto del pago sin IVA
+	$lint_totPag = $_POST['lint_totPag'.$i];//monto del pago sin IVA
 	$ltxt_fecPag = date('Y-m-d',strtotime($_POST['ltxt_fecPag'.$i]));//fecha programada para realizar el pago
 	$fechaProgramada = explode ("-", $ltxt_fecPag);
 	$fechaHoy = explode("-",date("Y-m-d"));
@@ -63,7 +63,7 @@ while(isset($_POST['lint_pjePag'.$i])){
 		$lint_idEst = $fila['IdEntEst'];//id del estado correspondiente
 	}
 	//query para ingresar el nuevo registro de pago tabla tblentpag
-	$query = "insert into tblentpag (FecEntPagPrg,PorEntPagPrg,MonEntPagPrg,CtoEntPag,IdEntPry,IdEntEst) values ('$ltxt_fecPag','$lint_pjePag','$lint_subPag','$ltxt_ctoPag','$lint_idProy','$lint_idEst')";
+	$query = "insert into tblentpag (FecEntPagPrg,PorEntPagPrg,MonEntPagPrg,CtoEntPag,IdEntPry,IdEntEst) values ('$ltxt_fecPag','$lint_pjePag','$lint_totPag','$ltxt_ctoPag','$lint_idProy','$lint_idEst')";
 	echo $query;
 	$res = mysql_query($query,$conexion);//se agrega nuevo registro de pago
 	if(!$res){

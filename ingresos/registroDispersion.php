@@ -537,12 +537,13 @@ while($renglonp = mysql_fetch_array($resultado)){
                             <input type="hidden" id="numerodePago'.$i.'" name="numerodePago" value="'.$i.'"/>
                             <input type="hidden" id="IdEntPag'.$i.'" name="IdEntPag" value="'.$Idpago[$i].'"/>
                         </form>
-                    </div>';	
+                    </div>
+                    <script type="text/javascript">validaTotal('.$i.');</script>';	
                     $h++;
                 }
             }				  
         }
-}//aqui cieera el while de pagos
+}//aqui cierra el while de pagos
 /*aqui cierra el acordeon*/
 echo  '</div> 
 </div> 
