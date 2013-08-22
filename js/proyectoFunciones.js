@@ -24,7 +24,7 @@ $(document).ready(function(){
 		  }else{
 			$("#error").html("");
 			$("#error").removeClass("ui-state-error ui-corner-all");
-			if(valida("pje")){
+			if(valida("totalP")){
 				$("input").removeAttr('disabled');
 				return true;
 			}else{
@@ -131,7 +131,7 @@ function agregaPago(actual){
 	if(confirm("¿Agregar nuevo pago?")){
 		var index = contadorPagos;
 		index++;
-		var newElem ="<tr class='entrada"+(index%2)+"' id='pago"+index+"'><td>"+(index+1)+"</td><td><input type='text' name='ltxt_ctoPag"+index+"' id='ltxt_ctoPag"+index+"' size='50' /></td><td><input type='text' name='lint_pjePag"+index+"' id='lint_pjePag"+index+"' size='8' onblur='valida("+'"pje"'+")'/></td><td>$<input type='text' name='lint_subPag"+index+"' id='lint_subPag"+index+"' size='10' disabled='disabled'/></td><td>$<input type='text' name='lint_ivaPag"+index+"' id='lint_ivaPag"+index+"' size='10' disabled='disabled'/></td><td>$<input type='text' name='lint_totPag"+index+"' id='lint_totPag"+index+"' size='10' onblur='valida("+'"totalP"'+")'/></td><td><input type='fechaPag' name='ltxt_fecPag"+index+"' id='ltxt_fecPag"+index+"' /></td><td id='botonP"+index+"'><a href='#' id='quitaPago' style='height: 20px;'></a></td></tr>";
+		var newElem ="<tr class='entrada"+(index%2)+"' id='pago"+index+"'><td>"+(index+1)+"</td><td><input type='text' name='ltxt_ctoPag"+index+"' id='ltxt_ctoPag"+index+"' size='50' /></td><td><input type='text' name='lint_pjePag"+index+"' id='lint_pjePag"+index+"' size='8' onblur='valida("+'"totalP"'+")'/></td><td>$<input type='text' name='lint_subPag"+index+"' id='lint_subPag"+index+"' size='10' disabled='disabled'/></td><td>$<input type='text' name='lint_ivaPag"+index+"' id='lint_ivaPag"+index+"' size='10' disabled='disabled'/></td><td>$<input type='text' name='lint_totPag"+index+"' id='lint_totPag"+index+"' size='10' onblur='valida("+'"totalP"'+")'/></td><td><input type='fechaPag' name='ltxt_fecPag"+index+"' id='ltxt_fecPag"+index+"' /></td><td id='botonP"+index+"'><a href='#' id='quitaPago' style='height: 20px;'></a></td></tr>";
 		if(index > 1){
 			$("#botonP"+contadorPagos).html("");
 		}
@@ -142,7 +142,7 @@ function agregaPago(actual){
 		$("input[type=text],input[type=fechaEtr],input[type=fechaPag]").addClass("ui-corner-all");
 		$("td").addClass("ui-corner-all");
 		$("#quitaPago").button({icons: {primary: "ui-icon-trash"}});
-		$("#quitaPago").on("click",function(click,ui){quitarPago(0); valida("pje",0);});
+		$("#quitaPago").on("click",function(click,ui){quitarPago(0); valida("totalP",0);});
 		contadorPagos++;
 	}else{return;}
 }
@@ -160,62 +160,55 @@ function valida(origen,actual){
 	}
 	var expresion = new RegExp("^[0-9]*.?[0-9]+$");
 	if(expresion.test($("#lint_ctoPry").val())){//aplica expresion regular
-		total = parseFloat($("#lint_ctoPry").val());
+            total = parseFloat($("#lint_ctoPry").val());
 	}else{
-		total = 0;
-		$("#lint_ctoPry").val("0");
+            total = 0;
+            $("#lint_ctoPry").val("0");
 	}
 	if($("#lbool_iva").attr("checked")){
-		iva = 0.16;	
-	}else{iva = 0;}
-	if(origen == "pje"){
-		suma = 0;
-		for(var i = 0;i<=contadorPagos;i++){
-			pje = "lint_pjePag"+i;
-			if(!expresion.test($("#"+pje).val())){
-				$("#"+pje).val("");
-				$("#lint_subPag"+i).val("");
-				$("#lint_ivaPag"+i).val("");
-				$("#lint_totPag"+i).val("");
-			}else{
-				subTotalPago = (($("#lint_pjePag"+i).val())*total)/100;
-				ivaPago = subTotalPago * iva;
-				totalPago = subTotalPago + ivaPago;
-				$("#lint_subPag"+i).val(subTotalPago.toFixed(2));
-				$("#lint_ivaPag"+i).val(ivaPago.toFixed(2));
-				$("#lint_totPag"+i).val(totalPago.toFixed(2));
-				suma = suma + parseFloat(totalPago);
-			}
-		}
-	}
+            iva = 0.16;	
+	}else{
+            iva = 0;
+        }
 	if(origen == "totalP"){
-		suma = 0;
-		for(var i = 0;i<=contadorPagos;i++){
-			pje = "lint_pjePag"+i;
-			totP = "lint_totPag"+i;
-			if(!expresion.test($("#"+totP).val())){
-				$("#"+totP).val("");
-				$("#lint_subPag"+i).val("");
-				$("#lint_ivaPag"+i).val("");
-				$("#lint_pjePag"+i).val("");
-			}else{
-				//obtiene porcentaje
-				pagoSinIVA = (parseFloat($("#"+totP).val())*total)/((total*iva)+total);
-				$("#"+pje).val((pagoSinIVA*100/total).toFixed(3));
-				subTotalPago = (($("#lint_pjePag"+i).val())*total)/100;
-				ivaPago = subTotalPago * iva;
-				$("#lint_subPag"+i).val(subTotalPago.toFixed(2));
-				$("#lint_ivaPag"+i).val(ivaPago.toFixed(2));
-				suma = suma + parseFloat($("#"+totP).val());
-			}
-		}
+            suma = 0;
+            for(var i = 0;i<=contadorPagos;i++){
+                    pje = "lint_pjePag"+i;
+                    totP = "lint_totPag"+i;
+                    if(!expresion.test($("#"+totP).val())){
+                            if(expresion.test($("#"+pje).val())){
+                                alert("entro");
+                                subTotalPago = (($("#lint_pjePag"+i).val())*total)/100;
+                                ivaPago = subTotalPago * iva;
+                                totalPago = subTotalPago + ivaPago;
+                                $("#lint_subPag"+i).val(subTotalPago.toFixed(2));
+                                $("#lint_ivaPag"+i).val(ivaPago.toFixed(2));
+                                $("#lint_totPag"+i).val(totalPago.toFixed(2));
+                                suma = suma + parseFloat(totalPago);
+                            }else{
+                                $("#"+totP).val("");
+                                $("#lint_subPag"+i).val("");
+                                $("#lint_ivaPag"+i).val("");
+                                $("#lint_pjePag"+i).val("");
+                            }
+                    }else{
+                            //obtiene porcentaje
+                            pagoSinIVA = (parseFloat($("#"+totP).val())*total)/((total*iva)+total);
+                            $("#"+pje).val((pagoSinIVA*100/total).toFixed(5));
+                            subTotalPago = (($("#lint_pjePag"+i).val())*total)/100;
+                            ivaPago = subTotalPago * iva;
+                            $("#lint_subPag"+i).val(subTotalPago.toFixed(2));
+                            $("#lint_ivaPag"+i).val(ivaPago.toFixed(2));
+                            suma = suma + parseFloat($("#"+totP).val());
+                    }
+            }
 	}
 	if(suma.toFixed(2) > ((total*iva)+total)){
 		$("#error").addClass("ui-state-error ui-corner-all");
 		$("#error").html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> Se superó el 100%");
 		excedente = suma.toFixed(2)-((total*iva)+total);
 		excedenteSinIVA = (excedente*total)/((total*iva)+total);
-		pjeExcedente = (excedenteSinIVA*100/total).toFixed(3);
+		pjeExcedente = (excedenteSinIVA*100/total).toFixed(5);
 		$("#info").html("Se superó el porcentaje en un <b>"+pjeExcedente+"%</b> <br/>O en un monto total de <b>$"+excedente.toFixed(2)+"</b>");
 		return false;
 	}else if(suma.toFixed(2) < ((total*iva)+total)){
@@ -223,7 +216,7 @@ function valida(origen,actual){
 			$("#error").html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> Aún no se alcanza el 100%");
 			faltante = ((total*iva)+total)- suma.toFixed(2);
 			faltanteSinIVA = (faltante*total)/((total*iva)+total);
-			pjeFaltante = (faltanteSinIVA*100/total).toFixed(3);
+			pjeFaltante = (faltanteSinIVA*100/total).toFixed(5);
 			$("#info").html("Falta un porcentaje de <b>"+pjeFaltante+"%</b> <br/>O un monto total de <b>$"+faltante.toFixed(2)+"</b>");
 		return false;
 		}else{

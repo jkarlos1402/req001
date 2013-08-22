@@ -66,8 +66,8 @@ $formulario = '<script type="text/javascript" src="../js/proyectoFunciones.js"><
                     <tr>
                         <td colspan="2">
                             <label for="lint_ctoPry2">Costo total: $</label>
-                            <input type="text" name="lint_ctoPry" id="lint_ctoPry" placeholder="Costo sin IVA" value="'.$proyecto['PreEntPry'].'" disabled="disabled"/>
-                            <input type="checkbox" name="lbool_ivaPry" id="lbool_iva" title="¿Se incluirá IVA?" '.$checked.' disabled="disabled"/>
+                            <input type="text" name="lint_ctoPry" id="lint_ctoPry" placeholder="Costo sin IVA" value="'.$proyecto['PreEntPry'].'"/>
+                            <input type="checkbox" name="lbool_ivaPry" id="lbool_iva" title="¿Se incluirá IVA?" '.$checked.' />
                             <label for="lbool_iva">IVA</label>
                         </td>
                         <td>
@@ -152,10 +152,10 @@ $contPago = 0;
 $numPagos=mysql_num_rows($res);
 while($pago = mysql_fetch_array($res)){
     if($pago['FecEntPagRal'] != ""){
-        $PorEntPag = $pago['PorEntPagRal'];
+        $MonEntPag = $pago['MonEntPagRal'];
         $disabled = 'disabled="disabled"';
     }else{
-        $PorEntPag = $pago['PorEntPagPrg'];
+        $MonEntPag = $pago['MonEntPagPrg'];
         $disabled = '';
     }
     if($pago['FecEntPagRal']!=""){
@@ -172,7 +172,7 @@ while($pago = mysql_fetch_array($res)){
                                 <input type="text" name="ltxt_ctoPag'.$contPago.'" id="ltxt_ctoPag'.$contPago.'" size="50"  value="'.$pago['CtoEntPag'].'" '.$disabled.'/>
                             </td>
                             <td>
-                                <input type="text" name="lint_pjePag'.$contPago.'" id="lint_pjePag'.$contPago.'" size="8" onblur="valida('."'pje',".$numPagos.');" value="'.$PorEntPag.'" '.$disabled.'/>
+                                <input type="text" name="lint_pjePag'.$contPago.'" id="lint_pjePag'.$contPago.'" size="8" onblur="valida('."'totalP',".$numPagos.');" '.$disabled.'/>
                             </td>
                             <td>
                                 $<input type="text" name="lint_subPag'.$contPago.'" id="lint_subPag'.$contPago.'" size="10" value="'.$pago['MonEntPagRal'].'" '.$disabled.'  disabled="disabled"/>
@@ -181,7 +181,7 @@ while($pago = mysql_fetch_array($res)){
                                 $<input type="text" name="lint_ivaPag'.$contPago.'" id="lint_ivaPag'.$contPago.'" size="10" disabled="disabled"/>
                             </td>
                             <td>
-                                $<input type="text" name="lint_totPag'.$contPago.'" id="lint_totPag'.$contPago.'" size="10" onblur="valida('."'totalP',".$numPagos.');" '.$disabled.'/>
+                                $<input type="text" name="lint_totPag'.$contPago.'" id="lint_totPag'.$contPago.'" size="10" onblur="valida('."'totalP',".$numPagos.');" value="'.$MonEntPag.'" '.$disabled.'/>
                             </td>
                             <td>
                                 <input type="fechaPag" name="ltxt_fecPag'.$contPago.'" id="ltxt_fecPag'.$contPago.'" '.$disabled.'/>
@@ -197,12 +197,7 @@ while($pago = mysql_fetch_array($res)){
     $formulario.='      </tr>';
     $contPago++;
 }
-$formulario .= '        <script type="text/javascript">
-                            $("#lbool_iva").on("change",function(change,ui){valida("pje",'.($numPagos-1).');});
-                            $("#lint_ctoPry").on("blur",function(blur,ui){valida("pje",'.($numPagos-1).');});
-                            valida("pje",'.($numPagos-1).');
-                        </script>
-                        <tr>
+$formulario .= '       <tr>
                             <td colspan="7" align="right">
                                 <input type="button" name="botonAddPag" value="Agregar" onclick="agregaPago('.($numPagos-1).')"/>
                             </td>
@@ -234,6 +229,12 @@ $formulario .= '        <script type="text/javascript">
     </form>
     <form id="formElimina" method="post" target="_top" action="../proyecto/eliminaProyecto.php">
             <input type="hidden" name="IdEntPry" value="'.$idProy.'"/>
-    </form>';
+    </form>
+    <script type="text/javascript">
+        $("#lbool_iva").on("change",function(change,ui){valida("totalP",'.($numPagos-1).');});
+        $("#lint_ctoPry").on("blur",function(blur,ui){valida("totalP",'.($numPagos-1).');});
+        valida("totalP",'.($numPagos-1).');
+    </script>
+';
 
 echo $formulario;

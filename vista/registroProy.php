@@ -68,8 +68,8 @@ if ($_SESSION["k_perfil"] == "USU") {
                     </tr>
                     <td colspan="2">
                         <label for="lint_ctoPry2">Costo total: $</label>
-                        <input type="text" name="lint_ctoPry" id="lint_ctoPry" onblur="valida('pje', 0)" placeholder="Costo sin IVA"/>
-                        <input type="checkbox" name="lbool_ivaPry" id="lbool_iva" title="¿Se incluirá IVA?" onchange="valida('pje', 0)"/>
+                        <input type="text" name="lint_ctoPry" id="lint_ctoPry" onblur="valida('totalP', 0)" placeholder="Costo sin IVA"/>
+                        <input type="checkbox" name="lbool_ivaPry" id="lbool_iva" title="¿Se incluirá IVA?" onchange="valida('totalP', 0)"/>
                         <label for="lbool_iva">IVA</label></td>
                     <td>
                         <label for="lint_pjeUni">Porcentaje:</label>
@@ -117,7 +117,7 @@ if ($_SESSION["k_perfil"] == "USU") {
                     <tr  class="entrada0" id="pago0">
                         <td>1</td>
                         <td><input type="text" name="ltxt_ctoPag0" id="ltxt_ctoPag0" size="50" /></td>
-                        <td><input type="text" name="lint_pjePag0" id="lint_pjePag0" size="8" onblur="valida('pje', 0)"/></td>
+                        <td><input type="text" name="lint_pjePag0" id="lint_pjePag0" size="8" onblur="valida('totalP', 0)"/></td>
                         <td>$<input type="text" name="lint_subPag0" id="lint_subPag0" size="10" disabled="disabled"/></td>
                         <td>$<input type="text" name="lint_ivaPag0" id="lint_ivaPag0" size="10" disabled="disabled"/></td>
                         <td>$<input type="text" name="lint_totPag0" id="lint_totPag0" size="10" onblur="valida('totalP', 0)"/></td>
