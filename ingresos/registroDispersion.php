@@ -5,7 +5,6 @@ $IdEntPry=$_POST['IdEntPry'];
 $Idpago=$_POST['pago'];
 $renglones = $_POST['renglones'];
 $r=0;
-echo $IdEntPry[1];
 echo '<script type="text/javascript" src="../js/dispersionFunciones.js"></script>
     <script type="text/javascript" >
         $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
