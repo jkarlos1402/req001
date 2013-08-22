@@ -100,7 +100,7 @@ while($renglon = mysql_fetch_array($resultadocliente)){
         $totalpry=$renglon['PreEntPry']+$iva;
         $totalpry = round($totalpry,2);
     }
-    echo '<label>Cliente: </label><input type=text value='.$renglon['NomEntCli'].'>';
+    echo '<label>Cliente: <b>'.$renglon['NomEntCli'].'</b></label>';
    $factor=$renglon['PjeEntPry'];
 }
 
@@ -128,17 +128,17 @@ while($renglon = mysql_fetch_array($resultado)){
                 <td>'.$renglon['CtoEntPag'].'</td>
                 <td>'.round($renglon['PorEntPagPrg'],3).'%</td>';
     if($auxiva==1){											//COMPRUEBA SI HAY IVA EN EL PROJECTO
-        $iva =$renglon['MonEntPagPrg'] * .16;				// SI LO HAY HACE EL CÁLCULO PARA SACAR EL IVA
-        $total =$total +($renglon['MonEntPagPrg']+$iva); 	// LO SUMA AL TOTAL
+        //$iva =$renglon['MonEntPagPrg'] * .16;				// SI LO HAY HACE EL CÁLCULO PARA SACAR EL IVA
+        $total =$total +($renglon['MonEntPagPrg']); 	// LO SUMA AL TOTAL
         $totalporc = $totalporc + $renglon['PorEntPagPrg'];
 
-        $pagoi=$renglon['MonEntPagPrg']+$iva; 
-        $pagoi=round($pagoi,2);
-        echo '  <td>$'.$pagoi.'</td>';			//IMPRIME EL VALOR CON IVA
+        //$pagoi=$renglon['MonEntPagPrg']+$iva; 
+        //$pagoi=round($pagoi,2);
+        echo '  <td>$'.$renglon['MonEntPagPrg'].'</td>';			//IMPRIME EL VALOR CON IVA
     }else{
-        $pagoi=$renglon['MonEntPagPrg'];
-        $pagoi=round($pagoi,2);
-        echo '  <td>$'.$pagoi.'</td>';			
+        //$pagoi=$renglon['MonEntPagPrg'];
+        //$pagoi=round($pagoi,2);
+        echo '  <td>$'.$renglon['MonEntPagPrg'].'</td>';			
     }														
     echo '      <td>'.date('d-m-Y',strtotime($renglon['FecEntPagPrg'])).'</td>
                 <td id="porreal'.$cont.'">';
@@ -152,16 +152,15 @@ while($renglon = mysql_fetch_array($resultado)){
     if($renglon['FecEntPagRal'] == Null){
             $cuentavalidar=$cuentavalidar+$pagoi;
     }else{
-        echo round($renglon['MonEntPagRal'],2);
+        echo $renglon['MonEntPagRal'];
         $cuenta=$cuenta+round($renglon['MonEntPagRal'],2);
         $cuentavalidar=$cuentavalidar+$cuenta;
-        if((round($renglon['MonEntPagRal'],1)>round($pagoi,1) || round($renglon['MonEntPagRal']<$pagoi,1))&&$renglon['MonEntPagRal']!=null){
+        if(($renglon['MonEntPagRal']!=$renglon['MonEntPagPrg'])&&$renglon['MonEntPagRal']!=null){
             $alerta='true';
         }else{
             if ($alerta!='true')
             $alerta='false';	
         }
-
     }
     echo '      </td>
                 <td id="est'.$cont.'" '.colorEstatus($renglon['IdEntEst']).'>
@@ -169,7 +168,7 @@ while($renglon = mysql_fetch_array($resultado)){
                         <table width="100%">
                             <tr align="center">';
     if($renglon['FecEntPagRal'] == Null){
-        echo '                  <td><input type="button" value="Registrar Pago" id="registra'.$cont.'" name="registra'.$cont.'" onclick="registraPago('.$renglon['IdEntPag'].','.$cont.','.$pagoi.')"></td>';								
+        echo '                  <td><input type="button" value="Registrar Pago" id="registra'.$cont.'" name="registra'.$cont.'" onclick="registraPago('.$renglon['IdEntPag'].','.$cont.','.$renglon['MonEntPagPrg'].')"></td>';								
     //echo '<input type="fecha" name="date'.$cont.'" id="date'.$cont.'" placeholder="Ingresa fecha" onchange="actualizarFecha('.$renglon['IdEntPag'].',this.value,'.$cont.');"/>';	
     }else{
         echo '                  <td id="fec'.$cont.'">'.date('d-m-Y',strtotime($renglon['FecEntPagRal'])).'</td>

@@ -1,6 +1,4 @@
  <?php
- //header('Content-Type: text/html; charset=UTF-8'); 
- 
  //**********************************************************************************************//
 // Nombre: Regino Tabares																		//
 // Nombre del módulo: Consulta de Proyectos 												//
@@ -11,7 +9,7 @@ include("../conexion.php");
 
 session_start();
 
-//Consulta 1 Para obtener los datos de la empresa
+//Consulta 2 Para obtener los datos de la empresa
 $IdEntPry=$_POST['IdEntPry'];
 $consulta="SELECT * 
     FROM tblentpag, tblentest
@@ -109,7 +107,7 @@ while($renglon = mysql_fetch_array($resultadocliente)){
         $auxiva=0;
     }
     echo '<script type="text/javascript" src="../js/proyectoFunciones.js"></script>
-        <label>Cliente: </label><input type="text" readonly value="'.$renglon['NomEntCli'].'">';
+        <label>Cliente: <b>'.$renglon['NomEntCli'].'</b></label>';
 }
 echo '<table CellSpacing="3">
     <tr class="encabezado">
@@ -136,10 +134,11 @@ while($renglon = mysql_fetch_array($resultado)){
         echo '<td>'.date("d-m-Y",strtotime($renglon['FecEntPagPrg'])).'</td>';
         echo '<td>'.$renglon['PorEntPagPrg'].'%</td>';
         if($auxiva==1){
-            $iva = $renglon['MonEntPagPrg'] * .16;
-            $total =$total +($renglon['MonEntPagPrg']+$iva);  
-            $totalporc = $totalporc + $renglon['PorEntPagPrg'];
-            echo '<td>$'.round($renglon['MonEntPagPrg']+$iva,2).'</td>';		
+            //$iva = $renglon['MonEntPagPrg'] * .16;
+            $iva = 0;
+            //$total =$total +($renglon['MonEntPagPrg']+$iva);  
+            //$totalporc = $totalporc + $renglon['PorEntPagPrg'];
+            echo '<td>$'.$renglon['MonEntPagPrg'].'</td>';		
         }else{
             echo '<td>$'.$renglon['MonEntPagPrg'].'</td>';
         }
@@ -161,7 +160,7 @@ while($renglon = mysql_fetch_array($resultado)){
     $cont++;	
 }
 echo '  <tr align="center" class="registro">
-            <td colspan="4">Total pagado</td><td>'.$totalporc.'%</td><td>$'.round($total,2).'</td><td colspan="3"></td>
+            <td colspan="4">Total pagado</td><td>'.round($totalporc,2).'%</td><td>$'.round($total,2).'</td><td colspan="3"></td>
         </tr>';
 if($_SESSION['k_perfil']!="USU"){
     echo'<tr>

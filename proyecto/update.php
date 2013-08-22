@@ -88,7 +88,7 @@ while(isset($_POST['lint_pjePag'.$i])){
 		if($pago['FecEntPagRal']==""){
 			$query = "update tblentpag set FecEntPagPrg = '$ltxt_fecPag',PorEntPagPrg = '$lint_pjePag',MonEntPagPrg = '$lint_subPag',CtoEntPag = '$ltxt_ctoPag',IdEntEst = '$lint_idEst' where IdEntPag = $IdEntPag";
 		}else{
-			$query = "update tblentpag set FecEntPagPrg = '$ltxt_fecPag',PorEntPagPrg = '$lint_pjePag',MonEntPagPrg = '$lint_subPag',CtoEntPag = '$ltxt_ctoPag' where IdEntPag = $IdEntPag";
+			$query = "update tblentpag set FecEntPagPrg = '$ltxt_fecPag',PorEntPagRal = '$lint_pjePag',MonEntPagPrg = '$lint_subPag',CtoEntPag = '$ltxt_ctoPag' where IdEntPag = $IdEntPag";
 		}
 		$ultimoIdPago = $IdEntPag;
 		$res = mysql_query($query,$conexion);//se almacena el registro en la bd
