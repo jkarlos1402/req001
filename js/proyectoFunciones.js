@@ -351,3 +351,7 @@ function programarDispersion(pago){
         });
     }
 }
+
+function regresar(){
+    
+}
