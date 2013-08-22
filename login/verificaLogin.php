@@ -14,6 +14,7 @@ if($row = mysql_fetch_array($res)){
  
             $_SESSION["k_username"] = $row['NomEntUsu'];
 			$_SESSION["k_perfil"]=$row['PflEntUsu'];
+                        $_SESSION["k_pass"]=$row['PwdEntUsu'];
            
             //echo 'Bienvenido'.$_SESSION['k_username'].' <p>';
             //echo '<a href="index.php">Index</a></p>';

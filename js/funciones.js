@@ -394,32 +394,53 @@ function enviaTotal(tot, cueral, cueval, por, aler) {
     }
 }
 
-function verificaPass(IdEntPag, cont, pago) {
-    //Agregar cuando ya esten los passwords
+function verificaPass(IdEntPag, cont) {
     var aux = confirm("¿Deseas modificar la fecha de pago?");
-    if (aux == true) {
+    if (aux) {            
         modificaFecha(IdEntPag, cont);
-
     }
 }
 var contFecha;
 function modificaFecha(IdEntPag, cont) {
     contFecha = cont;
-    //Agregar cuando ya esten los passwords
     $("#fechaPagoM").val("");
-    $("#mensajeM").html("");
+    $("#mensajeM").html("").removeClass("ui-state-error ui-corner-all");
+    $("#passwd").val("");
     $("#IdEntPagM").val(IdEntPag);
     $("input[type=fechaPagoM]").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate', 'today');
     $("#dialogmod").dialog("open");
+    $("#passwd").focus();
 }
 function guardarFecha() {
+    if($("#FecEntPagRalM").val() ===""){
+        $("#mensajeM").html("<span>Ingrese la nueva fecha de pago</span>").
+            css({"color":"#cd0a0a","width": "187px","padding": "12px","margin-top": "-24px"}).
+            addClass("ui-state-error ui-corner-all");
+        $("#FecEntPagRalM").focus();
+        return false;
+    }else{
+        if($("#passwd").val() ===""){
+            $("#mensajeM").html("<span>Ingrese su contraseña</span>").
+                css({"color":"#cd0a0a","width": "187px","padding": "12px","margin-top": "-24px"}).
+                addClass("ui-state-error ui-corner-all");
+            $("#passwd").focus();
+            return false; 
+        }
+    }
     var url = "../ingresos/actualizaFecha.php"
     var IdEntPag = $("#IdEntPagM").val();
     var FecEntPagRal = $("#FecEntPagRalM").val();
-    $.post(url, {IdEntPag: IdEntPag, FecEntPagRal: FecEntPagRal}, function(responseText) {
-        $("#mensajeM").html(responseText);
-        $("#dialogmod").dialog("close");
-        $("#fec" + contFecha).html(FecEntPagRal);
+    var Passwd =  $("#passwd").val();
+    $.post(url, {IdEntPag: IdEntPag, FecEntPagRal: FecEntPagRal,Passwd: Passwd}, function(responseText) {
+        if(responseText == "true"){
+            $("#dialogmod").dialog("close");
+            $("#fec" + contFecha).html(FecEntPagRal);
+        }else{
+            $("#mensajeM").html("<span>Contraseña incorrecta</span>").
+                css({"color":"#cd0a0a","width": "187px","padding": "12px","margin-top": "-24px"}).
+                addClass("ui-state-error ui-corner-all");
+            $("#passwd").val("").focus();
+        }
     });
 }
 

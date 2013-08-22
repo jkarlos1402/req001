@@ -7,10 +7,15 @@
 //**********************************************************************************************//
 include("../conexion.php");
 session_start();
-$IdEntPag = $_POST['IdEntPag'];	
-$FecEntPagRal = $_POST['FecEntPagRal'];
-$FecEntPagRal = date("Y-m-d",strtotime($_POST['FecEntPagRal']));
-$query = "UPDATE tblentpag SET FecEntPagRal=(SELECT STR_TO_DATE('$FecEntPagRal','%Y-%m-%d' )) WHERE IdEntPag=$IdEntPag";
-$res = mysql_query($query,$conexion);
-
+$Passwd = $_POST['Passwd'];
+if($Passwd == $_SESSION['k_pass']){
+    $IdEntPag = $_POST['IdEntPag'];	
+    $FecEntPagRal = $_POST['FecEntPagRal'];
+    $FecEntPagRal = date("Y-m-d",strtotime($_POST['FecEntPagRal']));
+    $query = "UPDATE tblentpag SET FecEntPagRal=(SELECT STR_TO_DATE('$FecEntPagRal','%Y-%m-%d' )) WHERE IdEntPag=$IdEntPag";
+    $res = mysql_query($query,$conexion);
+    echo 'true';
+}else{
+    echo 'false';
+}
 

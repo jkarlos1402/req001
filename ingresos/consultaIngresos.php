@@ -172,7 +172,7 @@ while($renglon = mysql_fetch_array($resultado)){
     //echo '<input type="fecha" name="date'.$cont.'" id="date'.$cont.'" placeholder="Ingresa fecha" onchange="actualizarFecha('.$renglon['IdEntPag'].',this.value,'.$cont.');"/>';	
     }else{
         echo '                  <td id="fec'.$cont.'">'.date('d-m-Y',strtotime($renglon['FecEntPagRal'])).'</td>
-                                <td><img src="../vista/images/config.gif" title="Modificar Fecha" onclick="verificaPass('.$renglon['IdEntPag'].','.$cont.','.$pagoi.');"  width="25" align="right"></td>';
+                                <td><img src="../vista/images/config.gif" title="Modificar Fecha" onclick="verificaPass('.$renglon['IdEntPag'].','.$cont.');"  width="25" align="right"></td>';
     }
     echo '                  </tr>
                         </table>
@@ -245,25 +245,26 @@ echo '      <tr align="center">
         </div>	
     </div>
     <div id="dialogmod" title="Modificar Fecha" style="display: none;">
-        <table align="center" border="1">
-            <tr align="center">
+        <table align="center" width="100%">
+            <tr>
                 <td>
-                    Fecha de Pago
+                    <label for="FecEntPagRalM"> Fecha de Pago:</label>
+                    <input type="fechaPagoM" name="FecEntPagRalM" id="FecEntPagRalM" size="10" class="ui-corner-all"/>
                 </td>
-                <td>
+                <td>                    
                 </td>
             </tr>
-            <tr align="center">
-                <td>
-                    <input type="hidden" name="IdEntPagM" id="IdEntPagM">
-                    <input type="fechaPagoM" name="FecEntPagRalM" id="FecEntPagRalM" size="10"/>
+            <tr>
+                <td colspan="2">
+                    <label for="passwd" style="margin-left: 17px;">Contraseña:</label>
+                    <input type="password" name="passwd" id="passwd" size="10"/>
+                    <input type="hidden" name="IdEntPagM" id="IdEntPagM">                   
                 </td>
-                <td>
-                    <input type="button" value="Guardar" onclick="guardarFecha();"/>
-                </td>
-                <td>
-                </td>
-            </tr>													
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="button" value="Guardar" onclick="guardarFecha();"/></td>
+            </tr>
         </table>
         <div id="mensajeM">
         </div>	
