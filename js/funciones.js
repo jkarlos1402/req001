@@ -30,10 +30,11 @@ function validaCliente() {
 
 $(function() {
     $("#formRegUsu").submit(function() {
-        if (validaUsuario())
+        if (validaUsuario()){
             return false;
-        else
+        }else{
             return false;
+        }
     });
 });
 
@@ -41,31 +42,35 @@ function validaUsuario() {
     var aux;
     var bandera = true;
     $("#formRegUsu").find(".requerido").each(function() {
-        if ($(this).val() == "") {
-            $("#errorReg").css("visibility", "visible");
-            $("#errorReg").css("display", "");
+        if ($(this).val() === "") {
+            $("#errorReg").html('<p style="margin-left: 40px;"><span class="ui-icon ui-icon-alert" style="float: left;"></span><strong>Campo requerido</strong></p>')
+                    .css({"color":"#cd0a0a","width": "210px"})
+                    .addClass("ui-state-error ui-corner-all");
+            //$("#errorReg").css("display", "");
             $(this).focus();
             bandera = false;
             return false;
+        }else{
+            $("#errorReg").html("").removeClass("ui-state-error ui-corner-all");
+            //$("#errorReg").css("display", "none");
         }
-        else
-            $("#errorReg").css("visibility", "hidden");
-        $("#errorReg").css("display", "none");
     });
-    if (bandera == true) {
+    if (bandera === true) {
         var NomEntUsu = $("#NomEntUsu").val();
         var PwdEntUsu = $("#PwdEntUsu").val();
         var PflEntUsu = $("#PflEntUsu").val();
         var url = "../usuario/alta.php";
         $.post(url, {NomEntUsu: NomEntUsu, PwdEntUsu: PwdEntUsu, PflEntUsu: PflEntUsu}, function(responseText) {
-            $("#formRegUsu").find(".requerido").each(function() {
-                $(this).val("");
-            });
-            $("#mensaje").html(responseText);
+            if(responseText != 'true'){
+                $("#errorReg").html('<p style="margin-left: 40px;"><span class="ui-icon ui-icon-alert" style="float: left;"></span><strong>'+responseText+'</strong></p>')
+                    .css({"color":"#cd0a0a","width": "210px"})
+                    .addClass("ui-state-error ui-corner-all");
+                return false;
+            }else{
+               $("#registrarUsuarios").dialog("close");
+            }
         });
-
     }
-
 }
 function modificaUsu(IdEntUsu) {
     var url = "../usuario/usuario.php";
@@ -73,42 +78,61 @@ function modificaUsu(IdEntUsu) {
         $("#consultarUsuarios").dialog("close");
         $("#modificarUsuarios").dialog("open");
         $("#modificarUsuarios").find("#datosMod").html(responseText);
+        $("input[type=button],input[type=submit]").button();
+        $("#formModUsu").submit(function() {
+            if (validaUsuarioMod()){
+                return false;
+            }else{
+                return false;
+            }
+        });
     });
-
 }
 
-$(function() {
-    $("#formModUsu").submit(function() {
-        if (validaUsuarioMod())
-            return false;
-        else
-            return false;
-    });
-});
+function eliminaUsu(IdEntUsu,boton){
+    if(confirm("¿Eliminar al usuario?")){
+        var url = "../usuario/elimina.php";
+        $.post(url, {IdEntUsu: IdEntUsu}, function(responseText) {
+           $(boton).parents("tr").remove();
+           $("#mensajeConsulta").html('<p style="margin-left: 10px;"><span class="ui-icon ui-icon-alert" style="float: left;"></span><strong>'+responseText+'</strong></p>')
+                        .css({"width": "210px"})
+                        .addClass("ui-state-highlight ui-corner-all");
+           return true;
+        });
+    }else{
+        return false;
+    }
+}
 
 function validaUsuarioMod() {
     var aux;
     var bandera = true;
     $("#formModUsu").find(".requerido").each(function() {
-        if ($(this).val() == "") {
-            $("#errorMod").css("visibility", "visible");
-            $("#errorMod").css("display", "");
+        if ($(this).val() === "") {
+            $("#errorMod").html('<p style="margin-left: 20px;"><span class="ui-icon ui-icon-alert" style="float: left;"></span><strong>Campo requerido</strong></p>')
+                    .css({"color":"#cd0a0a","width": "187px"})
+                    .addClass("ui-state-error ui-corner-all");            
             $(this).focus();
             bandera = false;
             return false;
         }
-        else
-            $("#errorMod").css("visibility", "hidden");
-        $("#errorMod").css("display", "none");
+        else{
+            $("#errorMod").html('').removeClass("ui-state-error ui-corner-all");
+        }
     });
-    if (bandera == true) {
+    if (bandera) {
         var IdEntUsu = $("#formModUsu").find("#IdEntUsu").val();
         var NomEntUsu = $("#formModUsu").find("#NomEntUsu").val();
         var PwdEntUsu = $("#formModUsu").find("#PwdEntUsu").val();
         var PflEntUsu = $("#formModUsu").find("#PflEntUsu").val();
         var url = "../usuario/modifica.php";
         $.post(url, {IdEntUsu: IdEntUsu, NomEntUsu: NomEntUsu, PwdEntUsu: PwdEntUsu, PflEntUsu: PflEntUsu}, function(responseText) {
-            $("#mensajeMod").html(responseText);
+            if(responseText === "true"){
+                $("#datosMod").html("");
+                $("#modificarUsuarios").dialog("close");
+            }else{
+                $("#mensajeMod").html(responseText);
+            }
         });
 
     }
@@ -180,11 +204,17 @@ function cargaCaracteristicas() {
             var url = "../usuario/usuario.php";
             $.post(url, {}, function(responseText) {
                 $("#datosUsuario").html(responseText);
+                $("#consultarUsuarios").find($(".btnMod")).button({icons: {primary: "ui-icon-wrench"},text: false});
+                $("#consultarUsuarios").find($(".btnDel")).button({icons: {primary: "ui-icon-trash"},text: false});
             });
         });
 
         $("#registra").click(function() {
             $("#consultarUsuarios").dialog("close");
+            $("#NomEntUsu").val("");
+            $("#PwdEntUsu").val("");
+            $("#PflEntUsu").prop("selectedIndex",0);
+            $("#errorReg").html("").removeClass("ui-state-error ui-corner-all");
             $("#registrarUsuarios").dialog("open");
         });
 

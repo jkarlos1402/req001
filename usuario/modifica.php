@@ -11,8 +11,8 @@ $query = "UPDATE tblentusu SET NomEntUsu='$NomEntUsu',PwdEntUsu='$PwdEntUsu',Pfl
 $res = mysql_query($query,$conexion); 
 if(!$res){
 	echo "Error: ".mysql_error();
+}else{
+    echo "true";
 }
-else
- echo "Usuario Modificado";
 
 ?>

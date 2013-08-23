@@ -38,55 +38,50 @@ echo '  <ul style="position:absolute; width:auto;">
         <div id="datosUsuario">
         </div>
         <div>
-            <input type="button" id="registra" value="Nuevo Usuario">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <input type="button" id="registra" value="Nuevo Usuario">
+                    </td>
+                    <td>
+                        <div id="mensajeConsulta"></div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div id="registrarUsuarios" title="Nuevo Usuario">
         <div id="dialog-form"> 
             <form action=""../usuario/alta.php" id="formRegUsu" name="formRegUsu" method="post" target="_top">
-                <table border="1" width="100%" class="ui-corner-all">
+                <table width="100%" class="ui-corner-all">
                     <tr>
-                        <td>
-                            Nombre
-                        </td>
-                        <td>
+                        <td colspan="2">
+                            <label for="NomEntUsu" style="margin-left: 9px;">Nombre:</label>
                             <input type="text" name="NomEntUsu" id="NomEntUsu" class="text ui-widget-content ui-corner-all requerido" />
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Password
-                        </td>
-                        <td>
-                            <input type="text" name="PwdEntUsu" id="PwdEntUsu" value="" class="text ui-widget-content ui-corner-all requerido" />
+                        <td colspan="2">
+                            <label for="PwdEntUsu">Password:</label>
+                            <input type="password" name="PwdEntUsu" id="PwdEntUsu" class="ui-widget-content ui-corner-all requerido" />
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Perfil
-                        </td>
-                        <td>
+                        <td colspan="2">
+                            <label for="PflEntUsu" style="margin-left: 25px;">Perfil:</label>
                             <select id="PflEntUsu" name="PflEntUsu" class="requerido">
                                 <option value=""></option>
                                 <option value="ADM">Administrador</option>
                                 <option value="USU">Usuario</option>
                             </select>
-                        </td>
+                        </td>                   
                     </tr>
                     <tr>
                         <td>
                             <input type="submit" value="Crear usuario" />
                         </td>
                         <td id="mensaje">
-                            <div id="errorReg" style="visibility:hidden; display:none;">
-                                <div class="ui-widget">
-                                    <div class="ui-state-error ui-corner-all">
-                                        <p>
-                                            <span class="ui-icon ui-icon-alert" style="float: left;"></span>
-                                            <strong>Error</strong>
-                                        </p>
-                                    </div>
-                                </div>
+                            <div id="errorReg">                               
                             </div>
                         </td>
                     </tr>
@@ -111,6 +106,7 @@ echo '  <ul style="position:absolute; width:auto;">
     
 <script type="text/javascript">
     $(window).load(cargaCaracteristicas());
+     $( document ).tooltip();
 </script>
 <div align="center">
     <table width="1325px">
