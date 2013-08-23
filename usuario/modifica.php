@@ -12,6 +12,7 @@ $res = mysql_query($query,$conexion);
 if(!$res){
 	echo "Error: ".mysql_error();
 }else{
+    $_SESSION['k_pass'] = $PwdEntUsu;
     echo "true";
 }
 
