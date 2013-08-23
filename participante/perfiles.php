@@ -16,7 +16,7 @@ if(isset($_GET['id'])){
 }
 $res = mysql_query($query,$conexion);//Se obtienen todos los perfiles
 $perfiles = '<label for="ltxt_pflPoE">Perfil:</label>
-			 <select name="ltxt_pflPoE" id="ltxt_pflPoE" onchange="mostrarCampos();" '.$disabled.'>
+			 <select name="ltxt_pflPoE" id="ltxt_pflPoE" '.$disabled.'>
 			 <option></option>';
 
 while($renglon = mysql_fetch_array($res)){// se forma el elemento select

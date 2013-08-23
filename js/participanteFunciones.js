@@ -253,15 +253,11 @@ function quitarCuenta(actual){
 }
 
 function mostrarCampos(){
-	if($("#ltxt_pflPoE :selected").text()=="PM INT" || $("#ltxt_pflPoE :selected").text()=="PM EXT"){
+	
 		$(".ocultar").removeClass("empresa");
 		if(!consulta)
 			$(".ocultar").children("input").val("");
-	}else{
-		$(".ocultar").addClass("empresa");
-		if(!consulta)
-			$(".ocultar").children("input").val("");
-	}
+	
 }
 
 
