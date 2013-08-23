@@ -27,6 +27,13 @@ if (!ISSET($_SESSION["k_username"])) {
             eliminaBarra();
         });
     }
+    
+    $("#Reg_Cli,#formModificaCli").submit(function() {
+        if (validaCliente())
+            return true;
+        else
+            return false;
+    });
 
 </script>
 <form class="form" method="POST" action="../cliente/modificaCliente.php" target="_top" id="formModificaCli">
