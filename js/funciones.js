@@ -25,7 +25,58 @@ function validaCliente() {
     }else{
         $("#TelEntCli").css("background-color","#FFF");
     }
+    if($("#Tel1CtoCli").val()!=''){
+            if(isNaN($("#Tel1CtoCli").val())|| $("#Tel1CtoCli").val().length < 7 || $("#Tel1CtoCli").val().length > 12){
+                alert("Número telefónico inválido");
+                $("#accordion").accordion("option","active",$("#Tel1CtoCli").parents("div").prev("h3").index("h3"));
+                $("#Tel1CtoCli").css("background-color","#FF6C70").focus();
+                return false;
+            }
+       }
+     if($("#Ext1CtoCli").val()!=''){
+            if(isNaN($("#Ext1CtoCli").val())){
+                alert("Extensión inválida");
+                $("#accordion").accordion("option","active",$("#Ext1CtoCli").parents("div").prev("h3").index("h3"));
+                $("#Ext1CtoCli").css("background-color","#FF6C70").focus();
+                return false;
+            }
+     }  
+     if($("#Tel2CtoCli").val()!=''){
+            if(isNaN($("#Tel2CtoCli").val())|| $("#Tel2CtoCli").val().length < 7 || $("#Tel2CtoCli").val().length > 12){
+                alert("Número telefónico inválido");
+                $("#accordion").accordion("option","active",$("#Tel2CtoCli").parents("div").prev("h3").index("h3"));
+                $("#Tel2CtoCli").css("background-color","#FF6C70").focus();
+                return false;
+            }
+        }
+     if($("#Ext2CtoCli").val()!=''){
+            if(isNaN($("#Ext2CtoCli").val())){
+                alert("Extensión inválida");
+                $("#accordion").accordion("option","active",$("#Ext2CtoCli").parents("div").prev("h3").index("h3"));
+                $("#Ext2CtoCli").css("background-color","#FF6C70").focus();
+                return false;
+            }
+     }     
+     if($("#Tel3CtoCli").val()!=''){
+            if(isNaN($("#Tel3CtoCli").val())|| $("#Tel3CtoCli").val().length < 7 || $("#Tel3CtoCli").val().length > 12){
+                alert("Número telefónico inválido");
+                $("#accordion").accordion("option","active",$("#Tel3CtoCli").parents("div").prev("h3").index("h3"));
+                $("#Tel3CtoCli").css("background-color","#FF6C70").focus();
+                return false;
+            }
+        }
+     if($("#Ext3CtoCli").val()!=''){
+            if(isNaN($("#Ext3CtoCli").val())){
+                alert("Extensión inválida");
+                $("#accordion").accordion("option","active",$("#Ext3CtoCli").parents("div").prev("h3").index("h3"));
+                $("#Ext3CtoCli").css("background-color","#FF6C70").focus();
+                return false;
+            }
+     }     
+             
+               
     return true;
+                
 }
 
 $(function() {
