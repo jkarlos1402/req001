@@ -151,7 +151,7 @@ echo '  <ul style="position:absolute; width:auto;">
         </tr>
         <tr>
             <td  class="classname" align="center"> 
-                <div id="workbench" style="margin-top: 31px;">               
+                <div id="workbench" style="margin-top: 41px;">               
                     <img src="images/upgenia.png" style="margin-top: 160px;"/><br />
                     <article class="mensaje"><?php if(isset($_SESSION['mensajeError'])){ echo $_SESSION['mensajeError'];unset($_SESSION['mensajeError']);}else{if(isset($_SESSION['mensajeInfo'])){echo $_SESSION['mensajeInfo'];unset($_SESSION['mensajeInfo']);}}?></article>                          
                 </div>               
