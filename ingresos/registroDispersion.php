@@ -172,7 +172,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                 $consultapoe = "SELECT IdEntPoE,NomEntPoE FROM tblentpoe where EstEntPoE = 1";
                                                 //************************************	
                                                 $resultadopoe=mysql_query($consultapoe) or die (mysql_error());
-                                                echo '<select name="IdEntPoE_'.$i.'_0[]" id="IdEntPoE_'.$i.'_'.$h.'_0_" onchange="habilitaOrigen(this,'.$i.','.$h.','.$j.');">
+                                                echo '<select name="IdEntPoE_'.$i.'_0[]" id="IdEntPoE_'.$i.'_'.$h.'_0_" onchange="habilitaOrigen(this,'.$i.','.$h.',0);">
                                                                 <option value="-1">Selecciona</option>';
                                                 while($renglon = mysql_fetch_array($resultadopoe)){
                                                     echo '<option value="'.$renglon['IdEntPoE'].'"';
