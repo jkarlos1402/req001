@@ -183,7 +183,7 @@ while($renglon = mysql_fetch_array($resultado)){
                 </td>
                 <td>Cliente</td>
                 <td><input type="button" onclick="programaDisp('.$cont.')" value="Programar"></td>
-                <td><input type="button" onclick="" value="Consultar"></td>
+                <td><input type="button" onclick="consultaDisp('.$renglon['IdEntPag'].','.$cont.')" value="Consultar"></td>
             </tr>';
     $cont++;	
 }
@@ -203,7 +203,7 @@ echo '      <tr align="center">
                 <td id="porcreal">'.round($totalporcral,3).'%</td>
                 <td id="totreal">$'.round($cuenta,2).'</td>
                 <td><input type="button" onclick="programaSel()" value="Programar Seleccionados"></td>
-                <td><input type="button" onclick="" value="Consultar Seleccionados"></td>
+                <td><input type="button" onclick="consultaSel('.$cont.');" value="Consultar Seleccionados"></td>
                 <td><input type="button" onclick="selTodos('.$cont.',1)" value="Programar Todos"></td>
                 <td><input type="button" onclick="selTodos('.$cont.',2)" value="Consultar Todos"></td>
             </tr>

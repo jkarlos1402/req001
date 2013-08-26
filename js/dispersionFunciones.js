@@ -70,6 +70,7 @@ function consultaDestino(padre,hijo){
 /////////////////////////////////////////////////////////////////////////////////////
 function guardarOrigen(){
     var url = "../ingresos/guardaOrigen.php";
+    if($("#nuevoorg").val()!=''){
     var origennuevo=$("#nuevoorg").val();
     var ultimoIdOrigen = -1;
     $.post(url,{origennuevo:origennuevo},function(responseText){
@@ -83,24 +84,39 @@ function guardarOrigen(){
                 $(this).append("<option value='"+ultimoIdOrigen+"'>"+origennuevo+"</option>");
             });
     });
+    }
+    else{
+        $("#msj").html('<p style="margin-left: 40px;"><span class="ui-icon ui-icon-alert" style="float: left;"></span><strong>Campo requerido</strong></p>')
+                    .css({"color":"#cd0a0a","width": "210px"})
+                    .addClass("ui-state-error ui-corner-all");
+        $("#nuevoorg").focus();    
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 function guardarDestino(){
     var url = "../ingresos/guardaDestino.php";
-    var destinonuevo=$("#nuevodest").val();
-    var ultimoIdDestino = -1;
-    $.post(url,{destinonuevo:destinonuevo},function(responseText){
-        $("#dialog2").dialog("close"); 
-        ultimoIdDestino = responseText;  
-        $(".destinoDis").each(function(){
-            $(this).find("option:last").remove();
-            $(this).append("<option value='"+ultimoIdDestino+"'>"+destinonuevo+"</option><option value='otros'>OTRO...</option>");
-        });
-        $(".destinoSec").each(function(){
-            $(this).append("<option value='"+ultimoIdDestino+"'>"+destinonuevo+"</option>");
-        });
-    });
+    if($("#nuevodest").val()!=''){
+            var destinonuevo=$("#nuevodest").val();
+            var ultimoIdDestino = -1;
+            $.post(url,{destinonuevo:destinonuevo},function(responseText){
+                $("#dialog2").dialog("close"); 
+                ultimoIdDestino = responseText;  
+                $(".destinoDis").each(function(){
+                    $(this).find("option:last").remove();
+                    $(this).append("<option value='"+ultimoIdDestino+"'>"+destinonuevo+"</option><option value='otros'>OTRO...</option>");
+                });
+                $(".destinoSec").each(function(){
+                    $(this).append("<option value='"+ultimoIdDestino+"'>"+destinonuevo+"</option>");
+                });
+            });
+    }
+    else{
+        $("#msj2").html('<p style="margin-left: 40px;"><span class="ui-icon ui-icon-alert" style="float: left;"></span><strong>Campo requerido</strong></p>')
+                    .css({"color":"#cd0a0a","width": "210px"})
+                    .addClass("ui-state-error ui-corner-all");
+        $("#nuevodest").focus();    
+    }
 }
 
 /////////////////////////////////////////
@@ -129,6 +145,7 @@ function habilitaOrigen(combo,pago,dispersion,secundaria){
 /////////////////////////////////////////////////////////////////////////////////////
 function agregaOrigen(valor,pago,dispersion,secundaria){
     if(valor.value === 'otros'){	
+        $("#msj").html('').removeClass("ui-state-error ui-corner-all");
         $( "#dialog").dialog( "open" );
     }
     if($("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_ :selected").text() === "DEPOSITO" || $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_ :selected").text() === "TRANSFERENCIA"){
@@ -151,6 +168,7 @@ function agregaOrigen(valor,pago,dispersion,secundaria){
 /////////////////////////////////////////////////////////////////////////////////////
 function agregaDestino(valor,padre,hijo,hijosec){
     if(valor === 'otros'){	
+        $("#msj2").html('').removeClass("ui-state-error ui-corner-all");
         $("#dialog2").dialog( "open" );
         $("#pagoPadre").val(padre);
         $("#dispersionPago").val(hijo);
@@ -512,7 +530,7 @@ function guardarDispersiones(pago,idpago){
         });
     }
 }
-
+    
 function validaCamposDispersion(pago){
     alerta = true;
     $("#controlDispersion"+pago).find("select,input").each(function(index){

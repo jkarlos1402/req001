@@ -714,6 +714,16 @@ function selTodos(cont, proceso){
         }
         if (confirm("¿Deseas consultar todos los pagos?"))
         {
+             $.post("../ingresos/consultaDispersion.php",$("#formulario").serialize(),function(data){
+                $("#workbench").html(data);
+                //cargaCaracteristicas();
+                $("#accordion").accordion({
+                    heightStyle: "content"
+                });
+                $("input[type=button],input[type=submit]").button();
+                $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");               
+                $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
+            });
         }else{
             for (var i = 1; i < cont; i++){
                 document.getElementById("pago" + i).checked = 0;
@@ -750,6 +760,25 @@ function programaDisp(aux) {
     }
 }
 
+
+
+function consultaDisp(IdEntPag,aux) {
+        var IdEntPry = $("#IdEntPry").val();
+        var pago =[];
+        pago[1]=IdEntPag;
+        document.getElementById("pago" + aux).checked = 1;
+        
+        //document.getElementById("formulario").submit();
+        $.post("../ingresos/consultaDispersion.php",{IdEntPry:IdEntPry,pago:pago},function(data){
+            $("#workbench").html(data);
+            $("input[type=button],input[type=submit]").button();
+            $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
+             $("#accordion").accordion({
+                    heightStyle: "content"
+                });
+        });
+    
+}
 ////////////////////////////////////////////////////////////////////////////
 function programaSel() {
     if($( "input:checked" ).length === 0){
@@ -778,6 +807,32 @@ function programaSel() {
     });
 }
 
+function consultaSel(aux) {
+    if($( "input:checked" ).length === 0){
+        alert("Seleccione por lo menos un pago");
+        return false;
+    }
+    var IdEntPry = $("#IdEntPry").val();
+    var pago =[];
+    var b=1;
+    for(var i=1;i<=aux;i++){
+        if($("#pago"+i).attr("checked")){
+            pago[b]=$("#pago"+i).val();
+            b++;
+        }
+    }
+    
+    
+    $.post("../ingresos/consultaDispersion.php",{IdEntPry:IdEntPry,pago:pago},function(data){
+        $("#workbench").html(data);
+        //cargaCaracteristicas();
+            $("input[type=button],input[type=submit]").button();
+            $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
+            $("#accordion").accordion({
+                    heightStyle: "content"
+                }); 
+    });
+}
 /////////////////////////////////////////////////////////////////////////////
 function eliminarProyecto() {
     if (confirm("¿Seguro de eliminar el proyecto?")) {

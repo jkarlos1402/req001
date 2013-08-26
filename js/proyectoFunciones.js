@@ -300,10 +300,15 @@ function enviaModificar(IdEntPry){
     });
 }
 
-function consultarDispersion(pago){
+function consultarDispersion(pag){
     var IdEntPry=($("#IdEntPry").val());
+    var pago=[];
+    pago[1]=pag;
     $.post("../ingresos/consultaDispersion.php",{IdEntPry:IdEntPry,pago:pago},function(data){
             $("#workbench").html(data);
+            $("#accordion").accordion({
+                    heightStyle: "content"
+                });
             $("input[type=button],input[type=submit]").button();
             $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
             $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});

@@ -549,10 +549,10 @@ echo  '</div>
 </div> 
 <div id="mensajePopUp">
 </div>
-<div id="dialog" title="Agregar Categoria" style="display: none;">
+<div id="dialog" title="Agregar Categoria" >
     <input type="text" name="nuevoorg" id="nuevoorg" size="30" placeholder="Ingresa el nuevo origen"/>
     <input type="button" value="Guardar" onclick="guardarOrigen();" />
-    <div id="mensaje">
+    <div id="msj">
     </div>
 </div>
 <div id="dialog2" title="Agregar Categoria" style="display: none;">
@@ -560,7 +560,7 @@ echo  '</div>
     <input type="button" value="Guardar" onclick="guardarDestino()" />
     <input type="hidden" value="" id="pagoPadre"/>
     <input type="hidden" value="" id="dispersionPago"/>
-    <div id="mensaje2"></div>
+    <div id="msj2"></div>
 </div>
 <div id="resp"></div>';	
 ?>
