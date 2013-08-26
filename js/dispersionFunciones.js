@@ -105,14 +105,24 @@ function guardarDestino(){
 
 /////////////////////////////////////////
 function habilitaOrigen(combo,pago,dispersion,secundaria){
-    if($(combo).val()!== -1){
-        $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("visibility","visible");
-        $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("display","");
-        $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").prop("selectedIndex",0);
-        $("#datosbanco"+pago+dispersion+secundaria).html("");
-        $("#datoscuenta"+pago+dispersion+secundaria).html("");
-        $("#MonDspPag_"+pago+"_"+dispersion+"_"+secundaria+"_").val("0.00");
-        $("#IdDesPag_"+pago+"_"+dispersion+"_"+secundaria+"_").prop("selectedIndex",0);
+    if($(combo).val()!== "-1"){
+        if(secundaria !== 0){
+            $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("visibility","visible");
+            $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("display","");
+            $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").prop("selectedIndex",0);
+            $("#datosbanco"+pago+dispersion+secundaria).html("");
+            $("#datoscuenta"+pago+dispersion+secundaria).html("");
+            $("#MonDspPag_"+pago+"_"+dispersion+"_"+secundaria+"_").val("0.00");
+            $("#IdDesPag_"+pago+"_"+dispersion+"_"+secundaria+"_").prop("selectedIndex",0);
+        }else{
+            $("#IdOrgPag_"+pago+"_"+dispersion+"_0_").css("visibility","visible");
+            $("#IdOrgPag_"+pago+"_"+dispersion+"_0_").css("display","");
+            $("#IdOrgPag_"+pago+"_"+dispersion+"_0_").prop("selectedIndex",0);
+            $("#datosbanco"+pago+dispersion).html("");
+            $("#datoscuenta"+pago+dispersion).html("");
+            $("#MonDspPag_"+pago+"_"+dispersion+"_0_").val("0.00");
+            $("#IdDesPag_"+pago+"_"+dispersion+"_0_").prop("selectedIndex",0);
+        }
     }else{
         $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("visibility","hidden");
         $("#IdOrgPag_"+pago+"_"+dispersion+"_"+secundaria+"_").css("display","none");
@@ -124,6 +134,19 @@ function habilitaOrigen(combo,pago,dispersion,secundaria){
             $("#datosbanco"+pago+dispersion+secundaria).html("");
             $("#datoscuenta"+pago+dispersion+secundaria).html("");
         }
+    }
+    if(secundaria === 0){
+        $("#agrega"+pago+dispersion).css({'visibility': 'hidden', 'display': 'none'});
+        $("#divDispersion"+pago+dispersion).find(".dispSec").css({'visibility': 'hidden', 'display': 'none'}).next(".dispSec").remove();//se eliminan dispersiones secundarias 
+        $("#divDispersion"+pago+dispersion).find("#numeroDeDispersionesSec"+pago+dispersion).val("0");
+        $("#MonDspPag_"+pago+"_"+dispersion+"_1_").val("0.00").attr("disabled","disabled");
+        $("#IdEntPoE_"+pago+"_"+dispersion+"_1_").prop("selectedIndex",0).attr("disabled","disabled");
+        $("#IdOrgPag_"+pago+"_"+dispersion+"_1_").prop("selectedIndex",0).css({'visibility': 'hidden', 'display': 'none'}).attr("disabled","disabled");
+        $("#datosbanco"+pago+dispersion+"1").html("");
+        $("#datoscuenta"+pago+dispersion+"1").html("");
+        $("#MonDspPag_"+pago+"_"+dispersion+"_1_").val("0.00").attr("disabled","disabled");
+        $("#FecMovDspPag_"+pago+"_"+dispersion+"_1_").val("").attr("disabled","disabled");
+        $("#IdDesPag_"+pago+"_"+dispersion+"_1_").prop("selectedIndex",0).attr("disabled","disabled");
     }
 }
 /////////////////////////////////////////////////////////////////////////////////////
@@ -169,7 +192,7 @@ function agregaDestino(valor,padre,hijo,hijosec){
         $("#datoscuenta"+padre+hijo+"1").html("");
         $("#MonDspPag_"+padre+"_"+hijo+"_1_").val("0.00").attr("disabled","disabled");
         $("#FecMovDspPag_"+padre+"_"+hijo+"_1_").val("").attr("disabled","disabled");
-        $("#IdDesPag_"+padre+"_"+hijo+"_1_").prop("selectedIndex",0).attr("disabled","disabled")
+        $("#IdDesPag_"+padre+"_"+hijo+"_1_").prop("selectedIndex",0).attr("disabled","disabled");
         validaTotal(padre);
     }
 }

@@ -14,9 +14,9 @@ if (mysql_num_rows($res) == 0)
 	else
 	{
 
-            $perfiles = '<label>Proyecto: </label><select required name="IdEntPry" id="IdEntPry0" onchange="despliegaRegistrados(this);" style="width:100%;"><option value="0">Selecciona un proyecto</option>';
+            $perfiles = '<label>Proyecto: </label><select required name="IdEntPry" id="IdEntPry0" onchange="despliegaRegistrados(this);" style="width:100%;"><option value="0" class="visible">Selecciona un proyecto</option>';
             while($renglon = mysql_fetch_array($res)){
-                    $perfiles = $perfiles.'<option value="'.$renglon['IdEntPry'].'">'.$renglon['NomEntPry'].'</option>';
+                    $perfiles = $perfiles.'<option value="'.$renglon['IdEntPry'].'" class="visible">'.$renglon['NomEntPry'].'</option>';
                     }
                     $perfiles = $perfiles."</select>";
                 }

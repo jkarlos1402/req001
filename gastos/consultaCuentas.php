@@ -10,17 +10,7 @@ $query="SELECT tblentcue.IdEntCue IdEntCue, tblentcue.NumEntCue NumEntCue, tblen
 $result=mysql_query("$query",$conexion) or die (mysql_error());
 
 
-echo '
-		<meta charset="utf-8">
-		<script src="../js/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
-		<script src="../js/funcionesGastos.js" type="text/javascript"></script>
-		<link href="../vista/css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" type="text/css" href="css/estilos.css">
-
-		';
-
-
-
+echo '<script src="../js/funcionesGastos.js" type="text/javascript"></script>';
 echo '
     <table width="100%" class="ui-widget" >
         <tr class="encabezado">
@@ -39,7 +29,7 @@ echo '
         while($cuenta =  mysql_fetch_array($result)){
         
    echo'<tr>
-            <td><input type="radio" id="radio" name="radio" onclick="despliegaMovimientos('.$i.')">
+            <td><input type="radio" id="radio" name="radio" onclick="despliegaMovimientos('.$i.');">
             <input type="hidden" id="IdEntCue'.$i.'" name="IdEntCue'.$i.'" value="'.$cuenta['IdEntCue'].'"/></td>
             <td><input type="text" id="NomEntBan'.$i.'" id="NomEntBan'.$i.'" value="'.$cuenta['NomEntBan'].'" readonly></td>
             <td><input type="text" id="SucEntSuc'.$i.'" id="SucEntSuc'.$i.'" value="'.$cuenta['SucEntSuc'].'" readonly></td>
