@@ -4,6 +4,7 @@ include("../conexion.php");
 $IdEntPry=$_POST['IdEntPry'];
 $IdEntPag=$_POST['pago'];
 
+
 /*echo '	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
 		<script src="../js/jquery.js" type="text/javascript"></script>
 		<script src="../js/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
@@ -16,10 +17,7 @@ $consulta="SELECT *
 		FROM tblentpry, tblentcli WHERE tblentcli.IdEntCli = tblentpry.IdEntCli and tblentpry.IdEntPry=$IdEntPry";
 $resultado=mysql_query("$consulta",$conexion) or die (mysql_error());
 
-//************************************
-$consultadisp="SELECT MonEntPagRal,MonEntPagPrg,CtoEntPag,FecEntPagPrg,FecEntPagRal FROM tblentpag WHERE IdEntPag =$IdEntPag";
-$resultadodisp=mysql_query("$consultadisp",$conexion) or die (mysql_error());
-//************************************
+
 $consultaorig = "SELECT * 
 		FROM tblorgpag;
 		";
@@ -57,7 +55,16 @@ echo '<h2 align="center" class="encabezado">CONSULTA DE DISPERSIÓN DE PAGOS</h2
 				</table>'; 
 			echo'	<h2 align="center" class="encabezado">PROGRAMACIÓN DE PAGOS</h2>
 			<div id="accordion">';
-									
+                                    
+                                    for($i=1;$i<=count($IdEntPag);$i++){
+                                    if(!isset($IdEntPag[$i])){
+                                            break;
+                                        }
+                                        
+                                        //************************************
+                                        $consultadisp="SELECT MonEntPagRal,MonEntPagPrg,CtoEntPag,FecEntPagPrg,FecEntPagRal FROM tblentpag WHERE IdEntPag =$IdEntPag[$i]";
+                                        $resultadodisp=mysql_query("$consultadisp",$conexion) or die (mysql_error());
+                                        //************************************
 					while($renglongeneral = mysql_fetch_array($resultadodisp))
 					{
                                                 
@@ -67,7 +74,7 @@ echo '<h2 align="center" class="encabezado">CONSULTA DE DISPERSIÓN DE PAGOS</h2
                                                 }else{
                                                     $monto =$renglongeneral['MonEntPagPrg'];
                                                     $monto=(float)$monto-(($monto*$renglon['PjeEntPry'])/100);
-                    }
+                                                      }
 						echo '
 							<h3>'.$renglongeneral['CtoEntPag'].'</h3>
 							<div>
@@ -97,10 +104,14 @@ echo '<h2 align="center" class="encabezado">CONSULTA DE DISPERSIÓN DE PAGOS</h2
 											'.$renglongeneral['CtoEntPag'].'
 										</td>
 										<td>
-											'.$renglongeneral['FecEntPagPrg'].'
+											'.date('d-m-Y',strtotime($renglongeneral['FecEntPagPrg'])).'
 										</td>
 										<td>
-											'.$renglongeneral['FecEntPagRal'].'
+											';
+                                                                                          if($renglongeneral['FecEntPagRal']){
+                                                                                            echo date('d-m-Y',strtotime($renglongeneral['FecEntPagRal']));
+                                                                                          }
+                                                                                        echo '
 										</td>
 										<td>
 											$'.$monto.'
@@ -141,7 +152,7 @@ echo '<h2 align="center" class="encabezado">CONSULTA DE DISPERSIÓN DE PAGOS</h2
                                                                         </tr>
                                                                     </table>';
                                                 
-                                                        $query = "select PadDspPag,IdDspPag,IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,SalDspPag,IdDesPag from tbldsppag where IdEntPag = $IdEntPag and PadDspPag is NULL";
+                                                        $query = "select PadDspPag,IdDspPag,IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,SalDspPag,IdDesPag from tbldsppag where IdEntPag = $IdEntPag[$i] and PadDspPag is NULL";
                                                         $dispersiones = mysql_query($query);
                                                         $numeroRegistrados = mysql_num_rows($dispersiones);
                                                         $h = 1;
@@ -287,15 +298,26 @@ echo '<h2 align="center" class="encabezado">CONSULTA DE DISPERSIÓN DE PAGOS</h2
                                                                             }
                                                                             echo '</table>
                                                                                 
-                                                                            </div>';//aqui termina el div de los que ya estan en base
+                                                                            </div>
+                                                                            ';//aqui termina el div de los que ya estan en base
                                                                         $h++;
-                                                                } 
+                                                                        
+                                                                }
+                                                                
                                                         }
+                                                        
                                                         else{
                                                             echo 'Aun no hay dispersiones programas';
                                                         }
+                                              echo  '</div>
+                                                  </div>';          
                                         }
-echo '<div style="position:absolute; right:60px; margin-top:10px;">
-        <input type="button" value="Regresar" onClick="cambiaHtml(\'consultaProyecto.php\')";">
-    </div>';
+                                    }
+                                    
+                    echo '
+                        </div>
+                        <div style="position:relative; margin-top:10px;">
+                        <input type="button" value="Regresar" onClick="cambiaHtml(\'consultaProyecto.php\')";">
+                        </div>
+    ';
 								
