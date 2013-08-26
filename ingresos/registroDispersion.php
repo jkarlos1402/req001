@@ -102,7 +102,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                         }
                       echo '</td>
                             <td>
-				<input type="text" value="'.$monto.'" id="montoTotal'.$i.'" name="montoTotal'.$i.'" disabled="disabled">
+				$<input type="text" value="'.$monto.'" id="montoTotal'.$i.'" name="montoTotal'.$i.'" disabled="disabled">
                             </td>
                             <td>
 				<input type="button" value="Programar" id="Programar'.$i.'" name="Programar" onClick="habilitaDispersion('.$i.');" />

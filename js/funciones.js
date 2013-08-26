@@ -127,7 +127,7 @@ function modificaUsu(IdEntUsu) {
     var url = "../usuario/usuario.php";
     $.post(url, {IdEntUsu: IdEntUsu}, function(responseText) {
         $("#consultarUsuarios").dialog("close");
-        $("#modificarUsuarios").dialog("open");
+        $("#modificarUsuarios").dialog("option","position",{my:"left top",at:"left bottom",of:$("#ident")}).dialog("open");
         $("#modificarUsuarios").find("#datosMod").html(responseText);
         $("input[type=button],input[type=submit]").button();
         $("#formModUsu").submit(function() {
@@ -251,7 +251,8 @@ function cargaCaracteristicas() {
         });
 
         $("#consulta").click(function() {
-            $("#consultarUsuarios").dialog("open");
+            
+            $("#consultarUsuarios").dialog("option","position",{my:"left top",at:"left bottom",of:$("#ident")}).dialog("open");
             var url = "../usuario/usuario.php";
             $.post(url, {}, function(responseText) {
                 $("#datosUsuario").html(responseText);
@@ -266,7 +267,8 @@ function cargaCaracteristicas() {
             $("#PwdEntUsu").val("");
             $("#PflEntUsu").prop("selectedIndex",0);
             $("#errorReg").html("").removeClass("ui-state-error ui-corner-all");
-            $("#registrarUsuarios").dialog("open");
+            $("#registrarUsuarios").dialog("option","position",{my:"left top",at:"left bottom",of:$("#ident")}).dialog("open");
+            
         });
 
         //Menu principal

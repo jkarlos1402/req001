@@ -126,10 +126,16 @@ $resultado=mysql_query("$consulta",$conexion) or die (mysql_error());
 while($renglon = mysql_fetch_array($resultado)){
     $dias = diasFaltantes(date("d-m-Y"),$renglon['FecEntPagPrg'],$renglon['IdEntPag']);
     echo '<tr align="center">
-            <form class="form" id="formulario'.$cont.'" name="formulario'.$cont.'" method="POST" action="../ingresos/consultaDispersion.php">
+            <form class="form" id="formulario'.$cont.'" name="formulario'.$cont.'" method="POST" action="../ingresos/consultaDispersion.php">';
+            if($_SESSION['k_perfil']!="USU"){
+            echo '
             <td><img src="../vista/images/vista.png" style="cursor:pointer;" width="25" onclick=consultarDispersion('.$renglon['IdEntPag'].');></td>
-            <td><img src="../vista/images/config.gif" style="cursor:pointer;" onclick=programarDispersion('.$renglon['IdEntPag'].') width="25"></td>
-            <td>'.$cont.'<input type="text" id="IdEntPag" name="IdEntPag" value="'.$renglon['IdEntPag'].'" style="visibility:hidden; display:none"><input type="text" id="IdEntPry" name="IdEntPry" value="'.$IdEntPry.'" style="visibility:hidden; display:none"></td>';
+            <td><img src="../vista/images/config.gif" style="cursor:pointer;" onclick=programarDispersion('.$renglon['IdEntPag'].') width="25"></td>';            
+            }
+            else{
+                echo'<td><img src="../vista/images/vista.png" style="cursor:pointer;" width="25" onclick=consultarDispersion('.$renglon['IdEntPag'].');></td>';
+            }
+           echo' <td>'.$cont.'<input type="text" id="IdEntPag" name="IdEntPag" value="'.$renglon['IdEntPag'].'" style="visibility:hidden; display:none"><input type="text" id="IdEntPry" name="IdEntPry" value="'.$IdEntPry.'" style="visibility:hidden; display:none"></td>';
     if($renglon['FecEntPagRal']==null){	
         echo '<td>'.date("d-m-Y",strtotime($renglon['FecEntPagPrg'])).'</td>';
         echo '<td>'.$renglon['PorEntPagPrg'].'%</td>';
