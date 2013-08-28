@@ -106,7 +106,7 @@ for($i = 0; $i < count($idPrys);$i ++){
                                 Pago acordado
                             </td>
                             <td>
-                                $'.((float)$pago['MonEntPagPrg']*(1.16)).'
+                                $'.((float)$pago['MonEntPagPrg']).'
                             </td>
                             <td>
                                 Pago ejercido
@@ -118,7 +118,10 @@ for($i = 0; $i < count($idPrys);$i ++){
                     </tfoot>
                 </tbody>
               </table>';
-            $query = "select * from tbldsppag where IdEntPag =".$pago['IdEntPag'];
+            $query = "SELECT * FROM tbldsppag disp
+join tblentpoe poe on disp.IdEntPoE = poe.IdEntPoE 
+join tbldespag accion on accion.IdDesPag = disp.IdDesPag
+where disp.IdEntPag = ".$pago['IdEntPag']." and disp.PadDspPag is null";
             $res2 = mysql_query($query);
               echo '<h3>Dispersión de pagos</h3>
               <table width="100%">
@@ -143,10 +146,7 @@ for($i = 0; $i < count($idPrys);$i ++){
                             Acción
                         </th>
                         <th>
-                            Monto de<br/>acción
-                        </th>
-                        <th>
-                            Gasto o<br/>dispersión
+                            Dispersión
                         </th>
                         <th>
                             Saldo
@@ -155,25 +155,85 @@ for($i = 0; $i < count($idPrys);$i ++){
                 </thead>
                 <tbody>';
               $contDisp = 1;
-              while($dispersion = mysql_fetch_array($res2)){
+              if(mysql_num_rows($res2)>0){
+                while($dispersion = mysql_fetch_array($res2)){
+                    $query = "SELECT ifNULL(sum(MonDspPag),0.00) dispersion FROM tbldsppag where PadDspPag = ".$dispersion['IdDspPag'];
+                    $res3 = mysql_query($query);
+                    $dispersado = mysql_fetch_array($res3);
+                    echo '<tr>
+                              <td>
+                                  '.$contDisp.'
+                              </td>
+                              <td>
+                                  Cliente
+                              </td>
+                              <td>
+                                  '.$dispersion['NomEntPoE'].'
+                              </td>
+                              <td>
+                                  '.$dispersion['MonDspPag'].'
+                              </td>
+                              <td>
+                                  '.date('d-m-Y',strtotime($dispersion['FecMovDspPag'])).'
+                              </td>
+                              <td>
+                                  '.$dispersion['DscDesPag'].'
+                              </td>
+                              <td>
+                                  $'.$dispersado['dispersion'].'
+                              </td>
+                              <td>
+                                  $'.$dispersion['SalDspPag'].'
+                              </td>
+                        </tr>';
+                    $contDisp++;
+                    $contDspSec = 1;
+                    $query = "SELECT * FROM tbldsppag disp
+                              join tblentpoe poe on disp.IdEntPoE = poe.IdEntPoE 
+                              join tbldespag accion on accion.IdDesPag = disp.IdDesPag
+                              where disp.PadDspPag = ".$dispersion['IdDspPag'];
+                    $res4 = mysql_query($query);
+                    while ($dispersionSec = mysql_fetch_array($res4)){
+                        $query="SELECT disp.IdEntPoE,NomEntPoE FROM tbldsppag disp
+                              join tblentpoe poe on poe.IdEntPoE = disp.IdEntPoE 
+                              where IdDspPag = ".$dispersionSec['PadDspPag'];
+                        $res5 = mysql_query($query);
+                        $origen = mysql_fetch_array($res5);
+                          echo '<tr>
+                              <td>
+                                  '.$contDisp.'.'.$contDspSec.'
+                              </td>
+                              <td>
+                                  '.$origen['NomEntPoE'].'
+                              </td>
+                              <td>
+                                  '.$dispersionSec['NomEntPoE'].'
+                              </td>
+                              <td>
+                                  '.$dispersionSec['MonDspPag'].'
+                              </td>
+                              <td>
+                                  '.date('d-m-Y',strtotime($dispersionSec['FecMovDspPag'])).'
+                              </td>
+                              <td>
+                                  '.$dispersionSec['DscDesPag'].'
+                              </td>
+                              <td>
+                                  $0.00
+                              </td>
+                              <td>
+                                  $'.$dispersionSec['SalDspPag'].'
+                              </td>
+                        </tr>';
+                        $contDspSec++;
+                    }
+                }
+              }else{
                   echo '<tr>
-                            <td>
-                                '.$contDisp.'
-                            </td>
-                            <td>
-                                '.$dispersion['DscOrgPag'].'
-                            </td>
-                            <td>
-                                '.$dispersion['DscDesPag'].'
-                            </td>
-                            <td>
-                                '.$dispersion['MonDspPag'].'
-                            </td>
-                            <td>
-                                '.$dispersion['FecMovDspPag'].'
+                            <td colspan="8" align="center">
+                                No se han registrado dispersiones
                             </td>
                       </tr>';
-                  $contDisp++;
               }
             echo'</tbody>
             </table>
