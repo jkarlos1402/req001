@@ -546,11 +546,29 @@ function registraPago(IdEntPag, cont, pago) {
     $("#FecEntPagRal").val("");
     $("input[type=fechaPago]").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate', 'today');
     $("#mensaje").html("");
-    $("#dialogregistro").dialog("open");
+    $("#dialogregistro").dialog("option","width",950).dialog("open").find("#cuenta").html('');
+    var url = "../ingresos/movimientos.php";
+    $.post(url, {}, function(responseText) {
+            $("#movimientoPago").html(responseText); 
+    });
+     var url = "../participante/participante.php";
+    $.post(url, {}, function(responseText) {
+        $("#part").html(responseText);
+        $("#part").find("#PoE").css("width","235px").removeAttr("onchange").attr("onchange","consultaCuentas(this.value);");
+    });
+    
     contoculta = cont;
     pagoprg = pago.toFixed(2);
 
 
+}
+
+function consultaCuentas(IdEntPoE){
+    var url = "../ingresos/cuentaPagos.php";
+    $.post(url, {IdEntPoE:IdEntPoE}, function(responseText) {
+        $("#cuenta").html(responseText);
+        //$("#part").find("#PoE").css("width","235px").removeAttr("onchange").attr("onchange","consultaCuentas(this);");
+    });
 }
 
 
@@ -564,7 +582,21 @@ function registraPago(IdEntPag, cont, pago) {
 //*************************************
 var sumainterna = 0;
 function guardarPago() {
-
+    if($("#IdEntMov").val()==='0'){
+        alert("Por favor seleccione movimiento de cobro");
+        $("#IdEntMov").focus();
+        return false;
+    }
+    if($("#PoE").val()==='0'){
+        alert("Por favor seleccione un destinatario");
+        $("#PoE").focus();
+        return false;
+    }
+    if($("#IdEntCue").val()==='0'){
+        alert("Por favor seleccione una cuenta");
+        $("#IdEntCue").focus();
+        return false;
+    }
     if (document.getElementById("MonEntPagRal").value == "" || isNaN(document.getElementById("MonEntPagRal").value)) {
         alert("Por favor ingrese el monto");
         document.getElementById("MonEntPagRal").value = "";
@@ -575,10 +607,10 @@ function guardarPago() {
         alert("Por favor ingrese la fecha");
         document.getElementById("FecEntPagRal").focus();
         return false;
-    }
-    else {
-        if (parseFloat(document.getElementById("MonEntPagRal").value).toFixed(2) > pagoprg || parseFloat(document.getElementById("MonEntPagRal").value).toFixed(2) < pagoprg)
-        {
+        }
+        else {
+            if (parseFloat(document.getElementById("MonEntPagRal").value).toFixed(2) > pagoprg || parseFloat(document.getElementById("MonEntPagRal").value).toFixed(2) < pagoprg)
+            {
             var band = confirm("El monto del pago es diferente al monto programado,\n es necesario ajuste. ¿Desea Continuar? ");
             if (band == true) {
 
@@ -604,8 +636,10 @@ function guardarPago() {
                     IdEntPag = document.getElementById("IdEntPagRal").value;
                     MonEntPagRal = document.getElementById("MonEntPagRal").value;
                     FecEntPagRal = document.getElementById("FecEntPagRal").value;
-
-                    $.post(url, {IdEntPag: IdEntPag, MonEntPagRal: MonEntPagRal, FecEntPagRal: FecEntPagRal, PorEntPagRal: PorEntPagRal}, function(responseText) {
+                    IdEntMov = $("#IdEntMov").val();
+                    IdEntCue = $("#IdEntCue").val();
+                    InfEntPag=$("#info").val();
+                    $.post(url, {IdEntPag: IdEntPag, MonEntPagRal: MonEntPagRal, FecEntPagRal: FecEntPagRal, PorEntPagRal: PorEntPagRal,IdEntMov:IdEntMov,IdEntCue:IdEntCue,InfEntPag:InfEntPag}, function(responseText) {
                         $("#mensaje").html(responseText);
                     });
                     $("#est" + contoculta).css("background-color", "#00D615");
@@ -645,7 +679,10 @@ function guardarPago() {
                 IdEntPag = document.getElementById("IdEntPagRal").value;
                 MonEntPagRal = document.getElementById("MonEntPagRal").value;
                 FecEntPagRal = document.getElementById("FecEntPagRal").value;
-                $.post(url, {IdEntPag: IdEntPag, MonEntPagRal: MonEntPagRal, FecEntPagRal: FecEntPagRal, PorEntPagRal: PorEntPagRal}, function(responseText) {
+                IdEntMov = $("#IdEntMov").val();
+                IdEntCue = $("#IdEntCue").val();
+                InfEntPag=$("#info").val();
+                $.post(url, {IdEntPag: IdEntPag, MonEntPagRal: MonEntPagRal, FecEntPagRal: FecEntPagRal, PorEntPagRal: PorEntPagRal,IdEntMov:IdEntMov,IdEntCue:IdEntCue,InfEntPag:InfEntPag}, function(responseText) {
                     $("#mensaje").html(responseText);
                 });
                 $("#dialogregistro").dialog("close");
@@ -745,6 +782,9 @@ function programaDisp(aux) {
             $("input[type=button],input[type=submit]").button();
             $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
             $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
+            $("#accordion").accordion({
+                    heightStyle: "content"
+                });
             $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
                 width: 350,
                 modal: true,
@@ -769,17 +809,15 @@ function consultaDisp(IdEntPag,aux) {
         var pago =[];
         pago[1]=IdEntPag;
         document.getElementById("pago" + aux).checked = 1;
-        
         //document.getElementById("formulario").submit();
         $.post("../ingresos/consultaDispersion.php",{IdEntPry:IdEntPry,pago:pago},function(data){
             $("#workbench").html(data);
             $("input[type=button],input[type=submit]").button();
             $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
-             $("#accordion").accordion({
+            $("#accordion").accordion({
                     heightStyle: "content"
                 });
         });
-    
 }
 ////////////////////////////////////////////////////////////////////////////
 function programaSel() {
@@ -790,6 +828,9 @@ function programaSel() {
     $.post("../ingresos/registroDispersion.php",$("#formulario").serialize(),function(data){
         $("#workbench").html(data);
         //cargaCaracteristicas();
+        $("#accordion").accordion({
+                    heightStyle: "content"
+                });
         $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
                 width: 350,
                 modal: true,

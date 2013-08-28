@@ -224,6 +224,13 @@ echo '      <tr align="center">
                     Fecha de Pago
                 </td>
                 <td>
+                    Movimiento de Cobro
+                </td>
+                <td>
+                    Destinatario
+                </td>
+                <td>
+                    Cuenta
                 </td>
             </tr>
             <tr align="center">
@@ -234,10 +241,27 @@ echo '      <tr align="center">
                 <td>
                     <input type="fechaPago" name="FecEntPagRal" id="FecEntPagRal" size="10"/>
                 </td>
-                <td>
-                    <input type="button" value="Guardar" onclick="guardarPago();"/>
+                <td id="movimientoPago">
+                    
                 </td>
+                <td id="part">
+                    
+                </td>
+                <td id="cuenta">
+                </td>
+            </tr>
+            <tr>
                 <td>
+                Nota:
+                </td>
+                <td colspan="4">
+                <textarea cols="100" rows="2" id="info">
+                </textarea>
+                </td>
+            </tr>
+            <tr align="right">
+                <td colspan="5">
+                    <input type="button" value="Guardar" onclick="guardarPago();"/>
                 </td>
             </tr>													
         </table>
