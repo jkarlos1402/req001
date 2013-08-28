@@ -21,8 +21,8 @@ if (!ISSET($_SESSION["k_username"])) {
         </td>
     </tr>
     <tr>
-        <td>
-            <div id="menuIzq" style="width: 350px; height: 424px; margin-top: 40px;border-right: dotted 1px;">
+        <td style="vertical-align: top;">
+            <div id="menuIzq" style="width: 350px; height: 424px; margin-top: 40px;border-right: dotted 1px; position: fixed;">
                 
             </div> 
         </td>
