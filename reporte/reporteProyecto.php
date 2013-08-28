@@ -240,5 +240,31 @@ where disp.IdEntPag = ".$pago['IdEntPag']." and disp.PadDspPag is null";
             <hr/>';
         $cont++;
     }
+    echo '<h3>Gastos realizados</h3>';
+    $query = "SELECT poe.NomEntPoE,gas.DesEntGas,gas.FecEntGas,gas.MonEntGas 
+                FROM tblentpry pry 
+                RIGHT JOIN tblentgas gas ON pry.IdEntPry = gas.IdEntPry
+                join tblentcue cuenta on cuenta.IdEntCue = gas.IdEntCue
+                join tblentpoe poe on poe.IdEntPoE = cuenta.IdEntPoE
+                WHERE pry.IdEntPry =".$idPrys[$i];
+    $res = mysql_query($query);
+    echo '<table>
+            <thead>
+                <tr>
+                    <th>
+                        Nombre del participante
+                    </th>
+                    <th>
+                        Descripción del gasto
+                    </th>
+                    <th>
+                        Fecha del gasto
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </thead>
+        </table>';
 }//fin del for para reporte
 ?>
