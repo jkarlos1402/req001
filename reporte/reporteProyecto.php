@@ -14,7 +14,7 @@ for($i = 0; $i < count($idPrys);$i ++){
         echo '<table width="100%">
                 <tr>
                     <td align="left">
-                        <b>Información de pago</b>
+                        <h3>Información de pago</h3>
                     </td>
                 </tr>
             </table>
@@ -51,7 +51,7 @@ for($i = 0; $i < count($idPrys);$i ++){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="entrada'.($cont%2).'" align="center">
+                    <tr class="entrada" align="center">
                         <td>
                             '.$cont.'
                         </td>
@@ -66,9 +66,9 @@ for($i = 0; $i < count($idPrys);$i ++){
                         </td>
                         <td>';
                     if($pago['FecEntPagRal']!= null){
-                        echo $pago['FecEntPagRal'];
+                        echo date('d-m-Y',strtotime($pago['FecEntPagRal']));
                     }else{
-                        echo $pago['FecEntPagPrg'];
+                        echo date('d-m-Y',strtotime($pago['FecEntPagPrg']));;
                     }
                     echo'</td>
                         <td>
@@ -78,7 +78,7 @@ for($i = 0; $i < count($idPrys);$i ++){
                     if($pago['MonEntPagRal']!= null){
                         echo "$".$pago['MonEntPagRal'];
                     }else{
-                        echo "$".((float)$pago['MonEntPagPrg']*(1.16));
+                        echo "$".$pago['MonEntPagPrg'];
                     }     
                     echo'</td>
                         <td>
@@ -123,8 +123,8 @@ join tblentpoe poe on disp.IdEntPoE = poe.IdEntPoE
 join tbldespag accion on accion.IdDesPag = disp.IdDesPag
 where disp.IdEntPag = ".$pago['IdEntPag']." and disp.PadDspPag is null";
             $res2 = mysql_query($query);
-              echo '<h3>Dispersión de pagos</h3>
-              <table width="100%">
+              echo '<div style="text-align: left;"><h3>Dispersión de pagos</h3></div>
+              <table width="100%" cellpading="0" cellspacing="0">
                 <thead>
                     <tr class="encabezado">
                         <th>
@@ -160,9 +160,9 @@ where disp.IdEntPag = ".$pago['IdEntPag']." and disp.PadDspPag is null";
                     $query = "SELECT ifNULL(sum(MonDspPag),0.00) dispersion FROM tbldsppag where PadDspPag = ".$dispersion['IdDspPag'];
                     $res3 = mysql_query($query);
                     $dispersado = mysql_fetch_array($res3);
-                    echo '<tr>
+                    echo '<tr class="entrada">
                               <td>
-                                  '.$contDisp.'
+                                  '.$cont.'.'.$contDisp.'
                               </td>
                               <td>
                                   Cliente
@@ -199,9 +199,9 @@ where disp.IdEntPag = ".$pago['IdEntPag']." and disp.PadDspPag is null";
                               where IdDspPag = ".$dispersionSec['PadDspPag'];
                         $res5 = mysql_query($query);
                         $origen = mysql_fetch_array($res5);
-                          echo '<tr>
+                          echo '<tr class="entrada">
                               <td>
-                                  '.$contDisp.'.'.$contDspSec.'
+                                  '.$cont.'.'.$contDisp.'.'.$contDspSec.'
                               </td>
                               <td>
                                   '.$origen['NomEntPoE'].'
@@ -240,5 +240,76 @@ where disp.IdEntPag = ".$pago['IdEntPag']." and disp.PadDspPag is null";
             <hr/>';
         $cont++;
     }
+    echo '<h3>Gastos realizados</h3>';
+    $query = "SELECT poe.NomEntPoE,gas.DesEntGas,gas.FecEntGas,gas.MonEntGas 
+                FROM tblentpry pry 
+                RIGHT JOIN tblentgas gas ON pry.IdEntPry = gas.IdEntPry
+                join tblentcue cuenta on cuenta.IdEntCue = gas.IdEntCue
+                join tblentpoe poe on poe.IdEntPoE = cuenta.IdEntPoE
+                WHERE pry.IdEntPry =".$idPrys[$i];
+    $res = mysql_query($query);
+    echo '<table width="100%" cellpading="0" cellspacing="0">
+            <thead>
+                <tr class="encabezado">
+                    <th>
+                        No.
+                    </th>
+                    <th>
+                        Nombre del participante
+                    </th>
+                    <th>
+                        Descripción del gasto
+                    </th>
+                    <th>
+                        Fecha del gasto
+                    </th>
+                    <th>
+                        Monto del gasto
+                    </th>
+                </tr>
+            </thead>
+            <tbody>';
+    $contGasto = 1;
+    $sumaGastos = 0;
+    if(mysql_num_rows($res) > 0){
+        while ($gasto = mysql_fetch_array($res)) {
+            echo '<tr class="entrada" align="center">
+                    <td>
+                        '.$contGasto.'
+                    </td>
+                    <td>
+                        '.$gasto['NomEntPoE'].'
+                    </td>
+                    <td>
+                        '.$gasto['DesEntGas'].'
+                    </td>
+                    <td>
+                        '.date('d-m-Y',strtotime($gasto['FecEntGas'])).'
+                    </td>
+                    <td>
+                        $'.$gasto['MonEntGas'].'
+                    </td>
+                </tr>';
+            $contGasto++;
+            $sumaGastos += (float)$gasto['MonEntGas'];
+            }
+            echo '<tr align="center">
+                    <td colspan="4" align="right">
+                        Total de gastos:
+                    </td>
+                    <td>
+                        <b>$'.$sumaGastos.'</b>
+                    </td>
+                </tr>';
+        }else{
+            echo '<tr>
+                    <td colspan="5">
+                        No hay gastos registrados para este proyecto
+                    </td>
+                </tr>';
+    }
+    echo'   </tbody>    
+        </table>
+        <hr style="box-shadow: 0px 0px 10px rgb(24, 6, 235);border-radius: 5px; margin-top: 20px;">';
 }//fin del for para reporte
 ?>

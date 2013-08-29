@@ -51,17 +51,23 @@ td{
 	color:#060;
 }
 .entrada0{
-	background-color:#E1E1E1;
-	border-bottom-left-radius: 1px;
-	border-bottom-right-radius: 1px;
+    background-color:#E1E1E1;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
 }
 
 .entrada1{
-	background-color:#F4F4F4;
-	border-bottom-left-radius: 1px;
-	border-bottom-right-radius: 1px;
+    background-color:#F4F4F4;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
 }
 
+.entrada:hover{
+    background-color: #222222;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    color: #FFF;
+}
 .empresa{
 	display:none;
 }
