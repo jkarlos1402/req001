@@ -640,7 +640,7 @@ function guardarPago() {
                     IdEntCue = $("#IdEntCue").val();
                     InfEntPag=$("#info").val();
                     $.post(url, {IdEntPag: IdEntPag, MonEntPagRal: MonEntPagRal, FecEntPagRal: FecEntPagRal, PorEntPagRal: PorEntPagRal,IdEntMov:IdEntMov,IdEntCue:IdEntCue,InfEntPag:InfEntPag}, function(responseText) {
-                        $("#mensaje").html(responseText);
+                        $("#errprue").html(responseText);
                     });
                     $("#est" + contoculta).css("background-color", "#00D615");
                     $("#montoreal" + contoculta).html("$" + MonEntPagRal);
@@ -683,7 +683,7 @@ function guardarPago() {
                 IdEntCue = $("#IdEntCue").val();
                 InfEntPag=$("#info").val();
                 $.post(url, {IdEntPag: IdEntPag, MonEntPagRal: MonEntPagRal, FecEntPagRal: FecEntPagRal, PorEntPagRal: PorEntPagRal,IdEntMov:IdEntMov,IdEntCue:IdEntCue,InfEntPag:InfEntPag}, function(responseText) {
-                    $("#mensaje").html(responseText);
+                    $("#errprue").html(responseText);
                 });
                 $("#dialogregistro").dialog("close");
                 $("#est" + contoculta).css("background-color", "#00D615");

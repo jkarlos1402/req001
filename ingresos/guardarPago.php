@@ -24,7 +24,38 @@ $query = "select IdEntEst from tblentest where DscEntEst like 'EJECUTADO'";
 		while($fila = mysql_fetch_array($res)){
 			$estado = $fila['IdEntEst'];
 		}
-$query = "UPDATE tblentpag SET FecEntPagRal=(SELECT STR_TO_DATE('$FecEntPagRal','%Y-%m-%d' )), IdEntEst=$estado, MonEntPagRal = $MonEntPagRal, PorEntPagRal = $PorEntPagRal, IdEntMov =$IdEntMov, IdEntCue=$IdEntCue, InfEntPag='".$InfEntPag."' WHERE IdEntPag=$IdEntPag";
-$res = mysql_query($query,$conexion);
+$q="SELECT pry.PjeEntPry FROM tblentpag pag
+        JOIN tblentpry pry ON pag.IdEntPry = pry.IdEntPry
+    WHERE pag.IdEntPag = $IdEntPag";
+$res=mysql_query($q);
+$pje=  mysql_fetch_array($res);
+$SalEntPag = $MonEntPagRal;
+$SalEntPag-=(((float)$pje[0]*$MonEntPagRal)/100);
+$qry = "SELECT SUM(SalDspPag) FROM tbldsppag WHERE IdEntPag =$IdEntPag";
+$res = mysql_query($qry);
+$suma = mysql_fetch_array($res);
+$SalEntPag -= (float)$suma[0];
+$query = "UPDATE tblentpag SET FecEntPagRal=(SELECT STR_TO_DATE('$FecEntPagRal','%Y-%m-%d' )), IdEntEst=$estado, MonEntPagRal = $MonEntPagRal, PorEntPagRal = $PorEntPagRal, IdEntMov =$IdEntMov, IdEntCue=$IdEntCue, InfEntPag='".$InfEntPag."', SalEntPag=$SalEntPag WHERE IdEntPag=$IdEntPag";
+$res = mysql_query($query,$conexion) or die(mysql_error());
+
+$que="select temp.IdEntCue,sum(saldo_cuenta) saldo_cuenta from (SELECT c.IdEntCue,
+(SELECT IFNULL(sum(p.SalDspPag),0.00) from tbldsppag p where p.IdEntCue = c.IdEntCue) saldo_cuenta
+from tblentcue c group by c.IdEntCue
+union
+select cuenta.IdEntCue,
+(select IFNULL(sum(pago.SalEntPag),0.00) from tblentpag pago where pago.IdEntCue = cuenta.IdEntCue) saldo_cuenta
+from tblentcue cuenta group by cuenta.IdEntCue
+union
+select cuenta1.IdEntCue,
+(select IFNULL(sum(gasto.MonEntGas)*-1,0.00) from tblentgas gasto where gasto.IdEntCue = cuenta1.IdEntCue) saldo_cuenta
+from tblentcue cuenta1 group by cuenta1.IdEntCue
+) temp group by temp.IdEntCue";
+
+$res = mysql_query($que) or die(mysql_error());
+    while($saldo = mysql_fetch_array($res)){
+        $query = "UPDATE tblentcue SET SalEntCue = ".$saldo['saldo_cuenta']." WHERE IdEntCue=".$saldo['IdEntCue']."";
+        mysql_query($query) or die(mysql_error());
+    }
+
 echo "!Pago Registrado!";
 

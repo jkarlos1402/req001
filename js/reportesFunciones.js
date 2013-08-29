@@ -22,4 +22,28 @@ function muestraFiltro(select){
            });
         });
     }
+    
+    if($(select).val() === '3'){
+        $("#menuIzq").html("");
+        $("#resultadoReporte").html("");
+        var url = "../reporte/empresas.php";
+        $.post(url,{},function (responseText){
+           $("#menuIzq").html(responseText); 
+           $("#btnRep").button();
+           $("#btnRep").click(function(){
+               if($("#lint_idPry").val() !== null){
+                    $("#mensaje").html("").removeClass("ui-state-error ui-corner-all");
+                    var url1 = "../reporte/reporteEmpresas.php";
+                    $.post(url1,{idPoE:$("#lint_idPoE").val()},function(data){
+                       $("#resultadoReporte").html(data);                      
+                       $("table tfoot td").nextAll("td").css({"border":"solid 1px","cellpading":"0px"});
+                    });
+               }else{
+                   $("#mensaje").html("<span>Seleccione por lo menos un proyecto</span>").
+                           css({"color":"#cd0a0a","width": "231px","padding": "12px","margin-top": "31px"}).
+                           addClass("ui-state-error ui-corner-all");
+               }
+           });
+        });
+    }
 }

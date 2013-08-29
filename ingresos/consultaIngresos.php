@@ -214,6 +214,8 @@ echo '      <tr align="center">
             </tr>
         </table>
     </form>
+    <div id="errprue">
+    </div>
     <div id="dialogregistro" title="Registrar Pago" style="display: none;">
         <table align="center" border="1">
             <tr align="center">
