@@ -337,6 +337,9 @@ function programarDispersion(pago){
         IdEntPag[1]=pago;
         $.post("../ingresos/registroDispersion.php",{IdEntPry:IdEntPry,pago:IdEntPag,renglones:renglones},function(data){
             $("#workbench").html(data);
+            $("#accordion").accordion({
+                    heightStyle: "content"
+                });
             $("input[type=button],input[type=submit]").button();
             $("input[type=text],input[type=password],select,td,h2").addClass("ui-corner-all");
             $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
@@ -357,6 +360,3 @@ function programarDispersion(pago){
     }
 }
 
-function regresar(){
-    
-}
