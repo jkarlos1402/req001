@@ -56,15 +56,24 @@ for($i = 0; $i < $totalDispersiones; $i++){
     }
     
 }
-$query = "SELECT c.IdEntCue,
-            (SELECT IFNULL(sum(p.SalDspPag),0.00) from tbldsppag p where p.IdEntCue = c.IdEntCue) saldo_cuenta
-        from tblentcue c where IdEntCue is not null group by c.IdEntCue";
+    $query = "select temp.IdEntCue,sum(saldo_cuenta) saldo_cuenta from (SELECT c.IdEntCue,
+                (SELECT IFNULL(sum(p.SalDspPag),0.00) from tbldsppag p where p.IdEntCue = c.IdEntCue) saldo_cuenta
+                    from tblentcue c group by c.IdEntCue
+                union
+                select cuenta.IdEntCue,
+                (select IFNULL(sum(pago.SalEntPag),0.00) from tblentpag pago where pago.IdEntCue = cuenta.IdEntCue) saldo_cuenta
+                from tblentcue cuenta group by cuenta.IdEntCue
+                union 
+                select cuenta1.IdEntCue,
+                (select IFNULL(sum(gasto.MonEntGas)*-1,0.00) from tblentgas gasto where gasto.IdEntCue = cuenta1.IdEntCue) saldo_cuenta
+                from tblentcue cuenta1 group by  cuenta1.IdEntCue
+              ) temp group by temp.IdEntCue";
 $res = mysql_query($query) or die(mysql_error());
 while($saldoCuenta = mysql_fetch_array($res)){
     $query = "update tblentcue set SalEntCue = ".$saldoCuenta['saldo_cuenta']." where IdEntCue = ".$saldoCuenta['IdEntCue'];
     mysql_query($query);
-    $query = "update tblentcue set SalActEntCue =(".$saldoCuenta['saldo_cuenta']."-(SELECT sum(MonEntGas) FROM tblentgas where IdEntCue =".$saldoCuenta['IdEntCue'].")) where IdEntCue = ".$saldoCuenta['IdEntCue'];
-    mysql_query($query) or die(mysql_error());
+    //$query = "update tblentcue set SalActEntCue =(".$saldoCuenta['saldo_cuenta']."-(SELECT sum(MonEntGas) FROM tblentgas where IdEntCue =".$saldoCuenta['IdEntCue'].")) where IdEntCue = ".$saldoCuenta['IdEntCue'];
+    //mysql_query($query) or die(mysql_error());
 }
 echo "Se han registrado las dipersiones para el pago";
 ?>
