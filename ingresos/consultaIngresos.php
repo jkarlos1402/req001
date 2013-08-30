@@ -221,6 +221,7 @@ echo '      <tr align="center">
             <tr align="center">
                 <td>
                     Monto 
+                    
                 </td>
                 <td>
                     Fecha de Pago

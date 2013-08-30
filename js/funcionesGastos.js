@@ -78,7 +78,8 @@ function despliegaMovimientos(index){
     
     var url="../gastos/cuenta.php";
     $.post(url,{IdEntCue:IdEntCue},function(responseText){
-        $("#saldo").val(responseText);
+        $("#saldoSingastos").val(responseText);
+        $("#saldoCongastos").val(responseText);
     });
     $("#IdEntPry0").prop("selectedIndex",0);
     $(".movRegistrados").html('');
@@ -210,12 +211,12 @@ function sumaTotal(){
  $("#movimientos").find(".montoTotal").each(function(){
      sumaTotal=sumaTotal+parseFloat($(this).val());
  });
- $("#movimientos").find("#totalGeneral").val(sumaTotal.toFixed(2));
+ $("#movimientos").find("#totalGastos").val(sumaTotal.toFixed(2));
 }
 
 function saldoCuenta(){
- var saldo = parseFloat($("#ingresos").val()-$("#totalGeneral").val());
- $("#saldo").val(saldo.toFixed(2));
+ var saldo = parseFloat($("#saldoSingastos").val()-$("#totalGastos").val());
+ $("#saldoCongastos").val(saldo.toFixed(2));
 }
 
 function guardarGastos(){
@@ -232,10 +233,10 @@ function guardarGastos(){
         }
     
         var cuenta=$("#cuentax").val();
-        var saldo = $("#saldo").val();
+        var saldo = $("#saldoCongastos").val();
         var url ="../gastos/estadoCuenta.php";
         $.post(url,{cuenta:cuenta,saldo:saldo},function(responseText){
-                /*$("#log").html(responseText);*/
+                alert(responseText);
         });
         
     }
@@ -255,7 +256,7 @@ function despliegaRegistrados(IdEntPry){
             function(){
                 gastosRegistrados=gastosRegistrados+eval($(this).val());
             });
-            $(IdEntPry).parents("table").next("div").next("div").find("#montoTotal").val(gastosRegistrados.toFixed(2));
+            //$(IdEntPry).parents("table").next("div").next("div").find("#montoTotal").val(gastosRegistrados.toFixed(2));
                     
         //$(".datosMov").css("visibility","visible");
         //$(".datosMov").css("display","");

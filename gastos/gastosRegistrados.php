@@ -31,7 +31,7 @@ echo '<div style="margin-top:5px;">
     echo'               <tr>
                             <td width="45%"><input type="text" style="width:100%;" value="'.$resultado['DesEntGas'].'"/></td>
                             <td width="25%"><input type="fecha"  style="width:100%;" value="'.date('d-m-Y',strtotime($resultado['FecEntGas'])).'"/></td>
-                            <td width="25%">$<input type="text" class="monto" style="width:90%;" value="'.$resultado['MonEntGas'].'"/></td>
+                            <td width="25%">$<input type="text"  style="width:90%;" value="'.$resultado['MonEntGas'].'"/></td>
                         </tr>';
     }
     

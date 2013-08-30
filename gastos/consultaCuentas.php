@@ -95,16 +95,16 @@ echo '</table>
      echo '
                     <table width="100%" class="ui-widget">
                         <tr>
-                            <td align="right">TOTAL DE GASTOS</td>
-                            <td>$<input type="text" id="totalGeneral" name="totalGeneral" value="0.00" readonly/></td>
-                        </tr>
-                        <tr>
-                            <td align="right">INGRESOS A CUENTA</td>
-                            <td>$<input type="text" id="ingresos" name="ingresos" readonly/></td>
-                        </tr>
-                        <tr>
                             <td align="right">SALDO EN CUENTA</td>
-                            <td>$<input type="text" id="saldo" name="saldo" readonly/></td>
+                            <td>$<input type="text" id="saldoSingastos" name="saldoSingastos" readonly/></td>
+                        </tr>
+                        <tr>
+                            <td align="right">TOTAL DE GASTOS</td>
+                            <td>$<input type="text" id="totalGastos" name="totalGastos" readonly/></td>
+                        </tr>
+                        <tr>
+                            <td align="right">SALDO EN CUENTA DESPUES DE GASTOS</td>
+                            <td>$<input type="text" id="saldoCongastos" name="saldoCongastos" readonly/></td>
                         </tr>
                         <tr>
                             <td align="right">

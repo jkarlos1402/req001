@@ -11,7 +11,7 @@ for($i = 0; $i < count($idPoEs);$i ++){
     $rescue=mysql_query($qry);
     while($cuenta=  mysql_fetch_array($rescue)){
     $query = "
-        SELECT cli.NomEntCli,pry.NomEntPry,pag.CtoEntPag,pag.FecEntPagRal,pag.MonEntPagPrg,pag.MonEntPagRal,mov.DscEntMov FROM tblentcli cli 
+        SELECT cli.NomEntCli,pry.NomEntPry,pag.CtoEntPag,pag.FecEntPagRal,pag.SalEntPag,mov.DscEntMov FROM tblentcli cli 
             JOIN tblentpry pry ON cli.IdEntCli = pry.IdEntCli
             RIGHT JOIN tblentpag pag ON pry.IdEntPry = pag.IdEntPry
             JOIN tblentmov mov ON pag.IdEntMov = mov.IdEntMov
@@ -85,18 +85,19 @@ for($i = 0; $i < count($idPoEs);$i ++){
                         <td>
                             '.$pago['DscEntMov'].'
                         </td>
-                        <td>';
+                        <td>'/*;
                     if($pago['MonEntPagRal']!= null){
                         echo "$".$pago['MonEntPagRal'];
                     }else{
                         echo "$".((float)$pago['MonEntPagPrg']*(1.16));
                     }     
-                    echo'</td>
+                    echo*/
+                            .$pago['SalEntPag'].'</td>
                     </tr>
                     ';
             
         $cont++;
-        $pagosTot=$pagosTot+$pago['MonEntPagRal'];
+        $pagosTot=$pagosTot+$pago['SalEntPag'];
     }
     echo '</tbody>
           <tfoot>
@@ -365,6 +366,24 @@ for($i = 0; $i < count($idPoEs);$i ++){
             </tr>
           </tfoot>
         </table>';
+        
+        $cobroTotal=$pagosTot+$dispoTot;
+        $gastosTotales=$gastosTot+$disprTot;
+        $saldoCuenta=$cobroTotal - $gastosTotales;
+        echo '  <table style="margin-top:35px;">
+                    <tr class="encabezado" align="center">
+                        <td>Cobro total</td>
+                        <td>Gastos totales</td>
+                        <td>Saldo en cuenta</td>
+                    </tr>
+                    <tr align="center">
+                        <td>$'.(float)$cobroTotal.'</td>
+                        <td>$'.(float)$gastosTotales.'</td>
+                        <td>$'.(float)$saldoCuenta.'</td>
+                    </tr>
+                </table>
+            
+        <hr style="box-shadow: 0px 0px 10px rgb(24, 6, 235);border-radius: 5px; margin-top: 20px;">';
     } //fin del while para cuentas   
 }//fin del for para reporte
 ?>
