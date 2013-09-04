@@ -34,6 +34,8 @@ function validaCliente() {
             }
        }
      if($("#Ext1CtoCli").val()!=''){
+         
+         
             if(isNaN($("#Ext1CtoCli").val())){
                 alert("Extensión inválida");
                 $("#accordion").accordion("option","active",$("#Ext1CtoCli").parents("div").prev("h3").index("h3"));

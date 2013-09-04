@@ -80,7 +80,7 @@ if ($_SESSION["k_perfil"] == "USU") {
                         <td>
                             <input name="Tel1CtoCli" type="text" id="Tel1CtoCli"/>
                         </td>
-                        <td><label>Ext:</label><input type="text" name="Ext1CtoCli"/></td>
+                        <td><label>Ext:</label><input type="text" name="Ext1CtoCli" id="Ext1CtoCli"/></td>
                     </tr>
                 </table>
             </div>
@@ -104,7 +104,7 @@ if ($_SESSION["k_perfil"] == "USU") {
                         <td>
                             <input name="Tel2CtoCli" type="text" id="Tel2CtoCli" />
                         </td>
-                        <td><label>Ext:</label><input type="text" name="Ext2CtoCli"/></td>
+                        <td><label>Ext:</label><input type="text" name="Ext2CtoCli" id="Ext2CtoCli"/></td>
                     </tr>
                 </table>
             </div>
@@ -128,7 +128,7 @@ if ($_SESSION["k_perfil"] == "USU") {
                         <td>
                             <input name="Tel3CtoCli" type="text" id="Tel3CtoCli" />
                         </td>
-                        <td><label>Ext:</label><input type="text" name="Ext3CtoCli"/></td>
+                        <td><label>Ext:</label><input type="text" name="Ext3CtoCli" id="Ext3CtoCli"/></td>
                     </tr>
                 </table>
             </div>
