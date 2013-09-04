@@ -94,11 +94,10 @@ function despliegaMovimientos(index){
 
 var cuenta;
 var index;
-
+var pilaIndex = [];
 function agregarMovimientos(){
     
   index = parseInt($("#movimientos").find(".index:last").val())+1;
-  //$("#IdEntPry0").attr("name","IdEntPry"+index);
   $("#fecha00").attr("id","fecha"+index+"0");
   $("#form0").attr("id","form"+index);
   $("#agrega0").attr("id","agrega"+index);
@@ -107,13 +106,10 @@ function agregarMovimientos(){
   newElem.find(".movRegistrados").html('').next("div").css({"visibility":"hidden","display":"none"});
   if(indiceSelect!=null){
       select.find("option:eq("+indiceSelect+")").css({"display":"none"}).removeClass("visible");
-      select.removeAttr("disabled");///////////////////////////////////////aqui me quede!!!!!!!!!!!
+      select.removeAttr("disabled");
       var newSelect = select.clone();
-     // alert(select.html());
       newElem.find("#IdEntPry0").replaceWith(newSelect);
-      //newElem.find("#IdEntPry0 option:eq("+indiceSelect+")").remove();
   }
-  //$("#IdEntPry"+index).attr("name","IdEntPry0");
   $("#agrega"+index).attr("id","agrega0");
   $("#elimina"+index).attr("id","elimina0")
   $("#fecha"+index+"0").attr("id","fecha00");
@@ -185,10 +181,13 @@ function eliminarMovimientos(){
         $("#eliminar").css("visibility","hidden");
         $("#eliminar").css("display","none");
     }
+    if($("#movimientos").find(".mov:last").find("select").prop("selectedIndex") !== 0){
+        var temp = pilaIndex.pop();
+        select.find("option:eq("+temp+")").css({"display":""}).addClass("visible");
+    }
     $("#movimientos").find(".mov:last").remove();
     sumaTotal();
     saldoCuenta();
-    select.find("option:eq("+indiceSelect+")").css({"display":""}).addClass("visible");
     $("#agregar").button("enable");
     indiceSelect = -1;
 }
@@ -250,16 +249,12 @@ function despliegaRegistrados(IdEntPry){
     $.post(url,{IdEntPry:$(IdEntPry).val(),IdEntCue:IdEntCue},function(reponseText){
         $(IdEntPry).parents("table").next("div").html(reponseText).next("div").css({"visibility":"visible","display":""});
         indiceSelect=$(IdEntPry).prop("selectedIndex");
-        //$(IdEntPry).parents("div").find(".movRegistrados:first").html(reponseText);
+        pilaIndex.push(indiceSelect);
         $(".elimina").button({icons: {primary: "ui-icon-trash"},text: false});
         $(IdEntPry).parents("table").next("div").find(".monto").each(
             function(){
                 gastosRegistrados=gastosRegistrados+eval($(this).val());
             });
-            //$(IdEntPry).parents("table").next("div").next("div").find("#montoTotal").val(gastosRegistrados.toFixed(2));
-                    
-        //$(".datosMov").css("visibility","visible");
-        //$(".datosMov").css("display","");
     });
     $(IdEntPry).attr("disabled","disabled");
     if(select.find(".visible").size() > 2){
