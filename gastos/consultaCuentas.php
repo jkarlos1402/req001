@@ -66,6 +66,7 @@ echo '</table>
                 <div class="movRegistrados">
                 </div>';
                 if($_SESSION['k_perfil']!="USU"){
+                    
                 echo'<div class="datosMov" style="visibility:hidden; display:none;">
                     <table class="ui-widget" width="100%" >
                         <tr>
@@ -90,7 +91,7 @@ echo '</table>
                         
                     </table>
                 </div>';
-                }
+                }                
                 echo'
             </form>   
         </div>

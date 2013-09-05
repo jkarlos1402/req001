@@ -1,6 +1,8 @@
 <?php
 include("../conexion.php");
 session_start();
+
+    $readonly='readonly';
 $IdEntPry=$_POST['IdEntPry'];
 $IdEntCue=$_POST['IdEntCue'];
 /*echo '
@@ -29,9 +31,9 @@ echo '<div style="margin-top:5px;">
                         </tr>';    
     while($resultado=  mysql_fetch_array($res)){
     echo'               <tr>
-                            <td width="45%"><input type="text" style="width:100%;" value="'.$resultado['DesEntGas'].'"/></td>
-                            <td width="25%"><input type="fecha"  style="width:100%;" value="'.date('d-m-Y',strtotime($resultado['FecEntGas'])).'"/></td>
-                            <td width="25%">$<input type="text"  style="width:90%;" value="'.$resultado['MonEntGas'].'"/></td>
+                            <td width="45%"><input type="text" '.$readonly.' style="width:100%;" value="'.$resultado['DesEntGas'].'"/></td>
+                            <td width="25%"><input type="fecha" '.$readonly.' style="width:100%;" value="'.date('d-m-Y',strtotime($resultado['FecEntGas'])).'"/></td>
+                            <td width="25%">$<input type="text" '.$readonly.' style="width:90%;" value="'.$resultado['MonEntGas'].'"/></td>
                         </tr>';
     }
     
