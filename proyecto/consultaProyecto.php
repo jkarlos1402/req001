@@ -86,16 +86,16 @@ function colorEstatus($id){
         $estado = $fila['DscEntEst'];
     }
     if($estado=="EJECUTADO"){
-        $color="bgcolor='#00D615'";
+        $color="bgcolor='5EBA67'";
     }
     if($estado=="PLANEADO"){
-        $color="bgcolor='#0080FF'";
+        $color="bgcolor='#5DA1E5'";
     }
     if($estado=="PROXIMO A EJECUTAR"){
-        $color="bgcolor='#F5F103'";
+        $color="bgcolor='#DFD96B'";
     }
     if($estado=="DESFASADO"){
-        $color="bgcolor='#FC0404'";
+        $color="bgcolor='#DA3E3E'";
     }
     return $color;	
 }
@@ -133,7 +133,7 @@ while($renglon = mysql_fetch_array($resultado)){
             <td><img src="../vista/images/config.gif" style="cursor:pointer;" onclick=programarDispersion('.$renglon['IdEntPag'].') width="25"></td>';            
             }
             else{
-                echo'<td><img src="../vista/images/vista.png" style="cursor:pointer;" width="25" onclick=consultarDispersion('.$renglon['IdEntPag'].');></td>';
+                echo'<td><img src="../vista/images/vista.png" style="cursor:pointer;" width="25" onclick=consultarDispersion('.$renglon['IdEntPag'].');></td><td></td>';
             }
            echo' <td>'.$cont.'<input type="text" id="IdEntPag" name="IdEntPag" value="'.$renglon['IdEntPag'].'" style="visibility:hidden; display:none"><input type="text" id="IdEntPry" name="IdEntPry" value="'.$IdEntPry.'" style="visibility:hidden; display:none"></td>';
     if($renglon['FecEntPagRal']==null){	

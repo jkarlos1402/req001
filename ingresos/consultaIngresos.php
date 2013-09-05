@@ -72,17 +72,17 @@ function colorEstatus($id){
     }
     if($estado=="EJECUTADO"){
         //$color="bgcolor='#0080FF'";
-        $color="bgcolor='#00D615'"; // VERDE
+        $color="bgcolor='#5EBA67'"; // VERDE
     }
     if($estado=="PLANEADO"){
-        $color="bgcolor='#0080FF'"; // AZUL
+        $color="bgcolor='#5DA1E5'"; // AZUL
         //$color="bgcolor='#00D615'";
     }
     if($estado=="PROXIMO A EJECUTAR"){
-        $color="bgcolor='#F5F103'";
+        $color="bgcolor='#DFD96B'";
     }
     if($estado=="DESFASADO"){
-        $color="bgcolor='#FC0404'";
+        $color="bgcolor='#DA3E3E'";
     }
     return $color;	
 }

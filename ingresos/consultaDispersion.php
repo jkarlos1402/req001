@@ -162,7 +162,7 @@ echo '<h2 align="center" class="encabezado">CONSULTA DE DISPERSIÓN DE PAGOS</h2
                                                             if($dispersion['PadDspPag']==NULL){
                                                             echo '<div id="divDispersion" style="width: 1225px;">
                                                                     <table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
-                                                                        <tr id="dispersion'.$i.'" bgcolor="01DF01">	
+                                                                        <tr id="dispersion'.$i.'" bgcolor="5EBA67">	
                                                                             <td width="50px">
                                                                                 '.$i.'.'.$h.'
                                                                             </td>
@@ -317,7 +317,7 @@ echo '<h2 align="center" class="encabezado">CONSULTA DE DISPERSIÓN DE PAGOS</h2
                     echo '
                         </div>
                         <div style="position:relative; margin-top:10px;">
-                        <input type="button" value="Regresar" onClick="cambiaHtml(\'consultaProyecto.php\')";">
+                        <input type="button" value="Regresar" onClick="cambiaHtml(\'consultaProyecto.php?IdEntPry='.$IdEntPry.'\')";">
                         </div>
     ';
 								

@@ -163,7 +163,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                             echo '<input type="hidden" name="idDispersion[]" value="'.$dispersion['IdDspPag'].'"/>';
                             echo '<div id="divDispersion'.$i.$h.'" style="width: 1225px;">
                                     <table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
-                                        <tr id="dispersion'.$i.'" bgcolor="01DF01">	
+                                        <tr id="dispersion'.$i.'" bgcolor="#5EBA67">	
                                             <td width="50px">
                                                 '.$i.'.'.$h.'
                                             </td>
@@ -340,7 +340,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                             $j++;
                                                         }//fin del while que contiene las dispersiones en base
                                             }else{
-                                                echo '<tr id="dispSec'.$i.$h.$j.'" class="dispSec" align="left" style="visibility:hidden; display:none;" bgcolor="A9F5A9">
+                                                echo '<tr id="dispSec'.$i.$h.$j.'" class="dispSec" align="left" style="visibility:hidden; display:none;" bgcolor="AED5B2">
                                                         <td width="50px">
                                                         '.$i.'.'.$h.'.'.$j.'
                                                         </td>
@@ -404,7 +404,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                         }else{
                             echo '<div id="divDispersion'.$i.$h.'" style="width: 1225px;">
                                     <table class="ui-widget" border="0" cellpadding="0" align="center" width="100%">
-                                        <tr id="dispersion'.$i.'" bgcolor="01DF01">	
+                                        <tr id="dispersion'.$i.'" bgcolor="5EBA67">	
                                             <td width="50px">
                                                 '.$i.'.'.$h.'
                                             </td>
@@ -462,7 +462,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                     <li id="agrega'.$i.$h.'" style="visibility:hidden; display:none;" onclick="agregaDispersionSecundaria('.$i.','.$h.');"></li>
                                                 </td>
                                         </tr>
-                                        <tr id="dispSec'.$i.$h.$j.'" class="dispSec" align="left" style="visibility:hidden; display:none;" bgcolor="A9F5A9">
+                                        <tr id="dispSec'.$i.$h.$j.'" class="dispSec" align="left" style="visibility:hidden; display:none;" bgcolor="AED5B2">
                                             <td width="50px">
                                                 '.$i.'.'.$h.'.'.$j.'
                                             </td>
