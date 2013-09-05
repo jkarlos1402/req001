@@ -310,6 +310,6 @@ where disp.IdEntPag = ".$pago['IdEntPag']." and disp.PadDspPag is null";
     }
     echo'   </tbody>    
         </table>
-        <hr style="box-shadow: 0px 0px 10px rgb(24, 6, 235);border-radius: 5px; margin-top: 20px;">';
+        <hr style="box-shadow: 0px 0px 10px rgb(24, 6, 235);border-radius: 5px; margin-top: 20px;"/>';
 }//fin del for para reporte
 ?>

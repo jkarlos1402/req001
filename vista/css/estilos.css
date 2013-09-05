@@ -63,10 +63,9 @@ td{
 }
 
 .entrada:hover{
-    background-color: #222222;
-    border-bottom-left-radius: 1px;
-    border-bottom-right-radius: 1px;
-    color: #FFF;
+    border: 1px solid #fcefa1;
+    background: #fbf9ee url(../css/images/ui-bg_glass_55_d9f4b5_1x400.png) 50% 50% repeat-x;
+    color: #363636;
 }
 .empresa{
 	display:none;
@@ -93,4 +92,14 @@ td{
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+.renglon:hover{
+    border: 1px solid #fcefa1;
+    background: #fbf9ee url(../css/images/ui-bg_glass_55_d9f4b5_1x400.png) 50% 50% repeat-x;
+    color: #363636;
+}
+
+.renglon td{
+    border: solid 1px #797979;
 }
