@@ -64,8 +64,9 @@ echo '</table>
                     </tr>
                 </table>
                 <div class="movRegistrados">
-                </div>
-                <div class="datosMov" style="visibility:hidden; display:none;">
+                </div>';
+                if($_SESSION['k_perfil']!="USU"){
+                echo'<div class="datosMov" style="visibility:hidden; display:none;">
                     <table class="ui-widget" width="100%" >
                         <tr>
                             <td colspan="4"><center>GASTOS NUEVOS</center></td>
@@ -88,7 +89,9 @@ echo '</table>
                         </tr>
                         
                     </table>
-                </div>
+                </div>';
+                }
+                echo'
             </form>   
         </div>
          ';  //Fin Mov0
@@ -107,8 +110,11 @@ echo '</table>
                             <td>$<input type="text" id="saldoCongastos" name="saldoCongastos" readonly/></td>
                         </tr>
                         <tr>
-                            <td align="right">
-                            <input type="button" id="enviar" onclick="guardarGastos(0);" value="Guardar"/>
+                            <td align="right">';
+                            if($_SESSION['k_perfil']!="USU"){
+                            echo '<input type="button" id="enviar" onclick="guardarGastos(0);" value="Guardar"/>';
+                            }
+                            echo '
                             </td>
                         </tr>
                     </table>
