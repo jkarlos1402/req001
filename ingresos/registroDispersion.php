@@ -152,7 +152,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                                 </td>
                             </tr>
                         </table>';
-                        $query = "select PadDspPag,IdDspPag,IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,SalDspPag,IdDesPag from tbldsppag where IdEntPag = $Idpago[$i] and PadDspPag is NULL";
+                        $query = "select PadDspPag,IdDspPag,IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,SalDspPag,IdDesPag,PropMonDsp from tbldsppag where IdEntPag = $Idpago[$i] and PadDspPag is NULL";
                         $dispersiones = mysql_query($query);
                         $numeroRegistrados = mysql_num_rows($dispersiones);
                         $h = 1;
@@ -217,8 +217,14 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                       </td>';
                                             }
                                             echo '<td width="100px">
-                                                    $<input type="text"  class="montoDispersion" id="MonDspPag_'.$i.'_'.$h.'_0_" name="MonDspPag_'.$i.'_0[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11" value="'.$dispersion['MonDspPag'].'"/>
+                                                    $<input type="text"  class="montoDispersion" id="MonDspPag_'.$i.'_'.$h.'_0_" name="MonDspPag_'.$i.'_0[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="7" value="'.$dispersion['MonDspPag'].'"/>
                                                     <input type="hidden" name="saldoDispersion[]" class="saldoDispersion" value="'.$dispersion['SalDspPag'].'"/>
+                                                    <input type = "checkbox" title="¿Pertenece al corporativo?" style="margin-left: 5px;" onchange="checa(this);"';
+                                            if($dispersion['PropMonDsp']=="0"){
+                                                echo 'checked="checked"';
+                                            }
+                                            echo '/>
+                                                    <input type="hidden" name="PropMonDsp_'.$i.'_0[]" value="'.$dispersion['PropMonDsp'].'"/>
                                                 </td>
                                                 <td width="220px">';
                                             //***************************************************************En base de datos
@@ -246,7 +252,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                     }
                                             echo '</td>
                                                 </tr>';
-                                            $query = "select IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,IdDesPag from tbldsppag where PadDspPag = ".$dispersion['IdDspPag'];
+                                            $query = "select IdEntPoE,FecMovDspPag,IdOrgPag,IdEntCue,MonDspPag,IdDesPag,PropMonDsp from tbldsppag where PadDspPag = ".$dispersion['IdDspPag'];
                                             $dispersionesSecundarias = mysql_query($query);
                                             $numeroDispersionesSec = mysql_num_rows($dispersionesSecundarias);
                                             $j = 1;
@@ -255,7 +261,7 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                         $("#agrega'.$i.$h.'").button({icons: {primary: "ui-icon-plusthick"},text: false}).css({"visibility":"visible","display":""});
                                                       </script>';
                                                 while($dispersionSecundaria = mysql_fetch_array($dispersionesSecundarias)){
-                                                    echo '<tr  id="dispSec'.$i.$h.$j.'" class="dispSec" align="left" bgcolor="A9F5A9">
+                                                    echo '<tr  id="dispSec'.$i.$h.$j.'" class="dispSec" align="left" bgcolor="AED5B2">
                                                             <td width="50px">
                                                                 '.$i.'.'.$h.'.'.$j.'
                                                             </td>
@@ -309,7 +315,13 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                                       </td>';
                                                             }
                                                             echo '<td width="100px">
-                                                                    $<input type="text" class="montoSecundaria" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$h.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11" value="'.$dispersionSecundaria['MonDspPag'].'"/>
+                                                                    $<input type="text" class="montoSecundaria" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$h.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="7" value="'.$dispersionSecundaria['MonDspPag'].'"/>
+                                                                        <input type = "checkbox" title="¿Pertenece al corporativo?" style="margin-left: 5px;" onchange="checa(this);"';
+                                                            if($dispersionSecundaria['PropMonDsp']=="0"){
+                                                                echo 'checked="checked"';
+                                                            }
+                                                            echo '/>
+                                                                <input type="hidden" name="PropMonDsp_'.$i.'_'.$h.'[]" value="'.$dispersion['PropMonDsp'].'"/>
                                                                   </td>
                                                                   <td width="220px">';
                                                             //***************************************************************
@@ -374,7 +386,9 @@ while($renglonp = mysql_fetch_array($resultado)){
                                                         <td id="datosbanco'.$i.$h.$j.'" width="150px"></td>
                                                         <td id="datoscuenta'.$i.$h.$j.'" width="150px"></td>
                                                         <td width="100px">
-                                                            $<input type="text" class="montoSecundaria" disabled="disabled" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$h.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11"/>
+                                                            $<input type="text" class="montoSecundaria" disabled="disabled" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$h.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="7"/>
+                                                            <input type = "checkbox" title="¿Pertenece al corporativo?" style="margin-left: 5px;" onchange="checa(this);"/>
+                                                    <input type="hidden" name="PropMonDsp_'.$i.'_'.$h.'[]" value="1"/>    
                                                         </td>
                                                         <td width="220px">';
                                                         //***************************************************************
@@ -441,8 +455,10 @@ while($renglonp = mysql_fetch_array($resultado)){
                                             <td width="150px" id="datoscuenta'.$i.$h.'">
                                             </td>
                                             <td width="100px">
-                                                $<input type="text"  class="montoDispersion" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_0[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11"/>
+                                                $<input type="text"  class="montoDispersion" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_0[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="7"/>
                                                 <input type="hidden" name="saldoDispersion[]" class="saldoDispersion"/>
+                                                <input type = "checkbox" title="¿Pertenece al corporativo?" style="margin-left: 5px;" onchange="checa(this);"/>
+                                                <input type="hidden" name="PropMonDsp_'.$i.'_0[]" value="1"/>
                                             </td>
                                             <td width="220px">';
                                             //***************************************************************
@@ -498,7 +514,9 @@ while($renglonp = mysql_fetch_array($resultado)){
                                             <td id="datoscuenta'.$i.$h.$j.'" width="150px">
                                             </td>
                                             <td width="100px">
-                                                $<input type="text" class="montoSecundaria" disabled="disabled" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$j.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="11"/>
+                                                $<input type="text" class="montoSecundaria" disabled="disabled" id="MonDspPag_'.$i.'_'.$h.'_'.$j.'_" name="MonDspPag_'.$i.'_'.$j.'[]" placeholder="Ingrese Monto" onBlur="validaTotal('.$i.');" size="7"/>
+                                                <input type = "checkbox" title="¿Pertenece al corporativo?" style="margin-left: 5px;" onchange="checa(this);" />
+                                                <input type="hidden" name="PropMonDsp_'.$i.'_'.$h.'[]" value="1"/>
                                             </td>
                                             <td width="220px">';
                                             //***************************************************************

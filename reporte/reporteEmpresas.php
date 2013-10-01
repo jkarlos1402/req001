@@ -367,6 +367,38 @@ for($i = 0; $i < count($idPoEs);$i ++){
           </tfoot>
         </table>';
         
+        $q = "SELECT sum(SalDspPag) totalEmpresa FROM bdupgenia.tbldsppag where PropMonDsp = 0 and IdEntCue = ".$cuenta['IdEntCue'];
+        $q1 = "SELECT sum(SalDspPag) totalPersona FROM bdupgenia.tbldsppag where PropMonDsp = 1 and IdEntCue = ".$cuenta['IdEntCue'];
+        $resTot = mysql_query($q1);
+        $totalPersona = mysql_fetch_array($resTot);
+        $resTot1 = mysql_query($q);
+        $totalEmpresa = mysql_fetch_array($resTot1);
+         echo '<table width="100%" style="margin-top:35px;">
+                <tr>
+                    <td align="left">
+                        <b>Información de totales</b>
+                    </td>                    
+                </tr>
+            </table>
+            <table cellpading="0" cellspacing="0">        
+                    <tr class="entrada">
+                        <th class="encabezado">
+                            Saldo Personal
+                        </th>
+                        <td>
+                            $'.$totalPersona["totalPersona"].'
+                        </td>                       
+                    </tr>
+                    <tr class="entrada">
+                        <th class="encabezado">
+                            Saldo Empresarial
+                        </th>
+                        <td>
+                            $'.$totalEmpresa["totalEmpresa"].'
+                        </td>  
+                    </tr>
+                </table>';
+        
         $cobroTotal=$pagosTot+$dispoTot;
         $gastosTotales=$gastosTot+$disprTot;
         $saldoCuenta=$cobroTotal - $gastosTotales;

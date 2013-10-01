@@ -1,3 +1,3 @@
 <?php
-$conexion = mysql_connect("192.168.100.2", "bd_upgenia","Upg3n14");
-mysql_select_db("bdupgenia",$conexion);
+$conexion = mysql_connect("localhost", "bdupgenia","upgenia2013");
+mysql_select_db("bdctrlpagos",$conexion);
