@@ -20,12 +20,16 @@ $ltxt_nomCtoPoE = $_POST['ltxt_nomCtoPoE'];
 $ltxt_telCtoPoE = $_POST['ltxt_telCtoPoE'];
 $ltxt_extCtoPoE = $_POST['ltxt_extCtoPoE'];
 $ltxt_emailCtoPoE = $_POST['ltxt_emailCtoPoE'];
+if(isset($_POST['bandera']))
+   $bandera = $_POST['bandera'];
+else
+   $bandera = '0';
 
 //Agregando la persona o empresa
 $query = "insert into tblentpoe (IdEntPoE,NomEntPoE,RFCEntPoE,DirEntPoE,IdEntPfl,GroEntPoE,TelEntPoE,ExtEntPoE,NomCtoPoE,TelCtoPoE,ExtCtoPoE,EmailCtoPoE,EstEntPoE) values (null,'$ltxt_nomPoE','$ltxt_RFCPoE','$ltxt_dirPoE','$ltxt_pflPoE','$ltxt_girPoE','$ltxt_telPoE','$ltxt_extPoE','$ltxt_nomCtoPoE','$ltxt_telCtoPoE','$ltxt_extCtoPoE','$ltxt_emailCtoPoE',1)";
 mysql_query($query,$conexion) or die (mysql_error());
 $lint_idePoE = mysql_insert_id();//se obtiene el id de la persona o empresa registrada
-
+echo $lint_idePoE;
 //Agregando la(s) sucursal(es) y cuentas
 $contador = 0;
 while(isset($_POST['lint_banPoE'.$contador])){
@@ -50,6 +54,8 @@ while(isset($_POST['lint_banPoE'.$contador])){
 	mysql_query($query,$conexion) or die (mysql_error());
 	$contador++;
 }
+if($bandera=='0'){
 $_SESSION['mensajeInfo'] = "Persona o empresa registrada correctamente";
 if(mysql_error()!= '') $_SESSION['mensajeError'] = mysql_error();
 header("Location: ../index.php");
+}

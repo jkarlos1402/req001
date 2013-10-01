@@ -208,7 +208,7 @@ function cargaCaracteristicas() {
             heightStyle: "content"
         });
         $("input[type=fecha]").datepicker({dateFormat: 'dd-mm-yy'});
-        $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
+        $("#dialog , #dialog2, #dialogregistro,#nuevoParticipante,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
             width: 350,
             modal: true,
             autoOpen: false,
@@ -438,7 +438,7 @@ function mostrarInfoIng(IdEntPry) {
         $.post(url, {IdEntPry: IdEntPry}, function(responseText) {
             $("#datos").html(responseText);
             eliminaBarra();
-            $("#dialog , #dialog2, #dialogregistro,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
+            $("#dialog , #dialog2, #dialogregistro,#nuevoParticipante,#dialogmod,#consultarUsuarios,#registrarUsuarios,#modificarUsuarios").dialog({
                 width: 350,
                 modal: true,
                 autoOpen: false,
@@ -548,7 +548,8 @@ function registraPago(IdEntPag, cont, pago) {
     $("#FecEntPagRal").val("");
     $("input[type=fechaPago]").datepicker({dateFormat: 'dd-mm-yy'}).datepicker('setDate', 'today');
     $("#mensaje").html("");
-    $("#dialogregistro").dialog("option","width",950).dialog("open").find("#cuenta").html('');
+    $("#dialogregistro").dialog("option","width",1000).dialog("open").find("#cuenta").html('');
+    
     var url = "../ingresos/movimientos.php";
     $.post(url, {}, function(responseText) {
             $("#movimientoPago").html(responseText); 
@@ -883,4 +884,102 @@ function eliminarProyecto() {
     if (confirm("¿Seguro de eliminar el proyecto?")) {
         $("#formElimina").submit();
     }
+}
+
+/////////////////////////////////////////////////////////////////////////////
+function registroParticipante(){
+    $("#nuevoParticipante").dialog("option","width",1000).dialog("open");
+}
+
+function enviaForm(){
+    if(valida()){
+    var nombre;
+   $.post("../participante/alta.php",$("#formAddPoENew").serialize(),function(id){
+       nombre=$("#nuevoParticipante").find("#ltxt_nomPoE").val();
+       $("#dialogregistro").find("#PoE").append('<option value="'+id+'">'+nombre+'</option>');
+       $("#nuevoParticipante").dialog("close");
+   });
+    }
+}
+
+function valida(){
+	$("#formAddPoENew").find('input[type=text],select').each(function() {
+		if($(this).val()=="" && !$(this).hasClass("nulo") && !$(this).parents("td").hasClass("empresa")){
+			$("#participante").accordion("option","active",$(this).parents("div").prev("h3").index("h3"));
+			$(this).focus();
+			bandera = false;
+			return false;
+		}
+		bandera = true;
+	});
+	if(!bandera)
+		return false;
+	if(!$("#ltxt_telPoE").parents("td").hasClass("empresa") && !$("#ltxt_telPoE").telefono()){
+		$("#participante").accordion("option","active",$("#ltxt_telPoE").parents("div").prev("h3").index("h3"));
+		alert("Número telefónico inválido");
+		$("#ltxt_telPoE").focus();
+		return false;
+	}
+	if(!$("#ltxt_extPoE").parents("td").hasClass("empresa") && !$("#ltxt_extPoE").ext()){
+		$("#participante").accordion("option","active",$("#ltxt_extPoE").parents("div").prev("h3").index("h3"));
+		alert("Extensión inválida");
+		$("#ltxt_extPoE").focus();
+		return false;
+	}
+	if(!$("#ltxt_telCtoPoE").parents("td").hasClass("empresa") && !$("#ltxt_telCtoPoE").telefono()){
+		$("#participante").accordion("option","active",$("#ltxt_telCtoPoE").parents("div").prev("h3").index("h3"));
+		alert("Número telefónico inválido");
+		$("#ltxt_telCtoPoE").focus();
+		return false;
+	}
+	if(!$("#ltxt_extCtoPoE").parents("td").hasClass("empresa") && !$("#ltxt_extCtoPoE").ext()){
+		$("#participante").accordion("option","active",$("#ltxt_extCtoPoE").parents("div").prev("h3").index("h3"));
+		alert("Extensión inválida");
+		$("#ltxt_extCtoPoE").focus();
+		return false;
+	}
+	var expresion = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if(!$("#ltxt_emailCtoPoE").parents("td").hasClass("empresa") && !expresion.test($("#ltxt_emailCtoPoE").val())){
+		alert("Correo inválido");
+		$("#participante").accordion("option","active",$("#ltxt_emailCtoPoE").parents("div").prev("h3").index("h3"));
+		$("#ltxt_emailCtoPoE").focus();
+		return false;
+	}
+	var i = 0;
+	for(i = 0;i <= contador; i++){
+		suc = "lint_sucPoE"+i;
+		cta = "lint_ctaPoE"+i;
+		cbe = "ltxt_cbePoE"+i;
+		if(isNaN($("#"+suc).val())){
+			alert("La sucursal es numérica");
+			$("#participante").accordion("option","active",$("#"+suc).parents("div").prev("h3").index("h3"));
+			$("#"+suc).focus();
+			return false;
+		}
+                if($("#"+suc).val().length>4){
+                    alert("La sucursal es no es válida");
+			$("#participante").accordion("option","active",$("#"+suc).parents("div").prev("h3").index("h3"));
+			$("#"+suc).focus();
+			return false;
+                }
+		if(isNaN($("#"+cta).val())){
+			alert("El número de cuenta es numérico");
+			$("#participante").accordion("option","active",$("#"+cta).parents("div").prev("h3").index("h3"));
+			$("#"+cta).focus();
+			return false;
+		}
+                if($("#"+cta).val().length!=16){
+			alert("El número de cuenta debe tener 16 dígitos");
+			$("#participante").accordion("option","active",$("#"+cta).parents("div").prev("h3").index("h3"));
+			$("#"+cta).focus();
+			return false;
+		}
+		if($("#"+cbe).val().length != 18 || isNaN($("#"+cbe).val())){
+			alert("CLABE inválida");
+			$("#participante").accordion("option","active",$("#"+cbe).parents("div").prev("h3").index("h3"));
+			$("#"+cbe).focus();
+			return false;
+		}
+	}
+	return true;
 }
