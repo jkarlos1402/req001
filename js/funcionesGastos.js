@@ -235,7 +235,7 @@ function guardarGastos(){
         var saldo = $("#saldoCongastos").val();
         var url ="../gastos/estadoCuenta.php";
         $.post(url,{cuenta:cuenta,saldo:saldo},function(responseText){
-                alert(responseText);
+                //alert(responseText);
         });
         
     }

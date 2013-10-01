@@ -204,7 +204,7 @@ function valida(origen,actual){
 	}
 	if(suma.toFixed(2) > ((total*iva)+total)){
 		$("#error").addClass("ui-state-error ui-corner-all");
-		$("#error").html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> Se superó el 100%");
+		$("#error").html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span>Se superó el 100%");
 		excedente = suma.toFixed(2)-((total*iva)+total);
 		excedenteSinIVA = (excedente*total)/((total*iva)+total);
 		pjeExcedente = (excedenteSinIVA*100/total).toFixed(5);
@@ -212,7 +212,7 @@ function valida(origen,actual){
 		return false;
 	}else if(suma.toFixed(2) < ((total*iva)+total)){
 			$("#error").addClass("ui-state-error ui-corner-all");
-			$("#error").html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> Aún no se alcanza el 100%");
+			$("#error").html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span> Aún no se alcanza el 100%");
 			faltante = ((total*iva)+total)- suma.toFixed(2);
 			faltanteSinIVA = (faltante*total)/((total*iva)+total);
 			pjeFaltante = (faltanteSinIVA*100/total).toFixed(5);

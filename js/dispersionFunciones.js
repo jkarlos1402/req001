@@ -492,7 +492,7 @@ function validaTotal(pago){
     });
     if(suma > montoTotal){
         $("#error"+pago).addClass("ui-state-error ui-corner-all");
-        $("#error"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> Se superó el monto del pago!");
+        $("#error"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span>Se superó el monto del pago!");
         $("#controlDispersion"+pago).find(".montoDispersion").each(function(index3){
             $(this).css("background-color","#FF6C70");
         });
@@ -527,7 +527,7 @@ function validaTotalDispersion(pago,dispersion){
         });
         if(!banderaTotal){
             $("#errorSec"+pago).addClass("ui-state-error ui-corner-all");
-            $("#errorSec"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span><b>Error:</b> ¡Se superó el monto de la dispersion!");
+            $("#errorSec"+pago).html("<span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'></span> Se superó el monto de la dispersión");
         }
         banderaTotal = true;
 	return false;
